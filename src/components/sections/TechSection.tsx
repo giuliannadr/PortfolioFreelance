@@ -33,29 +33,18 @@ export const TechSection = () => {
   const [isInside, setIsInside] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  /* InView */
   const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, margin: "-120px" });
 
-  const isInView = useInView(ref, {
-    once: false, // permite re-animar
-    margin: "-120px",
-  });
-
-  /* Mobile + mouse */
+  /* Detect mobile + mouse */
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isMobile) {
-        setMousePos({ x: e.clientX, y: e.clientY });
-      }
+      if (!isMobile) setMousePos({ x: e.clientX, y: e.clientY });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
@@ -68,16 +57,17 @@ export const TechSection = () => {
     <section
       ref={ref}
       id="tech"
-      onMouseEnter={() => setIsInside(true)}
+      onMouseEnter={() => !isMobile && setIsInside(true)}
       onMouseLeave={() => {
-        setIsInside(false);
-        setHoveredIndex(null);
+        !isMobile && setIsInside(false);
+        !isMobile && setHoveredIndex(null);
       }}
-      className={`scroll-mt-32 relative -mt-60 pt-0 pb-26 select-none overflow-hidden transition-all duration-300 ${
-        isInside && !isMobile ? "cursor-none" : "cursor-default"
-      }`}
+     className={`scroll-mt-32 relative -mt-80 md:-mt-60 pt-0 pb-26 select-none overflow-hidden transition-all duration-300 ${
+  isInside && !isMobile ? "cursor-none" : "cursor-default"
+}`}
+
     >
-      {/* CURSOR */}
+      {/* CURSOR PERSONALIZADO EN DESKTOP */}
       <AnimatePresence>
         {isInside && !isMobile && (
           <motion.div
@@ -98,12 +88,7 @@ export const TechSection = () => {
               backgroundColor: "#FF6F00",
               mixBlendMode: "difference",
             }}
-            transition={{
-              type: "spring",
-              damping: 35,
-              stiffness: 300,
-              mass: 0.4,
-            }}
+            transition={{ type: "spring", damping: 35, stiffness: 300, mass: 0.4 }}
           />
         )}
       </AnimatePresence>
@@ -132,7 +117,7 @@ export const TechSection = () => {
         </motion.h2>
       </div>
 
-      {/* LIST */}
+      {/* LISTADO DE CATEGORÍAS */}
       <div className="flex flex-col border-t border-white/5">
         {categories.map((cat, index) => {
           const isHovered = hoveredIndex === index;
@@ -141,21 +126,20 @@ export const TechSection = () => {
             <motion.div
               key={cat.id}
               initial={{ opacity: 0, y: 40 }}
-              animate={
-                isInView
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 40 }
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+              onMouseEnter={() => !isMobile && setHoveredIndex(index)}
+              onMouseLeave={() => !isMobile && setHoveredIndex(null)}
+              onClick={() =>
+                isMobile
+                  ? setHoveredIndex((prev) => (prev === index ? null : index))
+                  : undefined
               }
-              transition={{
-                duration: 0.6,
-                delay: index * 0.15,
-                ease: "easeOut",
-              }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="group relative py-12 px-10 border-b border-white/5"
+              className={`group relative py-12 px-10 border-b border-white/5 ${
+                isMobile ? "cursor-pointer" : ""
+              }`}
             >
-              {/* Hover BG */}
+              {/* Hover / Glow background */}
               <motion.div
                 initial={false}
                 animate={{
@@ -175,26 +159,21 @@ export const TechSection = () => {
                 <div className="flex items-baseline gap-4">
                   <span
                     className={`text-[10px] font-mono transition-colors duration-500 ${
-                      isHovered
-                        ? "text-[#FF6F00]"
-                        : "text-white/20"
+                      isHovered ? "text-[#FF6F00]" : "text-white/20"
                     }`}
                   >
                     {cat.id}
                   </span>
-
                   <h3
                     className={`text-2xl md:text-3xl font-bold transition-all duration-500 ease-out ${
-                      isHovered
-                        ? "text-white md:translate-x-4"
-                        : "text-white/40"
+                      isHovered ? "text-white md:translate-x-4" : "text-white/40"
                     }`}
                   >
                     {cat.title}
                   </h3>
                 </div>
 
-                {/* DETAILS */}
+                {/* DETALLES */}
                 <motion.div
                   initial={false}
                   animate={{
@@ -202,23 +181,19 @@ export const TechSection = () => {
                     opacity: isHovered ? 1 : 0,
                     marginTop: isHovered ? 16 : 0,
                   }}
-                  transition={{
-                    duration: 0.5,
-                    ease: [0.23, 1, 0.32, 1],
-                  }}
-                  className="overflow-hidden pointer-events-none"
+                  transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                  className="overflow-hidden"
                 >
                   <p className="text-[#FF6F00] text-sm font-medium tracking-wide mb-2 uppercase">
                     {cat.skills}
                   </p>
-
                   <p className="text-white/50 text-xs max-w-sm leading-relaxed">
                     {cat.details}
                   </p>
                 </motion.div>
               </div>
 
-              {/* Glow */}
+              {/* Glow general */}
               <motion.div
                 initial={false}
                 animate={{ opacity: isHovered ? 1 : 0 }}
