@@ -141,7 +141,7 @@ export const Projects = () => {
   }, [selectedProject]);
 
   return (
-    <section id="projects" className="relative mb-20">
+    <section id="projects" className="scroll-mt-32 relative mb-20">
       <div className="container mx-auto px-6 max-w-5xl">
        <AnimatedSection>
   <div className="pt-12 mb-10 text-white">
