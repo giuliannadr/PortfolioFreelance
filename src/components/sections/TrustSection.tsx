@@ -31,7 +31,7 @@ export const TrustSection = () => {
   const current = testimonialsData[testimonyIndex];
 
   return (
-    <section className="w-full relative">
+    <section className="w-full relative py-32" id="trust">
       <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 items-center">
         
         {/* IZQUIERDA: Frase y Métricas */}

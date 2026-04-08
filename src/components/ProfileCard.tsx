@@ -12,7 +12,7 @@ interface ProfileCardProps {
 export const ProfileCard = ({
   name = "Giuliana Di Rocco",
   role,
-  image = "/profile2.jpeg",
+  image = "/giuliprofile.jpeg",
 }: ProfileCardProps) => {
   const { t } = useTranslation();
   
