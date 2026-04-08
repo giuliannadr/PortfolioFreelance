@@ -58,7 +58,7 @@ export const Footer = () => {
         </motion.h2>
 
         {/* Botones de Contacto Prioritarios */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-20 w-full justify-center">
+        <div className="flex flex-col sm:flex-row items-center gap-4 mb-16 w-full justify-center">
           
           {/* Email con opción de copiar */}
           <div className="group relative flex items-center bg-zinc-100 dark:bg-zinc-900/50 p-1.5 pl-5 rounded-2xl border border-transparent hover:border-[#FF6F00]/30 transition-all w-full sm:w-auto">
@@ -95,7 +95,7 @@ export const Footer = () => {
         </div>
 
         {/* Redes Secundarias */}
-        <div className="flex gap-4 md:gap-6 mb-24">
+        <div className="flex gap-4 md:gap-6 mb-10">
           {socialLinks.map((social) => (
             <a
               key={social.label}
