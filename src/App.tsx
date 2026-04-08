@@ -1,19 +1,25 @@
 import { Layout } from "@/components/layout/Layout";
 import { Hero } from "@/components/sections/Hero";
-import { AboutMe } from "@/components/sections/AboutMe";
+// Forma correcta para export const
+// Reemplazá el import de AboutSection por este:
+import { AboutSection } from './components/sections/AboutSection';
 import { Projects } from "@/components/sections/Projects";
 
-import { TechCarrousel } from "@/components/sections/TechCarrousel";
-import { TechSection } from "./components/sections/TechSection";
+
+import { TrustSection } from "./components/sections/TrustSection";
+import { ProcessSection } from "./components/sections/ProcessSection";
+import { ServicesSection } from "./components/sections/ServicesSection";
 
 function App() {
   return (
     <Layout>
       <Hero />
-      <TechCarrousel />
-      <AboutMe />
+       <AboutSection />
+      <TrustSection />
+      <ProcessSection />
+     
       <Projects />
-      <TechSection />
+      <ServicesSection />
      
     </Layout>
   );

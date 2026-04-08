@@ -6,11 +6,20 @@
 
 @layer base {
   :root {
+    --background: 0 0% 98%; /* Light grey background */
+    --foreground: 0 0% 4%; /* Dark text */
+    --primary: 0 0% 9%; /* Dark text/buttons */
+    --secondary: 0 0% 96%; /* Light accents */
+    --muted: 0 0% 40%;
+    --card: 0 0% 100%; /* White cards */
+  }
+
+  .dark {
     --background: 0 0% 4%; /* #0a0a0a */
     --foreground: 0 0% 100%;
     --primary: 0 0% 100%;
     --secondary: 0 0% 96%;
-    --muted: 0 0% 40%;
+    --muted: 0 0% 60%;
     --card: 0 0% 8%;
   }
 
@@ -23,4 +32,24 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@layer utilities {
+  /* Oculta la barra de scroll en Chrome, Safari y Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Oculta la barra de scroll en IE, Edge y Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+/* Cuando el body tenga la clase lightbox-open, escondemos los controles */
+body.lightbox-open .fixed.top-4.right-4, 
+body.lightbox-open .fixed.top-6.right-6 {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease;
 }
