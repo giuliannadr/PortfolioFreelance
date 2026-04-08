@@ -273,8 +273,8 @@ i18n
       en,
       es
     },
-    lng: "en", 
-    fallbackLng: "en",
+    lng: "es", 
+    fallbackLng: "es",
     interpolation: {
       escapeValue: false 
     }

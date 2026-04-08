@@ -7,7 +7,7 @@ import { Menu, X, Home, User, Folder, Mail, ArrowRight, ShieldCheck, Briefcase }
 const menuItems = [
   { id: "home", label: "Inicio", icon: <Home size={20} />, href: "#home" },
   { id: "about", label: "Sobre mí", icon: <User size={20} />, href: "#about" },
-  { id: "trust", label: "Confianza", icon: <ShieldCheck size={20} />, href: "#trust" },
+  { id: "trust", label: "Feedback", icon: <ShieldCheck size={20} />, href: "#trust" },
   { id: "projects", label: "Proyectos", icon: <Folder size={20} />, href: "#projects" },
   { id: "services", label: "Servicios", icon: <Briefcase size={20} />, href: "#services" },
   { id: "contact", label: "Contacto", icon: <Mail size={20} />, href: "#contact" },
