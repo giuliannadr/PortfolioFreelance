@@ -123,6 +123,52 @@ process: {
         }
       }
     },
+    services: {
+  badge: "Proposition",
+  title: "Strategic",
+  titleItalic: "Services",
+  cta: {
+    badge: "Have a project in mind?",
+    title: "Request a quote",
+    faded: "— now"
+  },
+  items: {
+web: {
+  title: "Web Design & Development",
+  subtitle: "Your professional presence",
+  description: "Diseñamos la estructura ideal según tu objetivo: desde una Landing Page de alto impacto para conversiones rápidas, hasta sitios Multi-sección para una narrativa de marca completa.",
+  details: [
+    "One-page (Landing) o Multi-sección",
+    "Diseño UI/UX exclusivo",
+    "Optimización SEO & Performance",
+    "Adaptabilidad 100% Mobile"
+  ]
+},
+    store: {
+      title: "E-commerce",
+      subtitle: "24/7 Sales",
+      description: "We turn your catalog into an easy-to-use online sales machine.",
+      details: ["Payment gateways", "Stock management", "Easy admin panel", "Monthly sales reports"]
+    },
+    systems: {
+      title: "Custom Systems",
+      subtitle: "Intelligent Management",
+      description: "We automate your company processes with personalized tools.",
+      details: ["Relational databases", "Report automation", "Internal control panels", "Advanced data security"]
+    },
+    maintenance: {
+      title: "Maintenance",
+      subtitle: "Technical Support",
+      description: "We take care of keeping your web safe, fast, and working correctly.",
+      details: ["Daily backups", "Security patches", "Priority support", "Uptime monitoring"]
+    }
+  },
+  modal: {
+    includes: "What's included?",
+    button: "Request a quote"
+  }
+},
+   
    footer: {
   "status": "Available for new projects",
   "titleLine1": "Let's work",
@@ -255,6 +301,51 @@ process: {
         }
       }
     },
+    services: {
+  badge: "Propuesta",
+  title: "Servicios",
+  titleItalic: "Estratégicos",
+  cta: {
+    badge: "¿Tenés un proyecto en mente?",
+    title: "Solicitar presupuesto",
+    faded: "— ahora"
+  },
+  items: {
+    web: {
+  title: "Diseño & Desarrollo Web",
+  subtitle: "Tu presencia profesional",
+  description: "Creamos la estructura ideal según tu objetivo: desde una Landing Page de alto impacto para conversiones rápidas, hasta sitios Multi-sección para una narrativa de marca completa.",
+  details: [
+    "Landing Page o Sitios Multi-sección",
+    "Diseño UI/UX exclusivo",
+    "Optimización SEO & Performance",
+    "Adaptabilidad 100% Mobile"
+  ]
+},
+    store: {
+      title: "Tienda Online",
+      subtitle: "Ventas 24/7",
+      description: "Convertimos tu catálogo en una máquina de ventas online fácil de usar.",
+      details: ["Pasarelas de pago", "Gestión de stock e inventario", "Panel de administración fácil", "Reportes de ventas mensuales"]
+    },
+    systems: {
+      title: "Sistemas a Medida",
+      subtitle: "Gestión Inteligente",
+      description: "Automatizamos procesos de tu empresa con herramientas personalizadas.",
+      details: ["Bases de datos relacionales", "Automatización de reportes", "Paneles de control internos", "Seguridad de datos avanzada"]
+    },
+    maintenance: {
+      title: "Mantenimiento",
+      subtitle: "Soporte Técnico",
+      description: "Nos ocupamos de que tu web esté siempre segura, rápida y funcionando correctamente.",
+      details: ["Backups diarios preventivos", "Parches de seguridad", "Soporte técnico prioritario", "Monitoreo de tiempo en línea"]
+    }
+  },
+  modal: {
+    includes: "¿Qué incluye?",
+    button: "Solicitar presupuesto"
+  }
+},
    footer: {
   "status": "Disponible para nuevos proyectos",
   "titleLine1": "Trabajemos",
