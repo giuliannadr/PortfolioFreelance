@@ -15,7 +15,6 @@ export const ProfileCard = ({
   image = "/giuliprofile.jpeg",
 }: ProfileCardProps) => {
   const { t } = useTranslation();
-  
   const displayRole = role || t('profileCard.role');
 
   const handleEmailClick = () => {
@@ -28,70 +27,68 @@ export const ProfileCard = ({
 
   return (
     <motion.div
-      className="flex justify-center cursor-pointer px-4 sm:px-0 rounded-[28px]"
+      className="flex justify-center items-center px-4 sm:px-0 h-full"
       initial={{ opacity: 0, x: -40 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.9, ease: "easeOut" }}
       whileHover={{
-        y: -8,
-        scale: 1.02,
+        y: -4,
+        scale: 1.01,
         boxShadow: "0 25px 60px -15px rgba(0,0,0,0.35)",
         transition: { type: "spring", stiffness: 60, damping: 20 },
       }}
     >
-      <div className="relative w-[320px] sm:w-[360px] md:w-[380px] lg:w-[400px] bg-white text-gray-900 rounded-[28px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)] border border-black/10 dark:border-white/10 p-5 sm:p-6 md:p-7 max-h-[calc(100vh-8rem)] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-black/10 dark:[&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+      <div className="relative flex flex-col w-[320px] sm:w-[360px] md:w-[380px] lg:w-[400px] bg-white text-gray-900 rounded-[28px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)] border border-black/10 p-5 sm:p-6 max-h-[90vh] overflow-hidden">
         
-        {/* Decoración Naranja */}
-        <div className="flex items-center gap-2 mb-3 sm:mb-5">
+        {/* Decoración Naranja - Fijo */}
+        <div className="flex-none flex items-center gap-2 mb-3 sm:mb-4">
           <span className="w-3 h-3 bg-[#FF6F00] rounded-full" />
           <span className="w-8 h-[3px] bg-[#FF6F00] rounded-full" />
         </div>
 
-        {/* Imagen */}
-        <img
-          src={image}
-          alt={name}
-          className="w-full h-[240px] sm:h-[340px] rounded-2xl object-cover border border-black/5 dark:border-white/5"
-        />
+        {/* Imagen Flexible: flex-1 permite que se achique, max-h mantiene tu alto original */}
+        <div className="flex-1 min-h-0 w-full overflow-hidden rounded-2xl border border-black/5">
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-full max-h-[340px] object-cover"
+          />
+        </div>
 
-        {/* Información */}
-        <div className="mt-5 sm:mt-6 text-center px-2">
-          {/* Nombre: Una sola línea, Poppins Black */}
+        {/* Información - Fijo para que no se corte el texto */}
+        <div className="flex-none mt-4 sm:mt-6 text-center px-2">
           <h3
-            className="text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-black tracking-tight leading-none text-gray-900 whitespace-nowrap"
+            className="text-[1.2rem] sm:text-[1.5rem] font-black tracking-tight leading-none text-gray-900 whitespace-nowrap"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             {name}
           </h3>
 
-          {/* Frase: Más grande, más legible y con más peso */}
           <p 
-            className="text-[17px] sm:text-[18px] md:text-[19px] text-zinc-700 mt-6 leading-relaxed italic font-medium"
+            className="text-[0.9rem] sm:text-[1.1rem] text-zinc-700 mt-4 leading-relaxed italic font-medium"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             "{displayRole}"
           </p>
 
-          {/* Iconos Sociales: Color de marca uniforme */}
-          <div className="flex justify-center gap-5 mt-8 mb-2">
+          <div className="flex justify-center gap-5 mt-6 mb-1">
             <a href="https://wa.me/5491128341223" target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform duration-300" />
+              <FaWhatsapp className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <a href="https://linkedin.com/in/giulianadirocco" target="_blank" rel="noopener noreferrer">
-              <FaLinkedinIn className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform duration-300" />
+              <FaLinkedinIn className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <a href="https://github.com/giuliannadr" target="_blank" rel="noopener noreferrer">
-              <FaGithub className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform duration-300" />
+              <FaGithub className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <a href="https://instagram.com/giulianna.dev" target="_blank" rel="noopener noreferrer">
-              <FaInstagram className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform duration-300" />
+              <FaInstagram className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <button 
               onClick={handleEmailClick}
               className="cursor-pointer focus:outline-none"
-              title="Redactar Email en Gmail"
             >
-              <HiOutlineMail className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform duration-300" />
+              <HiOutlineMail className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
             </button>
           </div>
         </div>

@@ -101,13 +101,7 @@ export const AboutSection = () => {
                   </div>
                 </div>
 
-                <motion.div 
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-4 rounded-full bg-[#FF6F00]/10 text-[#FF6F00] border border-[#FF6F00]/20"
-                >
-                  <ArrowRight size={22} />
-                </motion.div>
+               
               </div>
 
             </div>

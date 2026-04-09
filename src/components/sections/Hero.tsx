@@ -7,18 +7,17 @@ import { useTranslation } from "react-i18next";
 export const Hero = () => {
   const { t } = useTranslation();
 
-  // Configura aquí tu número (con código de país sin el +)
   const whatsappNumber = "5491128341223"; 
   const message = encodeURIComponent("¡Hola! Vi tu portfolio y me gustaría hablar sobre una idea que tengo.");
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
   return (
-    <section id="home" className="w-full pt-4 lg:pt-10">
+    <section id="home" className="w-full pt-4 lg:pt-10 pr-6 sm:pr-8">
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="text-center lg:text-left max-w-full lg:max-w-[700px]"
+        className="text-center lg:text-left max-w-full lg:max-w-[650px]"
       >
         {/* Badge */}
         <div className="mb-8 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FF6F00]/20 bg-[#FF6F00]/5 text-[10px] font-bold uppercase tracking-[0.3em] text-[#FF6F00] mx-auto lg:mx-0">
@@ -26,12 +25,17 @@ export const Hero = () => {
           {t('hero.badge')}
         </div>
 
-        {/* Title */}
-        <h1 className="font-black tracking-tighter text-zinc-900 dark:text-white mb-8 leading-[0.85] flex flex-col">
-          <span className="block whitespace-nowrap text-[clamp(2rem,5.5vw,4.5rem)] uppercase">
+        {/* Title Container */}
+        <h1 className="font-black tracking-tighter text-zinc-900 dark:text-white mb-8 leading-[0.9] flex flex-col">
+          {/* Título Superior */}
+          <span className="block whitespace-nowrap text-[clamp(1.8rem,5vw,4rem)] uppercase">
             {t('hero.title1')}
           </span>
-          <span className="text-[#FF6F00] italic font-light font-serif whitespace-nowrap transition-all duration-[1500ms] ease-in-out hover:brightness-125 cursor-pointer text-[clamp(2.2rem,6.5vw,5.5rem)] leading-[1.1]">
+          
+          {/* Frase Naranja: Forzada a una línea con escalado automático */}
+          <span 
+            className="text-[#FF6F00] italic font-light font-serif whitespace-nowrap transition-all duration-[1500ms] ease-in-out hover:brightness-125 cursor-pointer block leading-[1.1] text-[clamp(1.5rem,4.5vw,5rem)]"
+          >
             {t('hero.title2')}
           </span>
         </h1>
@@ -51,7 +55,6 @@ export const Hero = () => {
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </a>
 
-          {/* Botón de Contacto Actualizado */}
           <a
             href={whatsappUrl}
             target="_blank"
@@ -64,13 +67,11 @@ export const Hero = () => {
               font-bold rounded-2xl 
               transition-all duration-500 ease-in-out
               text-center
-              /* EFECTOS DE HOVER PRESTIGIO */
               hover:border-[#FF6F00]/50 
               hover:bg-[#FF6F00]/5 
-              hover:text-white 
+              hover:text-[#FF6F00] 
               hover:scale-[1.02]
-              hover:shadow-[0_0_20px_rgba(255,111,0,0.2)]
-              /* Efecto de luz interna sutil */
+              hover:shadow-[0_0_20px_rgba(255,111,0,0.1)]
               before:absolute before:inset-0
               before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent
               before:translate-x-[-150%]
