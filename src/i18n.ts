@@ -74,8 +74,8 @@ process: {
 },
     projects: {
       subtitle: "Selected Works",
-      title: "Quality over quantity.",
-      titleFaded: "A selection of technical challenges.",
+      title: "The value of detail.",
+      titleFaded: "Projects designed and developed to measure.",
      
       tabs: {
         professional: "Professional",
@@ -157,7 +157,7 @@ web: {
       details: ["Relational databases", "Report automation", "Internal control panels", "Advanced data security"]
     },
     maintenance: {
-      title: "Maintenance",
+      title: "Maintenance & Optimization",
       subtitle: "Technical Support",
       description: "We take care of keeping your web safe, fast, and working correctly.",
       details: ["Daily backups", "Security patches", "Priority support", "Uptime monitoring"]
@@ -254,8 +254,8 @@ process: {
 },
     projects: {
       subtitle: "Trabajos Seleccionados",
-      title: "Calidad sobre cantidad.",
-      titleFaded: "Una selección de desafíos técnicos.",
+     title: "El valor del detalle.",
+     titleFaded: "Proyectos pensados y desarrollados a medida.",
       tabs: {
         professional: "Profesionales",
         academic: "Académicos"
@@ -335,7 +335,7 @@ process: {
       details: ["Bases de datos relacionales", "Automatización de reportes", "Paneles de control internos", "Seguridad de datos avanzada"]
     },
     maintenance: {
-      title: "Mantenimiento",
+      title: "Mantenimiento & Optimización",
       subtitle: "Soporte Técnico",
       description: "Nos ocupamos de que tu web esté siempre segura, rápida y funcionando correctamente.",
       details: ["Backups diarios preventivos", "Parches de seguridad", "Soporte técnico prioritario", "Monitoreo de tiempo en línea"]

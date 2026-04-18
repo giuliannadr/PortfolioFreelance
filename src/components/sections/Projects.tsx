@@ -165,15 +165,20 @@ useEffect(() => {
         {/* CABECERA */}
         <div className="mb-24 space-y-12">
           <AnimatedSection>
-            <div className="space-y-6">
-              <span className="text-[#FF6F00] text-[10px] font-bold uppercase tracking-[0.5em] block">
-                {t('projects.subtitle')}
-              </span>
-              <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-white leading-[0.8] mb-4">
-                {t('projects.title')} <br />
-                <span className="text-white/10 italic font-serif font-light">{t('projects.titleFaded')}</span>
-              </h2>
-            </div>
+            <div className="space-y-4"> {/* Reduje el espacio entre el span y el h2 */}
+      
+      <span className="text-[#FF6F00] text-[9px] font-bold uppercase tracking-[0.4em] block">
+        {t('projects.subtitle')}
+      </span>
+
+      <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white leading-[0.9] mb-4 uppercase">
+        {t('projects.title')} <br />
+        <span className="text-white/20 italic font-serif font-light">
+          {t('projects.titleFaded')}
+        </span>
+      </h2>
+      
+    </div>
           </AnimatedSection>
 
           {/* TABS */}
