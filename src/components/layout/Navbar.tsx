@@ -18,11 +18,30 @@ export const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Función para scroll suave sin ensuciar la URL
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // Espacio para que el menu no tape el titulo
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+    
+    // Limpia el hash de la URL
+    window.history.pushState("", document.title, window.location.pathname);
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     const sectionIds = menuItems.map(item => item.id);
     
     const handleScroll = () => {
-      // 1. Detección de Final de Página (Para el Footer/Contacto)
       const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
       
       if (isAtBottom) {
@@ -30,13 +49,11 @@ export const Navbar = () => {
         return;
       }
 
-      // 2. Lógica normal para el resto de secciones
       const sections = document.querySelectorAll("section[id]");
       let currentSection = activeSection;
 
       sections.forEach((section) => {
         const sectionTop = (section as HTMLElement).offsetTop;
-        const sectionHeight = section.clientHeight;
         if (window.scrollY >= sectionTop - window.innerHeight / 3) {
           if (sectionIds.includes(section.id)) {
             currentSection = section.id;
@@ -51,7 +68,6 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeSection]);
 
-  // ... (mouseX, mouseY y springConfig se mantienen igual que antes)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springConfig = { damping: 20, stiffness: 200 };
@@ -70,12 +86,17 @@ export const Navbar = () => {
   return (
     <LayoutGroup>
       {/* --- DESKTOP NAVBAR --- */}
-      <nav className="hidden md:block fixed top-0 left-1/2 z-50 mt-6 -translate-x-1/2 bg-zinc-800/60 backdrop-blur-[20px] border border-white/20 shadow-lg rounded-full overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.25),transparent_50%)] after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_80%_80%,rgba(0,0,0,0.1),transparent_50%)]">
+      <nav className="hidden md:block fixed top-0 left-1/2 z-50 mt-6 -translate-x-1/2 bg-zinc-800/60 backdrop-blur-[20px] border border-white/20 shadow-lg rounded-full overflow-hidden">
         <div className="relative flex items-center gap-6 px-6 py-2">
           {menuItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
-              <a key={item.id} href={item.href} className="relative group">
+              <a 
+                key={item.id} 
+                href={item.href} 
+                onClick={(e) => handleNavClick(e, item.id)}
+                className="relative group"
+              >
                 {isActive && (
                   <motion.span 
                     layoutId="activeGlow" 
@@ -106,7 +127,7 @@ export const Navbar = () => {
               onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
               style={{ x: springX, y: springY }}
               onClick={() => setIsOpen(true)}
-              className="relative w-11 h-11 rounded-full flex items-center justify-center shadow-[0_12px_40px_rgba(0,0,0,0.3)] cursor-pointer overflow-hidden bg-zinc-800/60 backdrop-blur-[20px] border border-white/20 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.25),transparent_50%)] after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_80%_80%,rgba(0,0,0,0.1),transparent_50%)]"
+              className="relative w-11 h-11 rounded-full flex items-center justify-center shadow-lg cursor-pointer bg-zinc-800/60 backdrop-blur-[20px] border border-white/20"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -122,10 +143,7 @@ export const Navbar = () => {
               />
               <motion.div
                 layoutId="glass-panel"
-                className="text-white p-6 rounded-[2.5rem] shadow-[0_24px_64px_rgba(0,0,0,0.4)] w-[280px] bg-zinc-900/85 backdrop-blur-[30px] border border-white/10 overflow-hidden"
-                initial={{ scale: 0.9, opacity: 0, x: -20, y: -20 }}
-                animate={{ scale: 1, opacity: 1, x: 0, y: 0 }}
-                exit={{ scale: 0.9, opacity: 0, x: -20, y: -20 }}
+                className="text-white p-6 rounded-[2.5rem] shadow-2xl w-[280px] bg-zinc-900/85 backdrop-blur-[30px] border border-white/10 overflow-hidden"
               >
                 <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/10 relative z-10">
                   <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#FF6F00]">Navegación</span>
@@ -138,7 +156,7 @@ export const Navbar = () => {
                     <motion.a
                       key={item.id}
                       href={item.href}
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => handleNavClick(e, item.id)}
                       initial={{ x: -10, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: i * 0.05 }}
