@@ -4,16 +4,34 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
 
-// React has a known bug where the `muted` prop isn't applied to the real DOM node,
-// which causes browsers to block autoplay. This component forces it via a ref.
+// Mobile browsers block autoplay unless the video is visible in the viewport.
+// This component uses IntersectionObserver to play only when visible,
+// and also forces muted via ref (React doesn't apply it to the real DOM node).
 const AutoplayVideo = ({ src, className }: { src: string; className?: string }) => {
   const ref = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
     v.muted = true;
-    v.play().catch(() => {});
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(v);
+    return () => observer.disconnect();
   }, [src]);
+
   return (
     <video
       ref={ref}
