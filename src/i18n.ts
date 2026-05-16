@@ -142,30 +142,30 @@ process: {
 web: {
   title: "Web Design & Development",
   subtitle: "Your professional presence",
-  description: "Diseñamos la estructura ideal según tu objetivo: desde una Landing Page de alto impacto para conversiones rápidas, hasta sitios Multi-sección para una narrativa de marca completa.",
+  description: "I design the ideal structure for your goal: from a high-impact Landing Page for quick conversions, to a multi-section site for a complete brand narrative.",
   details: [
-    "One-page (Landing) o Multi-sección",
-    "Diseño UI/UX exclusivo",
-    "Optimización SEO & Performance",
-    "Adaptabilidad 100% Mobile"
+    "Landing Page or Multi-section",
+    "Exclusive UI/UX design",
+    "SEO & Performance optimization",
+    "100% Mobile responsive"
   ]
 },
     store: {
       title: "E-commerce",
       subtitle: "24/7 Sales",
-      description: "We turn your catalog into an easy-to-use online sales machine.",
+      description: "I turn your catalog into an easy-to-use online sales machine that works for you around the clock.",
       details: ["Payment gateways", "Stock management", "Easy admin panel", "Monthly sales reports"]
     },
     systems: {
       title: "Custom Systems",
       subtitle: "Intelligent Management",
-      description: "We automate your company processes with personalized tools.",
+      description: "I automate your business processes with personalized tools built exactly for how you work.",
       details: ["Relational databases", "Report automation", "Internal control panels", "Advanced data security"]
     },
     maintenance: {
       title: "Maintenance & Optimization",
       subtitle: "Technical Support",
-      description: "We take care of keeping your web safe, fast, and working correctly.",
+      description: "I keep your web safe, fast, and running correctly — so you can focus on what you do best.",
       details: ["Daily backups", "Security patches", "Priority support", "Uptime monitoring"]
     }
   },
@@ -326,7 +326,7 @@ process: {
     web: {
   title: "Diseño & Desarrollo Web",
   subtitle: "Tu presencia profesional",
-  description: "Creamos la estructura ideal según tu objetivo: desde una Landing Page de alto impacto para conversiones rápidas, hasta sitios Multi-sección para una narrativa de marca completa.",
+  description: "Creo la estructura ideal según tu objetivo: desde una Landing Page de alto impacto para conversiones rápidas, hasta sitios Multi-sección para una narrativa de marca completa.",
   details: [
     "Landing Page o Sitios Multi-sección",
     "Diseño UI/UX exclusivo",
@@ -337,19 +337,19 @@ process: {
     store: {
       title: "Tienda Online",
       subtitle: "Ventas 24/7",
-      description: "Convertimos tu catálogo en una máquina de ventas online fácil de usar.",
+      description: "Convierto tu catálogo en una máquina de ventas online fácil de usar que trabaja por vos las 24 horas.",
       details: ["Pasarelas de pago", "Gestión de stock e inventario", "Panel de administración fácil", "Reportes de ventas mensuales"]
     },
     systems: {
       title: "Sistemas a Medida",
       subtitle: "Gestión Inteligente",
-      description: "Automatizamos procesos de tu empresa con herramientas personalizadas.",
+      description: "Automatizo los procesos de tu empresa con herramientas personalizadas, construidas exactamente para como vos trabajás.",
       details: ["Bases de datos relacionales", "Automatización de reportes", "Paneles de control internos", "Seguridad de datos avanzada"]
     },
     maintenance: {
       title: "Mantenimiento & Optimización",
       subtitle: "Soporte Técnico",
-      description: "Nos ocupamos de que tu web esté siempre segura, rápida y funcionando correctamente.",
+      description: "Me encargo de que tu web esté siempre segura, rápida y funcionando correctamente — para que vos puedas enfocarte en lo tuyo.",
       details: ["Backups diarios preventivos", "Parches de seguridad", "Soporte técnico prioritario", "Monitoreo de tiempo en línea"]
     }
   },
