@@ -49,7 +49,7 @@ export const AboutSection = () => {
 
       {/* Label */}
       <div className="flex items-center gap-5 mb-14 relative z-10">
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>01</span>
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>02</span>
         <div className="h-px flex-1 bg-white/[0.07]" />
         <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>{badge}</span>
       </div>
