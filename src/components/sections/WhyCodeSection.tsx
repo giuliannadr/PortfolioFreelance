@@ -1,182 +1,212 @@
 import { motion } from "framer-motion";
+import { XCircle, Paintbrush, Code2, Zap, BadgeCheck, ShieldCheck, Globe } from "lucide-react";
 
-const ROWS = [
-  {
-    es: { template: "Diseño genérico, igual al de miles",   code: "Diseño 100% único, solo para tu marca" },
-    en: { template: "Generic design, same as thousands",    code: "100% unique design, built for your brand" },
-  },
-  {
-    es: { template: "Funciones limitadas a la plataforma", code: "Cualquier función que imagines" },
-    en: { template: "Features limited by the platform",    code: "Any feature you can imagine" },
-  },
-  {
-    es: { template: "Carga lenta por código innecesario",  code: "Rendimiento optimizado al máximo" },
-    en: { template: "Slow loading from bloated code",      code: "Maximum performance, fully optimized" },
-  },
-  {
-    es: { template: "Pago mensual eterno — nunca es tuya", code: "Pagás una vez — es tuya para siempre" },
-    en: { template: "Monthly fee forever — never yours",   code: "Pay once — yours forever" },
-  },
-  {
-    es: { template: "Si la plataforma cierra, desaparece", code: "Vos controlás todo, sin intermediarios" },
-    en: { template: "Platform closes? Your site's gone",   code: "You control everything — no middlemen" },
-  },
+// ── Data ──────────────────────────────────────────────────────────────────────
+const TEMPLATE_POINTS = {
+  es: [
+    "Diseño genérico, igual al de miles de sitios",
+    "Funciones limitadas a la plataforma",
+    "Carga lenta por código innecesario",
+    "Pago mensual eterno — nunca es realmente tuya",
+    "Si la plataforma cierra, tu web desaparece",
+  ],
+  en: [
+    "Generic design, same as thousands of others",
+    "Features limited to what the platform allows",
+    "Slow loading from bloated, unnecessary code",
+    "Monthly fee forever — never truly yours",
+    "Platform closes? Your site disappears too",
+  ],
+};
+
+const CODE_POINTS: {
+  icon: React.ElementType;
+  color: string;
+  bg: string;
+  es: string;
+  en: string;
+}[] = [
+  { icon: Paintbrush,  color: "#CC1500", bg: "rgba(204,21,0,0.12)",   es: "Diseño 100% único, creado solo para tu marca",    en: "100% unique design, built only for your brand" },
+  { icon: Code2,       color: "#7C3AED", bg: "rgba(124,58,237,0.12)", es: "Cualquier función que puedas imaginar",            en: "Any feature you can imagine, no limits" },
+  { icon: Zap,         color: "#06B6D4", bg: "rgba(6,182,212,0.12)",  es: "Rendimiento optimizado al máximo",                en: "Maximum performance, fully optimized" },
+  { icon: BadgeCheck,  color: "#10B981", bg: "rgba(16,185,129,0.12)", es: "Pagás una vez — es tuya para siempre",            en: "Pay once — it's yours forever" },
+  { icon: ShieldCheck, color: "#D97706", bg: "rgba(217,119,6,0.12)",  es: "Vos controlás todo — sin depender de nadie",      en: "You control everything — no dependencies" },
 ];
 
+// ── Component ─────────────────────────────────────────────────────────────────
 export const WhyCodePanel = ({ lang }: { lang: string }) => {
-  const headGrad   = "linear-gradient(120deg, #CC1500 0%, #ffffff 35%, #7C3AED 70%, #06B6D4 100%)";
+  const tPoints = lang === "en" ? TEMPLATE_POINTS.en : TEMPLATE_POINTS.es;
+  const headGrad   = "linear-gradient(120deg, #CC1500 0%, #0A0A0A 32%, #7C3AED 65%, #06B6D4 100%)";
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 50%, #ff5533 100%)";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden"
-      style={{ background: "#0A0A0A" }}
-    >
-      {/* Red top bar */}
-      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-[#CC1500]" />
-      <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgba(204,21,0,0.10), transparent)" }} />
+    <div className="relative">
 
-      {/* Ambient blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute blur-3xl rounded-full"
-          style={{ background: "#CC1500", width: 300, height: 300, right: -60, top: -60, opacity: 0.07 }} />
-        <div className="absolute blur-3xl rounded-full"
-          style={{ background: "#7C3AED", width: 240, height: 240, left: -40, bottom: -40, opacity: 0.06 }} />
+      {/* ── Title ── */}
+      <div className="mb-8">
+        <motion.h3
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="block font-black uppercase leading-[0.88]"
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "clamp(1.8rem, 4.5vw, 3.8rem)",
+            letterSpacing: "-0.03em",
+            backgroundImage: headGrad,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          {lang === "en" ? "Why code" : "¿Por qué código"}
+        </motion.h3>
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="block font-serif italic font-light leading-[1.1]"
+          style={{
+            fontSize: "clamp(1.2rem, 3vw, 2.5rem)",
+            backgroundImage: italicGrad,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          {lang === "en" ? "and not a template?" : "y no una plantilla?"}
+        </motion.span>
       </div>
 
-      <div className="relative px-6 md:px-10 pt-10 pb-8">
+      {/* ── Two cards ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-        {/* ── Title ── */}
-        <div className="mb-8">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-[8px] font-black uppercase tracking-[0.5em] text-white/30 mb-3"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            {lang === "en" ? "The real difference" : "La diferencia real"}
-          </motion.p>
-
-          <motion.h3
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-black uppercase leading-[0.88]"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "clamp(1.8rem, 4.5vw, 3.8rem)",
-              letterSpacing: "-0.03em",
-              backgroundImage: headGrad,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {lang === "en" ? "Why code" : "¿Por qué código"}
-          </motion.h3>
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-serif italic font-light leading-[1.1]"
-            style={{
-              fontSize: "clamp(1.3rem, 3vw, 2.6rem)",
-              backgroundImage: italicGrad,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {lang === "en" ? "and not a template?" : "y no una plantilla?"}
-          </motion.span>
-        </div>
-
-        {/* ── Comparison table ── */}
-        <div className="border border-white/[0.06] overflow-hidden">
-
-          {/* Column headers */}
-          <div className="grid grid-cols-2 border-b border-white/[0.06]">
-            <div className="px-5 py-3 border-r border-white/[0.06]">
-              <p className="text-[7.5px] font-black uppercase tracking-[0.38em] text-white/25"
+        {/* TEMPLATE card — light, boring, crossed out */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-30px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col bg-white border border-[#0A0A0A]/8 overflow-hidden"
+        >
+          {/* Card header */}
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-[#0A0A0A]/6"
+            style={{ background: "rgba(10,10,10,0.02)" }}>
+            <div className="w-7 h-7 rounded-full border border-[#0A0A0A]/10 flex items-center justify-center shrink-0">
+              <Globe size={13} className="text-[#0A0A0A]/30" />
+            </div>
+            <div>
+              <p className="text-[7.5px] font-black uppercase tracking-[0.38em] text-[#0A0A0A]/30 leading-none mb-0.5"
                 style={{ fontFamily: "Poppins, sans-serif" }}>
                 Wix · WordPress · Shopify
               </p>
-            </div>
-            <div className="px-5 py-3" style={{ background: "rgba(204,21,0,0.05)" }}>
-              <p className="text-[7.5px] font-black uppercase tracking-[0.38em]"
-                style={{ fontFamily: "Poppins, sans-serif", color: "rgba(204,21,0,0.8)" }}>
-                {lang === "en" ? "Custom code" : "Código a medida"}
+              <p className="text-[0.8rem] font-black uppercase text-[#0A0A0A]/40 leading-none"
+                style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
+                {lang === "en" ? "With a template" : "Con una plantilla"}
               </p>
             </div>
           </div>
 
-          {/* Rows */}
-          {ROWS.map((row, i) => {
-            const isLast = i === ROWS.length - 1;
-            const c = lang === "en" ? row.en : row.es;
-            return (
-              <div
+          {/* Points */}
+          <ul className="flex flex-col flex-1 divide-y divide-[#0A0A0A]/[0.05]">
+            {tPoints.map((pt, i) => (
+              <motion.li
                 key={i}
-                className="grid grid-cols-2"
-                style={{ borderBottom: isLast ? "none" : "1px solid rgba(255,255,255,0.04)" }}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.07 }}
+                className="flex items-center gap-3 px-5 py-3.5"
               >
-                {/* Template cell */}
-                <motion.div
-                  initial={{ opacity: 0, x: -6 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.07 }}
-                  className="flex items-center gap-3 px-5 py-4 border-r border-white/[0.06]"
-                  style={{ background: i % 2 === 1 ? "rgba(255,255,255,0.012)" : "transparent" }}
-                >
-                  <span className="shrink-0 w-4 h-4 rounded-full border border-white/15 flex items-center justify-center">
-                    <span className="text-[8px] font-black text-white/30" style={{ fontFamily: "Poppins, sans-serif" }}>✕</span>
-                  </span>
-                  <p className="text-[0.75rem] leading-snug text-white/38">{c.template}</p>
-                </motion.div>
+                <XCircle size={16} className="shrink-0" style={{ color: "rgba(204,21,0,0.35)" }} />
+                <p className="text-[0.78rem] leading-snug text-[#0A0A0A]/45">{pt}</p>
+              </motion.li>
+            ))}
+          </ul>
+        </motion.div>
 
-                {/* Code cell */}
-                <motion.div
-                  initial={{ opacity: 0, x: 6 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.07 + 0.05 }}
-                  className="flex items-center gap-3 px-5 py-4"
-                  style={{ background: i % 2 === 1 ? "rgba(204,21,0,0.03)" : "transparent" }}
-                >
-                  <span className="shrink-0 w-4 h-4 rounded-full border border-[#CC1500]/40 flex items-center justify-center">
-                    <span className="text-[8px] font-black text-[#CC1500]" style={{ fontFamily: "Poppins, sans-serif" }}>→</span>
-                  </span>
-                  <p className="text-[0.75rem] leading-snug text-white/80">{c.code}</p>
-                </motion.div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* ── Footer note ── */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-5 text-white/25 text-[0.72rem] leading-relaxed"
-          style={{ fontFamily: "Poppins, sans-serif" }}
+        {/* CODE card — dark, colorful, vibrant */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-30px" }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col overflow-hidden border border-[#CC1500]/20 relative"
+          style={{ background: "#0A0A0A" }}
         >
-          {lang === "en"
-            ? "With code, if you can imagine it — it can be built. No templates, no limits."
-            : "Con código, si lo podés imaginar — se puede construir. Sin plantillas, sin límites."}
-        </motion.p>
+          {/* Red accent bar */}
+          <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-[#CC1500]" />
+          <div className="absolute top-0 left-0 right-0 h-20 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, rgba(204,21,0,0.10), transparent)" }} />
+
+          {/* Ambient blobs */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute blur-2xl rounded-full"
+              style={{ background: "#7C3AED", width: 160, height: 160, right: -30, bottom: -20, opacity: 0.15 }} />
+            <div className="absolute blur-2xl rounded-full"
+              style={{ background: "#06B6D4", width: 120, height: 120, left: -20, top: "50%", opacity: 0.10 }} />
+          </div>
+
+          {/* Card header */}
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.07] relative">
+            <div className="w-7 h-7 rounded-full border border-[#CC1500]/40 flex items-center justify-center shrink-0"
+              style={{ background: "rgba(204,21,0,0.12)" }}>
+              <Code2 size={13} style={{ color: "#CC1500" }} />
+            </div>
+            <div>
+              <p className="text-[7.5px] font-black uppercase tracking-[0.38em] leading-none mb-0.5"
+                style={{ fontFamily: "Poppins, sans-serif", color: "rgba(204,21,0,0.7)" }}>
+                {lang === "en" ? "Custom code" : "Código a medida"}
+              </p>
+              <p className="text-[0.8rem] font-black uppercase text-white leading-none"
+                style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
+                {lang === "en" ? "With real code" : "Con código real"}
+              </p>
+            </div>
+          </div>
+
+          {/* Points */}
+          <ul className="flex flex-col flex-1 divide-y divide-white/[0.05] relative">
+            {CODE_POINTS.map((pt, i) => {
+              const Icon = pt.icon;
+              return (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: 8 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: i * 0.07 + 0.08 }}
+                  className="flex items-center gap-3 px-5 py-3.5"
+                >
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: pt.bg, border: `1px solid ${pt.color}40` }}>
+                    <Icon size={13} style={{ color: pt.color }} />
+                  </div>
+                  <p className="text-[0.78rem] leading-snug text-white/80">
+                    {lang === "en" ? pt.en : pt.es}
+                  </p>
+                </motion.li>
+              );
+            })}
+          </ul>
+        </motion.div>
       </div>
-    </motion.div>
+
+      {/* Closing note */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="mt-5 text-center text-[0.73rem] text-[#0A0A0A]/35"
+        style={{ fontFamily: "Poppins, sans-serif" }}
+      >
+        {lang === "en"
+          ? "With code, if you can imagine it — it can be built."
+          : "Con código, si lo podés imaginar — se puede construir."}
+      </motion.p>
+    </div>
   );
 };
