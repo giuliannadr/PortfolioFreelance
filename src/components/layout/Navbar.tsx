@@ -82,7 +82,7 @@ export const Navbar = () => {
               onClick={(e) => handleNavClick(e, item.id)}
               className={`relative text-[10px] font-bold uppercase tracking-[0.2em] pb-0.5 transition-all ${
                 activeSection === item.id
-                  ? "text-[#CC1500]"
+                  ? "text-[#0A0A0A]"
                   : "text-[#0A0A0A]/40 hover:text-[#0A0A0A]"
               }`}
             >
@@ -90,7 +90,7 @@ export const Navbar = () => {
               {activeSection === item.id && (
                 <motion.div
                   layoutId="activeNavLine"
-                  className="absolute -bottom-1 left-0 right-0 h-[1px] bg-[#CC1500]"
+                  className="absolute -bottom-1 left-0 right-0 h-[1px] bg-[#0A0A0A]"
                 />
               )}
             </a>
@@ -107,22 +107,24 @@ export const Navbar = () => {
       </nav>
 
       {/* ── MOBILE HEADER ── */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-5 bg-white/95 backdrop-blur-sm border-b border-[#0A0A0A]/10">
+      <div className={`md:hidden fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-5 transition-all duration-300 ${
+        scrolled ? "bg-white/95 backdrop-blur-sm border-b border-[#0A0A0A]/10" : "bg-transparent"
+      }`}>
         <a
           href="#home"
-          className="font-black tracking-tighter uppercase text-sm text-[#0A0A0A]"
+          className={`font-black tracking-tighter uppercase text-[11px] transition-colors duration-300 ${scrolled ? "text-[#0A0A0A]" : "text-white"}`}
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
-          GDR
+          Giuliana Di Rocco
         </a>
         <div className="flex items-center gap-4">
           <button
             onClick={toggleLanguage}
-            className="text-[10px] font-black uppercase tracking-[0.2em] text-[#0A0A0A]/40 hover:text-[#CC1500] transition-colors"
+            className={`text-[10px] font-black uppercase tracking-[0.2em] hover:text-[#CC1500] transition-colors duration-300 ${scrolled ? "text-[#0A0A0A]/40" : "text-white/50"}`}
           >
             {lang === "en" ? "ES" : "EN"}
           </button>
-          <button onClick={() => setIsOpen(true)} className="p-1 text-[#0A0A0A]">
+          <button onClick={() => setIsOpen(true)} className={`p-1 transition-colors duration-300 ${scrolled ? "text-[#0A0A0A]" : "text-white"}`}>
             <Menu size={22} />
           </button>
         </div>
@@ -141,10 +143,10 @@ export const Navbar = () => {
             {/* Header */}
             <div className="flex justify-between items-center mb-16">
               <span
-                className="font-black text-[#F4EFE6] tracking-tighter uppercase text-sm"
+                className="font-black tracking-tighter uppercase text-[11px] text-white"
                 style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                GDR
+                Giuliana Di Rocco
               </span>
               <button
                 onClick={() => setIsOpen(false)}
@@ -167,10 +169,14 @@ export const Navbar = () => {
                   className="flex items-center justify-between py-5 border-b border-white/5 group"
                 >
                   <span
-                    className={`text-4xl font-black uppercase tracking-tighter ${
-                      activeSection === item.id ? "text-[#CC1500]" : "text-[#F4EFE6]"
-                    }`}
-                    style={{ fontFamily: "Poppins, sans-serif" }}
+                    className="text-4xl font-black uppercase tracking-tighter"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      backgroundImage: "linear-gradient(120deg, #CC1500 0%, #ffffff 45%, #7C3AED 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: activeSection === item.id ? "white" : "transparent",
+                      backgroundClip: "text",
+                    }}
                   >
                     {item[lang]}
                   </span>

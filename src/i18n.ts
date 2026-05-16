@@ -29,7 +29,7 @@ const en = {
   
 },
 trust: {
-  "badge": "Made with dedication",
+  "badge": "Real experiences",
   "title": "Your idea,",
   "titleFaded": "in good hands.",
   "description": "I get involved in every detail to ensure your web is exactly what you need.",
@@ -215,7 +215,7 @@ const es = {
   }
 },
 trust: {
-  "badge": "Hecho con dedicación",
+  "badge": "Experiencias reales",
   "title": "Tu idea,",
   "titleFaded": "en buenas manos.",
   "description": "Me involucro en cada detalle para que tu web sea exactamente lo que necesitás.",
