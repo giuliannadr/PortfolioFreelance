@@ -2,7 +2,6 @@ import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { WhyCodePanel } from "./WhyCodeSection";
-import { SPOTS_LIGHT } from "@/lib/textGradients";
 
 const BG = "#F8F7F5";
 
@@ -305,7 +304,6 @@ export const UseCasesSection = () => {
     };
   }, []);
 
-  const headGrad   = SPOTS_LIGHT;
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)";
 
   return (
@@ -344,7 +342,7 @@ export const UseCasesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="block font-black uppercase leading-[0.88]"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 6.5vw, 6.5rem)", letterSpacing: "-0.03em", backgroundImage: headGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 6.5vw, 6.5rem)", letterSpacing: "-0.03em", color: "#0A0A0A" }}
         >
           {lang === "en" ? "A site built" : "Una web hecha"}
         </motion.h2>

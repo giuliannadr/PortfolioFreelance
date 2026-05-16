@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { XCircle, Paintbrush, Code2, Zap, BadgeCheck, ShieldCheck, Globe } from "lucide-react";
-import { SPOTS_LIGHT } from "@/lib/textGradients";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const TEMPLATE_POINTS = {
@@ -37,7 +36,6 @@ const CODE_POINTS: {
 // ── Component ─────────────────────────────────────────────────────────────────
 export const WhyCodePanel = ({ lang }: { lang: string }) => {
   const tPoints = lang === "en" ? TEMPLATE_POINTS.en : TEMPLATE_POINTS.es;
-  const headGrad   = SPOTS_LIGHT;
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 50%, #ff5533 100%)";
 
   return (
@@ -55,10 +53,7 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
             fontFamily: "Poppins, sans-serif",
             fontSize: "clamp(1.8rem, 4.5vw, 3.8rem)",
             letterSpacing: "-0.03em",
-            backgroundImage: headGrad,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            color: "#0A0A0A",
           }}
         >
           {lang === "en" ? "Why code" : "¿Por qué código"}
