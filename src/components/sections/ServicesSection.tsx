@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { SPOTS_DARK, SPOTS_LIGHT } from "@/lib/textGradients";
 
 const SERVICES = [
   { key: "web",         num: "01", accent: "#CC1500" },
@@ -61,8 +62,8 @@ export const ServicesSection = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
-  const headGrad = "linear-gradient(120deg, #CC1500 0%, #ffffff 38%, #7C3AED 72%, #D97706 100%)";
-  const ctaGrad  = "linear-gradient(120deg, #CC1500 0%, #7C3AED 52%, #06B6D4 100%)";
+  const headGrad = SPOTS_DARK;
+  const ctaGrad  = SPOTS_LIGHT;
 
   const handleGeneral = () => {
     const msg = lang === "en"

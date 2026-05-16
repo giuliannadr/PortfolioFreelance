@@ -2,6 +2,7 @@ import { ArrowUpRight, X, Eye, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { SPOTS_LIGHT } from "@/lib/textGradients";
 
 const BG = "#ffffff";
 const BLOBS = [
@@ -9,7 +10,7 @@ const BLOBS = [
   { color: "#7C3AED", w: 360, x: "5%",  y: "65%", op: 0.05, cls: "blob-2" },
   { color: "#D97706", w: 260, x: "55%", y: "90%", op: 0.04, cls: "blob-1" },
 ];
-const headGrad = "linear-gradient(120deg, #CC1500 0%, #7C3AED 52%, #06B6D4 100%)";
+const headGrad = SPOTS_LIGHT;
 const ACCENTS  = ["#CC1500", "#7C3AED", "#06B6D4"];
 
 interface Project {
