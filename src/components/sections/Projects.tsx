@@ -1,10 +1,16 @@
 import { ArrowUpRight, X, Eye, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-type ProjectCategory = "professional" | "academic";
+const BG = "#ffffff";
+const BLOBS = [
+  { color: "#CC1500", w: 420, x: "90%", y: "20%", op: 0.06, cls: "blob-1" },
+  { color: "#7C3AED", w: 360, x: "5%",  y: "65%", op: 0.05, cls: "blob-2" },
+  { color: "#D97706", w: 260, x: "55%", y: "90%", op: 0.04, cls: "blob-1" },
+];
+const headGrad = "linear-gradient(120deg, #CC1500 0%, #0A0A0A 30%, #7C3AED 65%, #D97706 100%)";
+const ACCENTS  = ["#CC1500", "#7C3AED", "#06B6D4"];
 
 interface Project {
   id: string;
@@ -14,395 +20,549 @@ interface Project {
   longDescription: string;
   image?: string;
   video?: string;
-  githubUrl?: string;
   liveUrl?: string;
   stack: string[];
-  type: ProjectCategory;
-  process?: string[]; 
+  process?: string[];
 }
 
-const ProjectCard = ({ project, onSelect }: { project: Project; onSelect: (id: string) => void }) => {
-  return (
-    <motion.div
-      layoutId={`card-${project.id}`}
-      onClick={() => onSelect(project.id)}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      className="group cursor-pointer w-full"
-    >
-      <div className="relative aspect-[16/10] w-full rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden bg-zinc-900 border border-white/5 mb-8">
-        {project.video ? (
-          <video 
-            src={project.video} muted loop playsInline autoPlay 
-            className="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 ease-in-out" 
-          />
-        ) : (
-          <img 
-            src={project.image} alt="" 
-            className="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 ease-in-out" 
-          />
-        )}
-        <div className="absolute top-8 right-8 w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <ArrowUpRight size={24} />
-        </div>
-      </div>
+/* ── PROCESS OVERLAY ──────────────────────────────────────── */
+const ProcessOverlay = ({
+  project, lang, onClose,
+}: { project: Project; lang: string; onClose: () => void }) => {
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const before = project.process?.slice(0, 3) ?? [];
+  const after  = project.process?.slice(3)    ?? [];
+  const all    = project.process ?? [];
 
-      <div className="space-y-4 px-2">
-        <div className="flex items-center gap-4">
-          <span className="text-[#FF6F00] text-[10px] font-bold uppercase tracking-[0.3em]">{project.category}</span>
-          <div className="h-[1px] flex-1 bg-white/5" />
+  const prev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (lightboxIdx !== null) setLightboxIdx((lightboxIdx - 1 + all.length) % all.length);
+  };
+  const next = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (lightboxIdx !== null) setLightboxIdx((lightboxIdx + 1) % all.length);
+  };
+
+  return (
+    <>
+      <motion.div
+        key="process-overlay"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 40 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-0 z-[1100] bg-[#0A0A0A] overflow-y-auto scrollbar-hide"
+      >
+        {/* Close */}
+        <button
+          onClick={onClose}
+          className="fixed top-6 right-6 z-[1110] w-10 h-10 flex items-center justify-center border border-white/10 bg-[#0A0A0A] text-white/40 hover:border-[#CC1500] hover:text-white transition-all"
+        >
+          <X size={17} />
+        </button>
+
+        <div className="px-5 sm:px-8 lg:px-10 pt-14 pb-24">
+
+          {/* ── Header ── */}
+          <div className="flex items-center gap-5 mb-12 border-b border-white/[0.06] pb-7">
+            <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/20" style={{ fontFamily: "Poppins, sans-serif" }}>01</span>
+            <div className="h-px flex-1 bg-white/[0.06]" />
+            <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/20" style={{ fontFamily: "Poppins, sans-serif" }}>
+              {lang === "en" ? "Process" : "Proceso"}
+            </span>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-16"
+          >
+            <h2
+              className="block font-black uppercase leading-[0.88]"
+              style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 8rem)", letterSpacing: "-0.03em", backgroundImage: headGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+            >
+              {project.title}
+            </h2>
+            <span
+              className="block font-serif italic font-light text-white/20 leading-none mt-1"
+              style={{ fontSize: "clamp(1.8rem, 5vw, 4.5rem)" }}
+            >
+              {lang === "en" ? "before & after." : "antes & después."}
+            </span>
+          </motion.div>
+
+          {/* ── Two columns ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
+
+            {/* ANTES */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.18 }}
+                className="flex items-center gap-4 mb-6"
+              >
+                <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>
+                  {lang === "en" ? "Before" : "Antes"}
+                </span>
+                <div className="h-px flex-1 bg-white/[0.06]" />
+              </motion.div>
+
+              <div className="grid grid-cols-2 gap-2">
+                {before.map((img, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, delay: 0.22 + idx * 0.09, ease: [0.16, 1, 0.3, 1] }}
+                    onClick={() => setLightboxIdx(idx)}
+                    className={`group relative overflow-hidden bg-zinc-900 cursor-zoom-in ${idx === 0 ? "col-span-2 aspect-[16/9]" : "aspect-[4/3]"}`}
+                  >
+                    <img src={img} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700" alt="" />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500" />
+                    <div className="absolute bottom-3 left-3">
+                      <span className="px-2.5 py-1 bg-white/5 border border-white/10 text-white/40 text-[9px] uppercase tracking-widest font-black" style={{ fontFamily: "Poppins, sans-serif" }}>
+                        {idx + 1} / {before.length}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* DESPUÉS */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, x: 12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.24 }}
+                className="flex items-center gap-4 mb-6"
+              >
+                <span className="text-[9px] font-black uppercase tracking-[0.5em]" style={{ fontFamily: "Poppins, sans-serif", color: "#CC1500" }}>
+                  {lang === "en" ? "After" : "Después"}
+                </span>
+                <div className="h-px flex-1" style={{ background: "rgba(204,21,0,0.18)" }} />
+              </motion.div>
+
+              <div className="grid grid-cols-2 gap-2">
+                {after.map((img, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, delay: 0.28 + idx * 0.09, ease: [0.16, 1, 0.3, 1] }}
+                    onClick={() => setLightboxIdx(3 + idx)}
+                    className={`group relative overflow-hidden bg-zinc-900 cursor-zoom-in ${idx === 0 ? "col-span-2 aspect-[16/9]" : "aspect-[4/3]"}`}
+                  >
+                    <img src={img} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700" alt="" />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
+                    {/* red accent top line */}
+                    <motion.div
+                      className="absolute top-0 left-0 right-0 h-[2px] origin-left"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.5, delay: 0.35 + idx * 0.09 }}
+                      style={{ background: "#CC1500" }}
+                    />
+                    <div className="absolute bottom-3 left-3">
+                      <span className="px-2.5 py-1 bg-[#CC1500] text-white text-[9px] uppercase tracking-widest font-black" style={{ fontFamily: "Poppins, sans-serif" }}>
+                        {idx + 1} / {after.length}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-        <h3 className="text-xl md:text-3xl font-bold text-white tracking-tighter italic font-serif leading-none">
-          {project.title}
-        </h3>
-        <p className="text-white/40 text-sm font-light leading-relaxed max-w-xl line-clamp-2">
-          {project.description}
-        </p>
-      </div>
-    </motion.div>
+      </motion.div>
+
+      {/* ── Lightbox ── */}
+      <AnimatePresence>
+        {lightboxIdx !== null && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1200] bg-black/97 backdrop-blur-2xl flex items-center justify-center p-4 md:p-14"
+            onClick={() => setLightboxIdx(null)}
+          >
+            <button className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center border border-white/10 bg-white/5 text-white hover:bg-white/10"><X size={20} /></button>
+            <button onClick={prev} className="absolute left-4 md:left-8 w-11 h-11 flex items-center justify-center border border-white/8 hover:bg-white/10 text-white z-10"><ChevronLeft size={26} /></button>
+            <button onClick={next} className="absolute right-4 md:right-8 w-11 h-11 flex items-center justify-center border border-white/8 hover:bg-white/10 text-white z-10"><ChevronRight size={26} /></button>
+            <motion.div
+              key={lightboxIdx}
+              initial={{ scale: 0.93, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.93, opacity: 0 }}
+              className="relative max-w-5xl w-full overflow-hidden border border-white/8"
+              onClick={e => e.stopPropagation()}
+            >
+              <img src={all[lightboxIdx]} className="w-full h-auto object-contain" alt="" />
+              <div className="absolute bottom-4 left-4">
+                <span
+                  className={`px-3 py-1.5 text-[9px] uppercase tracking-[0.2em] font-black border ${lightboxIdx < 3 ? "bg-white/5 border-white/10 text-white/50" : "bg-[#CC1500] border-[#CC1500] text-white"}`}
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  {lightboxIdx < 3
+                    ? (lang === "en" ? "Before" : "Antes")
+                    : (lang === "en" ? "After" : "Después")}
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
+/* ── MAIN COMPONENT ───────────────────────────────────────── */
 export const Projects = () => {
-  const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<ProjectCategory>("professional");
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-  const [showProcess, setShowProcess] = useState(false);
-  
-  // Estado para el carrusel a pantalla completa (Lightbox)
-  const [fullscreenImageIdx, setFullscreenImageIdx] = useState<number | null>(null);
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language === "en" ? "en" : "es";
+  const ref  = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const blobY = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);
 
-  const projectBaseData = [
-    { 
-      id: "unik", 
-      video: "./Unik-web.mp4", 
-      liveUrl: "https://unik-kappa.vercel.app/", 
-      githubUrl: "https://github.com/giuliannadr/Unik.git", 
-      type: "professional", 
-      stack: ["Next.js 15", "TypeScript", "Framer Motion"],
-      process: ["./antes1.png", "./antes2.png", "./antes3.png", "./despues1.png", "./despues2.png", "./despues3.png"]
-    },
-    { 
-      id: "la-quinta-miri", 
-      video: "./LaQuintaMiri.mp4", 
-      liveUrl: "https://laquintamiri.vercel.app/", 
-      githubUrl: "https://github.com/giuliannadr/LaQuintaMiri.git", 
-      type: "professional", 
-      stack: ["React.js", "TypeScript", "EmailJS"]
-    },
-    { id: "trivia", image: "./triviaproject.png", type: "academic", stack: ["Java", "Spring MVC", "WebSockets"] },
-    { id: "hardware", image: "./tiendaonline.png", type: "academic", stack: ["Angular", "Node.js", "MySQL"] },
-    { id: "nlp", image: "./ExamGenerator.png", githubUrl: "https://github.com/varelafacu/NLPExamGenerator.git", type: "academic", stack: [".NET 9", "C#", "NLP"] }
+  const [hoveredId,  setHoveredId]  = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [processId,  setProcessId]  = useState<string | null>(null);
+
+  const rawData = [
+    { id: "unik",           video: "./Unik-web.mp4",    liveUrl: "https://unik-kappa.vercel.app/",   stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
+    { id: "emme",           video: "./emme.mp4",         liveUrl: "https://www.emmedigital.com.ar/",  stack: ["React.js", "TypeScript", "Framer Motion"] },
+    { id: "la-quinta-miri", video: "./LaQuintaMiri.mp4", liveUrl: "https://laquintamiri.vercel.app/", stack: ["React.js", "TypeScript", "EmailJS"] },
   ];
 
-  const projects: Project[] = projectBaseData.map(p => {
-    const translationKey = p.id === 'la-quinta-miri' ? 'miri' : p.id;
+  const projects: Project[] = rawData.map(p => {
+    const key = p.id === "la-quinta-miri" ? "miri" : p.id;
     return {
       ...p,
-      title: t(`projects.items.${translationKey}.title`),
-      category: t(`projects.items.${translationKey}.category`),
-      description: t(`projects.items.${translationKey}.description`),
-      longDescription: t(`projects.items.${translationKey}.longDescription`),
-      stack: p.stack as string[],
-      type: p.type as ProjectCategory,
+      title:           t(`projects.items.${key}.title`),
+      category:        t(`projects.items.${key}.category`),
+      description:     t(`projects.items.${key}.description`),
+      longDescription: t(`projects.items.${key}.longDescription`),
     } as Project;
   });
 
-  const filtered = projects.filter((p) => p.type === activeTab);
-  const selectedProject = projects.find(p => p.id === selectedProjectId);
-
-  // Funciones de navegación del Lightbox
-  const nextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedProject?.process && fullscreenImageIdx !== null) {
-      setFullscreenImageIdx((fullscreenImageIdx + 1) % selectedProject.process.length);
-    }
-  };
-
-  const prevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedProject?.process && fullscreenImageIdx !== null) {
-      setFullscreenImageIdx((fullscreenImageIdx - 1 + selectedProject.process.length) % selectedProject.process.length);
-    }
-  };
-// Busca este useEffect en tu componente Projects y déjalo así:
-useEffect(() => {
-  if (selectedProjectId || fullscreenImageIdx !== null) {
-    document.body.style.overflow = 'hidden';
-    // ESTO ES LO NUEVO:
-    if (fullscreenImageIdx !== null) {
-      document.body.classList.add("lightbox-open");
-    }
-  } else {
-    document.body.style.overflow = 'unset';
-    // ESTO ES LO NUEVO:
-    document.body.classList.remove("lightbox-open");
-  }
-}, [selectedProjectId, fullscreenImageIdx]);
+  const selected      = projects.find(p => p.id === selectedId);
+  const processProj   = projects.find(p => p.id === processId);
 
   useEffect(() => {
-    if (!selectedProjectId) {
-      setShowProcess(false);
-      setFullscreenImageIdx(null);
-    }
-  }, [selectedProjectId]);
+    const locked = selectedId !== null || processId !== null;
+    document.body.style.overflow = locked ? "hidden" : "unset";
+    const nav = document.querySelector("nav") as HTMLElement | null;
+    if (nav) nav.style.opacity = locked ? "0" : "1";
+  }, [selectedId, processId]);
 
-  useEffect(() => {
-    const nav = document.querySelector('nav') as HTMLElement | null;
-    if (selectedProjectId || fullscreenImageIdx !== null) {
-      document.body.style.overflow = 'hidden';
-      if (nav) nav.style.opacity = '0';
-    } else {
-      document.body.style.overflow = 'unset';
-      if (nav) nav.style.opacity = '1';
-    }
-  }, [selectedProjectId, fullscreenImageIdx]);
+  const panelWidth = (id: string) => {
+    if (!hoveredId) return "33.33%";
+    return id === hoveredId ? "52%" : "24%";
+  };
 
   return (
-    <section id="projects" className="py-32 bg-transparent">
-      <div className="container mx-auto px-6 max-w-7xl">
-        {/* CABECERA */}
-        <div className="mb-24 space-y-12">
-          <AnimatedSection>
-            <div className="space-y-4"> {/* Reduje el espacio entre el span y el h2 */}
-      
-      <span className="text-[#FF6F00] text-[9px] font-bold uppercase tracking-[0.4em] block">
-        {t('projects.subtitle')}
-      </span>
+    <section ref={ref} id="projects" className="bg-white pt-14 md:pt-20 pb-20 md:pb-28 px-5 sm:px-8 lg:px-10 relative overflow-hidden">
 
-      <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white leading-[0.9] mb-4 uppercase">
-        {t('projects.title')} <br />
-        <span className="text-white/20 italic font-serif font-light">
-          {t('projects.titleFaded')}
-        </span>
-      </h2>
-      
-    </div>
-          </AnimatedSection>
+      {/* Edge fade top */}
+      <div className="absolute inset-x-0 top-0 h-24 pointer-events-none z-10"
+        style={{ background: `linear-gradient(to bottom, ${BG}, transparent)` }} />
 
-          {/* TABS */}
-          <div className="flex gap-12 border-b border-white/5">
-            {(["professional", "academic"] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`pb-8 text-[11px] font-bold uppercase tracking-[0.3em] transition-all relative ${
-                  activeTab === tab ? "text-white" : "text-white/20 hover:text-white/40"
-                }`}
-              >
-                {t(`projects.tabs.${tab}`)}
-                {activeTab === tab && (
-                  <motion.div layoutId="activeTabIndicator" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FF6F00]" />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* GRILLA DE PROYECTOS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
-              <ProjectCard key={project.id} project={project} onSelect={setSelectedProjectId} />
-            ))}
-          </AnimatePresence>
-        </div>
+      {/* Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div className="absolute inset-0" style={{ y: blobY }}>
+          {BLOBS.map((b, i) => (
+            <div key={i} className={`${b.cls} absolute blur-3xl`}
+              style={{ background: b.color, width: b.w, height: b.w, left: b.x, top: b.y, opacity: b.op, transform: "translate(-50%,-50%)" }} />
+          ))}
+        </motion.div>
       </div>
 
-      {/* MODAL DETALLE DE PROYECTO */}
-      <AnimatePresence>
-        {selectedProjectId && selectedProject && (
-          <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-12">
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setSelectedProjectId(null)}
-              className="absolute inset-0 bg-zinc-950/98 backdrop-blur-xl"
-            />
-            
-            <motion.div 
-              layoutId={`card-${selectedProject.id}`}
-              className="relative w-full max-w-7xl bg-[#080808] rounded-[3rem] md:rounded-[4.5rem] overflow-hidden border border-white/10 z-[1001] max-h-[85vh] overflow-y-auto scrollbar-hide"
+      {/* Label */}
+      <div className="flex items-center gap-5 mb-14 relative z-20 border-b border-[#0A0A0A]/8 pb-8">
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25" style={{ fontFamily: "Poppins, sans-serif" }}>05</span>
+        <div className="h-px flex-1 bg-[#0A0A0A]/8" />
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25" style={{ fontFamily: "Poppins, sans-serif" }}>{t("projects.subtitle")}</span>
+      </div>
+
+      {/* Title */}
+      <div className="mb-10 relative z-20">
+        <motion.h2
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="block font-black uppercase leading-[0.88]"
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 7.5rem)", letterSpacing: "-0.03em", backgroundImage: headGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+        >
+          {lang === "en" ? "My work." : "Mi trabajo."}
+        </motion.h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="block font-serif italic font-light leading-[1.1]"
+          style={{ fontSize: "clamp(1.8rem, 5vw, 4.5rem)", backgroundImage: "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+        >
+          {lang === "en" ? "selected." : "seleccionado."}
+        </motion.h2>
+      </div>
+
+      {/* ── DESKTOP: expanding panels ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-20 hidden md:flex gap-3"
+        style={{ height: "clamp(400px, 62vh, 640px)" }}
+        onMouseLeave={() => setHoveredId(null)}
+      >
+        {projects.map((p, i) => {
+          const accent = ACCENTS[i];
+          const isHov  = hoveredId === p.id;
+          const anyHov = hoveredId !== null;
+
+          return (
+            <motion.div
+              key={p.id}
+              animate={{ width: panelWidth(p.id) }}
+              transition={{ type: "spring", stiffness: 260, damping: 30 }}
+              className="relative overflow-hidden cursor-pointer flex-shrink-0"
+              onHoverStart={() => setHoveredId(p.id)}
+              onClick={() => setSelectedId(p.id)}
             >
-              {/* ACCIONES SUPERIORES */}
-              <div className="absolute top-10 right-10 z-[1010] flex items-center gap-4">
-                <AnimatePresence>
-                  {showProcess && (
-                    <motion.button 
-                      initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }}
-                      onClick={() => setShowProcess(false)}
-                      className="px-6 py-3 border border-white/10 bg-white/5 text-white/70 rounded-full font-bold text-[10px] uppercase tracking-widest hover:border-[#FF6F00] hover:text-white transition-all backdrop-blur-md"
-                    >
-                      {t('projects.labels.viewWork')}
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-                
-                <button 
-                  onClick={() => setSelectedProjectId(null)} 
-                  className="w-12 h-12 flex items-center justify-center border border-white/10 bg-white/5 text-white/40 rounded-full hover:border-[#FF6F00] hover:text-white transition-all backdrop-blur-md"
+              {/* media */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{ scale: isHov ? 1.05 : 1 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {p.video
+                  ? <video src={p.video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                  : <img src={p.image} alt="" className="w-full h-full object-cover" />
+                }
+              </motion.div>
+
+              {/* dark overlay */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{ opacity: isHov ? 0.45 : (anyHov ? 0.75 : 0.55) }}
+                transition={{ duration: 0.4 }}
+                style={{ background: "#0A0A0A" }}
+              />
+
+              {/* gradient bottom */}
+              <div className="absolute inset-0"
+                style={{ background: "linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.55) 50%, transparent 100%)" }} />
+
+              {/* top: number + category */}
+              <div className="absolute top-0 left-0 right-0 p-5 flex items-start justify-between z-10">
+                <span
+                  className="font-black transition-colors duration-300"
+                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.58rem", letterSpacing: "0.18em", color: isHov ? accent : "rgba(255,255,255,0.35)" }}
                 >
-                  <X size={20} />
-                </button>
+                  0{i + 1}
+                </span>
+                <motion.span
+                  animate={{ opacity: isHov ? 1 : 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-[9px] font-black uppercase tracking-[0.3em] text-white/50"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  {p.category}
+                </motion.span>
               </div>
 
-              <div className="flex flex-col lg:flex-row h-full min-h-[650px]">
-                {/* SECCIÓN MEDIA O PROCESO */}
-                <motion.div 
-                  animate={{ width: showProcess ? "100%" : "50%" }}
-                  transition={{ type: "spring", stiffness: 260, damping: 25 }}
-                  className={`relative min-h-[500px] bg-[#0c0c0c] overflow-hidden ${showProcess ? 'w-full' : 'w-1/2 hidden lg:block'}`}
+              {/* accent top line */}
+              <motion.div
+                className="absolute top-0 left-0 right-0 h-[2px] origin-left z-10"
+                animate={{ scaleX: isHov ? 1 : 0, opacity: isHov ? 1 : 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                style={{ background: accent }}
+              />
+
+              {/* description + buttons — above title, only on hover */}
+              <motion.div
+                className="absolute left-0 right-0 px-6 z-10 space-y-3"
+                style={{ bottom: "calc(3.8rem + 36px)" }}
+                animate={{ opacity: isHov ? 1 : 0, y: isHov ? 0 : 16 }}
+                transition={{ duration: 0.3, delay: isHov ? 0.08 : 0, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <p className="text-white/55 text-sm leading-relaxed line-clamp-2">{p.description}</p>
+                <div className="flex items-center gap-3">
+                  {p.liveUrl && (
+                    <a
+                      href={p.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={e => e.stopPropagation()}
+                      className="flex items-center gap-2 px-4 py-2.5 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all group/btn"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
+                      {lang === "en" ? "Visit site" : "Ver sitio"}
+                      <ArrowUpRight size={12} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </a>
+                  )}
+                  {p.process && (
+                    <button
+                      onClick={e => { e.stopPropagation(); setProcessId(p.id); }}
+                      className="flex items-center gap-2 px-4 py-2.5 border border-white/20 text-white/60 font-black text-[10px] uppercase tracking-widest hover:border-white/50 hover:text-white transition-all"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
+                      <Eye size={11} />
+                      {lang === "en" ? "Process" : "Proceso"}
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* title — always visible, pegado al borde */}
+              <div className="absolute bottom-0 left-0 right-0 px-6 pb-5 z-10">
+                <h3
+                  className="font-black tracking-tighter italic leading-none text-white"
+                  style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(2rem, 3.2vw, 3.8rem)" }}
                 >
-                  <AnimatePresence mode="wait">
-                    {!showProcess ? (
-                      <motion.div 
-                        key="main-media" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        className="w-full h-full"
+                  {p.title}
+                </h3>
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* ── MOBILE ── */}
+      <div className="flex flex-col gap-6 md:hidden relative z-20">
+        {projects.map((p, i) => (
+          <motion.div
+            key={p.id}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            onClick={() => setSelectedId(p.id)}
+            className="group relative overflow-hidden bg-[#0A0A0A] cursor-pointer aspect-[4/3]"
+          >
+            <div className="absolute inset-0">
+              {p.video
+                ? <video src={p.video} autoPlay muted loop playsInline className="w-full h-full object-cover opacity-60 group-active:opacity-75 transition-opacity" />
+                : <img src={p.image} alt="" className="w-full h-full object-cover opacity-60" />
+              }
+            </div>
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.15) 55%, transparent 100%)" }} />
+            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: ACCENTS[i] }} />
+            <div className="absolute top-0 left-0 right-0 p-4 flex justify-between">
+              <span className="font-black" style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.55rem", letterSpacing: "0.18em", color: ACCENTS[i] }}>0{i + 1}</span>
+              <span className="text-[9px] font-black uppercase tracking-[0.28em] text-white/40" style={{ fontFamily: "Poppins, sans-serif" }}>{p.category}</span>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-5">
+              <h3 className="font-black tracking-tighter italic leading-none text-white mb-1.5 text-2xl" style={{ fontFamily: "Playfair Display, serif" }}>{p.title}</h3>
+              <p className="text-white/45 text-sm line-clamp-1">{p.description}</p>
+            </div>
+            <div className="absolute top-4 right-4 w-8 h-8 border border-white/20 flex items-center justify-center text-white/50">
+              <ArrowUpRight size={14} />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ── MODAL (project detail) ── */}
+      <AnimatePresence>
+        {selectedId && selected && (
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-10">
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setSelectedId(null)}
+              className="absolute inset-0 bg-[#0A0A0A]/96 backdrop-blur-xl"
+            />
+            {/* Close button outside scroll area so it stays visible on mobile */}
+            <button
+              onClick={() => setSelectedId(null)}
+              className="absolute top-5 right-5 md:top-7 md:right-7 z-[1002] w-10 h-10 flex items-center justify-center border border-white/10 bg-[#0A0A0A] text-white/40 hover:border-[#CC1500] hover:text-white transition-all"
+            >
+              <X size={17} />
+            </button>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97, y: 16 }}
+              animate={{ opacity: 1, scale: 1,    y: 0 }}
+              exit={{ opacity: 0,  scale: 0.97,   y: 16 }}
+              transition={{ type: "spring", stiffness: 280, damping: 28 }}
+              className="relative w-full max-w-5xl bg-[#111] overflow-hidden border border-white/8 z-[1001] max-h-[88vh] overflow-y-auto scrollbar-hide"
+            >
+
+              <div className="flex flex-col lg:flex-row min-h-[500px]">
+                {/* media */}
+                <div className="relative lg:w-1/2 min-h-[300px] bg-[#0c0c0c] hidden lg:block">
+                  {selected.video
+                    ? <video src={selected.video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                    : <img src={selected.image} className="w-full h-full object-cover" alt="" />}
+                </div>
+
+                {/* info */}
+                <motion.div
+                  initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
+                  className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-[#111]"
+                >
+                  <div className="mb-8">
+                    <div className="flex items-center gap-4 mb-5 flex-wrap">
+                      <span className="text-[#CC1500] font-black uppercase tracking-[0.4em] text-[10px]" style={{ fontFamily: "Poppins, sans-serif" }}>{selected.category}</span>
+                      {selected.process && (
+                        <button
+                          onClick={() => { setSelectedId(null); setProcessId(selected.id); }}
+                          className="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest border border-[#CC1500]/30 text-[#CC1500] hover:bg-[#CC1500] hover:text-white transition-all"
+                          style={{ fontFamily: "Poppins, sans-serif" }}
+                        >
+                          <Eye size={12} /> {lang === "en" ? "See process" : "Ver proceso"}
+                        </button>
+                      )}
+                    </div>
+                    <h2
+                      className="font-black tracking-tighter italic leading-[0.88] text-white"
+                      style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+                    >
+                      {selected.title}
+                    </h2>
+                  </div>
+
+                  <p className="text-white/50 text-base font-light leading-relaxed mb-10 max-w-md">{selected.longDescription}</p>
+
+                  <div className="space-y-8">
+                    <div>
+                      <h4 className="text-white/20 text-[10px] uppercase tracking-[0.3em] font-black mb-3" style={{ fontFamily: "Poppins, sans-serif" }}>Stack</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {selected.stack.map(tech => (
+                          <span key={tech} className="px-4 py-2 bg-white/5 text-[10px] text-white/40 font-black uppercase border border-white/5 flex items-center gap-2" style={{ fontFamily: "Poppins, sans-serif" }}>
+                            <div className="w-1 h-1 bg-[#CC1500]" /> {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    {selected.liveUrl && (
+                      <a
+                        href={selected.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center justify-center gap-3 py-4 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all group"
+                        style={{ fontFamily: "Poppins, sans-serif" }}
                       >
-                        {selectedProject.video ? (
-                          <video src={selectedProject.video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
-                        ) : (
-                          <img src={selectedProject.image} className="w-full h-full object-cover" alt="" />
-                        )}
-                      </motion.div>
-                    ) : (
-                      <motion.div 
-                        key="process-grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        className="w-full h-full p-12 md:p-32 bg-zinc-950"
-                      >
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-                          {selectedProject.process?.map((img, index) => (
-                            <motion.div 
-                              initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: index * 0.1 }}
-                              key={index} 
-                              onClick={() => setFullscreenImageIdx(index)}
-                              className="group relative aspect-[4/3] rounded-[2.5rem] overflow-hidden border border-white/5 bg-zinc-900 shadow-2xl cursor-zoom-in"
-                            >
-                              <img src={img} className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" alt="" />
-                              <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
-                              
-                              <div className="absolute top-4 left-4 z-[1002]">
-                                {index < 3 ? (
-                                  <span className="px-3 py-1 bg-white/5 border border-white/10 text-white/50 text-[9px] uppercase tracking-widest rounded-full font-bold backdrop-blur-sm">
-                                    Antes
-                                  </span>
-                                ) : (
-                                  <span className="px-3 py-1 bg-[#FF6F00] text-white text-[9px] uppercase tracking-widest rounded-full font-bold">
-                                    Después
-                                  </span>
-                                )}
-                              </div>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </motion.div>
+                        {lang === "en" ? "Visit site" : "Ver sitio"}
+                        <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </a>
                     )}
-                  </AnimatePresence>
+                  </div>
                 </motion.div>
-
-                {/* SECCIÓN INFO */}
-                {!showProcess && (
-                  <motion.div 
-                    initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }}
-                    className="lg:w-1/2 p-10 md:p-20 flex flex-col justify-center bg-[#080808]"
-                  >
-                    <div className="mb-12 max-w-xl">
-                      <div className="flex items-center gap-4 mb-8">
-                        <span className="text-[#FF6F00] font-bold uppercase tracking-[0.4em] text-[10px]">
-                          {t('projects.labels.challenge')}
-                        </span>
-                        {selectedProject.process && (
-                          <button 
-                            onClick={() => setShowProcess(true)}
-                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all border border-[#FF6F00]/30 text-[#FF6F00] hover:bg-[#FF6F00] hover:text-white"
-                          >
-                            <Eye size={14} /> {t('projects.labels.viewProcess')}
-                          </button>
-                        )}
-                      </div>
-                      <h2 className="text-4xl md:text-7xl font-bold text-white tracking-tighter italic font-serif leading-[0.85]">
-                        {selectedProject.title}
-                      </h2>
-                    </div>
-
-                    <p className="text-white/50 text-xl font-light leading-relaxed mb-16 max-w-md">
-                      {selectedProject.longDescription}
-                    </p>
-
-                    <div className="space-y-12">
-                      <div className="space-y-6">
-                        <h4 className="text-white/20 text-[10px] uppercase tracking-[0.3em] font-bold">Stack</h4>
-                        <div className="flex flex-wrap gap-3">
-                          {selectedProject.stack.map(tech => (
-                            <span key={tech} className="px-6 py-2.5 bg-white/5 rounded-full text-[10px] text-white/40 font-bold uppercase border border-white/5 flex items-center gap-2">
-                              <div className="w-1 h-1 rounded-full bg-[#FF6F00]" /> {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row gap-5 pt-4">
-                        {selectedProject.liveUrl && (
-                          <a href={selectedProject.liveUrl} target="_blank" rel="noreferrer" className="flex-1 py-6 bg-white text-black rounded-2xl font-bold text-[11px] uppercase tracking-widest text-center hover:bg-[#FF6F00] hover:text-white transition-all">
-                            {t('projects.labels.live')}
-                          </a>
-                        )}
-                        {selectedProject.githubUrl && (
-                          <a href={selectedProject.githubUrl} target="_blank" rel="noreferrer" className="flex-1 py-6 bg-white/5 text-white border border-white/10 rounded-2xl font-bold text-[11px] uppercase tracking-widest text-center hover:bg-white/10 transition-all">
-                            {t('projects.labels.github')}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
 
-      {/* LIGHTBOX / CARRUSEL FULLSCREEN */}
+      {/* ── PROCESS OVERLAY ── */}
       <AnimatePresence>
-        {fullscreenImageIdx !== null && selectedProject?.process && (
-          <motion.div 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[2000] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-20"
-            onClick={() => setFullscreenImageIdx(null)}
-          >
-            {/* Cerrar Lightbox */}
-            <button className="absolute top-10 right-10 w-12 h-12 flex items-center justify-center border border-white/10 bg-white/5 text-white rounded-full hover:bg-white/10 transition-all">
-              <X size={24} />
-            </button>
-
-            {/* Navegación */}
-            <button onClick={prevImage} className="absolute left-6 md:left-10 w-14 h-14 flex items-center justify-center rounded-full border border-white/5 hover:bg-white/10 text-white transition-all z-[2001]">
-              <ChevronLeft size={32} />
-            </button>
-            <button onClick={nextImage} className="absolute right-6 md:right-10 w-14 h-14 flex items-center justify-center rounded-full border border-white/5 hover:bg-white/10 text-white transition-all z-[2001]">
-              <ChevronRight size={32} />
-            </button>
-
-            {/* Imagen Principal del Lightbox */}
-            <motion.div 
-              key={fullscreenImageIdx}
-              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-5xl w-full aspect-[4/3] rounded-[3rem] md:rounded-[4rem] overflow-hidden shadow-2xl border border-white/10"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img 
-                src={selectedProject.process[fullscreenImageIdx]} 
-                className="w-full h-full object-contain"
-                alt="Process view"
-              />
-              <div className="absolute bottom-10 left-10">
-                <span className={`px-4 py-2 text-[10px] uppercase tracking-[0.2em] rounded-full font-bold border ${fullscreenImageIdx < 3 ? 'bg-white/5 border-white/10 text-white/50' : 'bg-[#FF6F00] border-[#FF6F00] text-white'}`}>
-                  {fullscreenImageIdx < 3 ? "Diseño Previo" : "Resultado Final"}
-                </span>
-              </div>
-            </motion.div>
-          </motion.div>
+        {processId && processProj && (
+          <ProcessOverlay
+            project={processProj}
+            lang={lang}
+            onClose={() => setProcessId(null)}
+          />
         )}
       </AnimatePresence>
     </section>
