@@ -1,126 +1,243 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Heart, ShieldCheck, MessageSquare } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+
+const REVIEW_BTN_GRAD = [
+  "radial-gradient(ellipse 90% 160% at 8% 50%, rgba(204,21,0,0.50), transparent 55%)",
+  "radial-gradient(ellipse 80% 140% at 92% 50%, rgba(124,58,237,0.42), transparent 55%)",
+  "radial-gradient(ellipse 60% 110% at 50% -15%, rgba(6,182,212,0.30), transparent 50%)",
+  "#ffffff",
+].join(", ");
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import { MessageSquarePlus } from "lucide-react";
+import { ReviewForm } from "@/components/ui/ReviewForm";
+import { fetchPublishedReviews, type Review as DynReview } from "@/lib/firebase";
+
+// ─── Color palette for dynamic reviews ────────────────────────────────────────
+
+const METRICS = [
+  { num: "100%", color: "#CC1500", es: "Velocidad · Excelente",     en: "Speed · Excellent" },
+  { num: "1:1",  color: "#7C3AED", es: "Atención directa",          en: "Direct attention"  },
+  { num: "∞",    color: "#06B6D4", es: "Web moderna · Garantizada", en: "Modern web · Guaranteed" },
+];
+
+// Color palette for dynamic reviews (cycles deterministically by name)
+const PALETTE = ["#CC1500", "#7C3AED", "#06B6D4", "#EC4899", "#F59E0B", "#10B981"];
+const colorFor = (name: string) =>
+  PALETTE[[...name].reduce((a, c) => a + c.charCodeAt(0), 0) % PALETTE.length];
+
+// Unified carousel item
+type CarouselItem = {
+  key:      string;
+  name:     string;
+  initial:  string;
+  color:    string;
+  isStatic: boolean;
+  // static
+  id?:      string;
+  // dynamic
+  text?:    string;
+  role?:    string;
+};
 
 export const TrustSection = () => {
-  const { t } = useTranslation();
-  const [testimonyIndex, setTestimonyIndex] = useState(0);
-  const [hoveredMetric, setHoveredMetric] = useState<number | null>(null);
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language === "en" ? "en" : "es";
 
-  // Definimos la estructura de datos que NO cambia (IDs, Iconos, Iniciales)
-  const testimonialsData = [
-    { id: "miri", name: "Miriam Di Rocco", initial: "M" },
-    { id: "camila", name: "Camila", initial: "C" },
-    { id: "iara", name: "Iara", initial: "I" }
-  ];
+  const [idx,        setIdx]        = useState(0);
+  const [showForm,   setShowForm]   = useState(false);
+  const [dynReviews, setDynReviews] = useState<DynReview[]>([]);
+  const [hovBtn,     setHovBtn]     = useState(false);
 
-  const metricsData = [
-    { key: "speed", icon: <Zap className="w-4 h-4" /> },
-    { key: "direct", icon: <Heart className="w-4 h-4" /> },
-    { key: "modern", icon: <ShieldCheck className="w-4 h-4" /> }
-  ];
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
+  // ── fetch reviews ────────────────────────────────────────────────────────────
+  const loadReviews = useCallback(() => {
+    fetchPublishedReviews().then(setDynReviews).catch(() => {});
+  }, []);
+
+  useEffect(() => { loadReviews(); }, [loadReviews]);
+
+  // ── build carousel items from Firebase only ───────────────────────────────
+  const items = useMemo<CarouselItem[]>(() =>
+    dynReviews.map(r => ({
+      key:      r.id,
+      name:     r.name,
+      initial:  r.name.charAt(0).toUpperCase() || "?",
+      color:    colorFor(r.name),
+      isStatic: false,
+      text:     r.comment,
+      role:     r.role,
+    })),
+  [dynReviews]);
+
+  // ── auto-advance ─────────────────────────────────────────────────────────────
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTestimonyIndex((prev) => (prev + 1) % testimonialsData.length);
-    }, 5000);
+    if (items.length <= 1) return;
+    const timer = setInterval(
+      () => setIdx(p => (p + 1) % items.length),
+      5500,
+    );
     return () => clearInterval(timer);
-  }, [testimonialsData.length]);
+  }, [items.length]);
 
-  const current = testimonialsData[testimonyIndex];
+  const safeIdx  = items.length > 0 ? Math.min(idx, items.length - 1) : 0;
+  const cur      = items[safeIdx];
+  const hasItems = items.length > 0;
+
+  const quoteGrad = cur
+    ? `linear-gradient(120deg, ${cur.color} 0%, #ffffff 45%, ${cur.color}99 100%)`
+    : "linear-gradient(120deg, #CC1500 0%, #ffffff 45%, #CC150099 100%)";
 
   return (
-    <section className="w-full relative py-32" id="trust">
-      <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 items-center">
-        
-        {/* IZQUIERDA: Frase y Métricas */}
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <motion.span className="text-[#FF6F00] text-[10px] font-bold uppercase tracking-[0.3em] block opacity-80">
-              {t('trust.badge')}
-            </motion.span>
-            <motion.h2 className="text-3xl md:text-4xl font-bold tracking-tighter leading-tight text-white">
-              {t('trust.title')} <br />
-              <span className="text-white/30 italic font-light">{t('trust.titleFaded')}</span>
-            </motion.h2>
-            <p className="text-white/60 text-base max-w-sm leading-relaxed">
-              {t('trust.description')}
-            </p>
-          </div>
+    <section ref={ref} className="bg-[#0A0A0A] text-white py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative" id="trust">
 
-          {/* MÉTRICAS */}
-          <div className="flex flex-row gap-3 w-full">
-            {metricsData.map((item, i) => (
-              <div 
-                key={i} 
-                className="relative flex-1 min-w-0" 
-                onMouseEnter={() => setHoveredMetric(i)}
-                onMouseLeave={() => setHoveredMetric(null)}
+      {/* Edge fades */}
+      <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #0A0A0A, transparent)" }} />
+      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10" style={{ background: "linear-gradient(to top, #0A0A0A, transparent)" }} />
+
+      {/* Ambient blob — shifts color with active testimonial */}
+      <motion.div className="absolute inset-0 pointer-events-none" style={{ y: blobY }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={cur?.key ?? "empty"}
+            className="blob-2 absolute blur-3xl"
+            style={{ background: cur?.color ?? "#CC1500", width: 520, height: 520, left: "78%", top: "38%", transform: "translate(-50%,-50%)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.09 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+          />
+        </AnimatePresence>
+        <div className="blob-1 absolute blur-3xl" style={{ background: "#7C3AED", width: 300, height: 300, left: "6%", top: "72%", opacity: 0.05, transform: "translate(-50%,-50%)" }} />
+      </motion.div>
+
+      {/* Label */}
+      <div className="flex items-center gap-5 mb-14 relative z-10">
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>04</span>
+        <div className="h-px flex-1 bg-white/[0.06]" />
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>{t("trust.badge")}</span>
+      </div>
+
+      {/* Giant testimonial */}
+      <div className="relative z-10 max-w-5xl mb-16">
+
+        {/* Fixed-height quote area so controls below never jump */}
+        <div className="min-h-[320px] sm:min-h-[360px]">
+          {!hasItems ? (
+            /* Empty state — shown while loading or no reviews yet */
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col justify-center h-full py-10">
+              <p className="font-black leading-none mb-4 select-none text-white/10" style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(5rem,10vw,9rem)", lineHeight: 1 }} aria-hidden>"</p>
+              <p className="font-black tracking-tighter text-white/15" style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.5rem,3.2vw,2.8rem)" }}>
+                {lang === "en" ? "Be the first to leave a review." : "Sé la primera en dejar una reseña."}
+              </p>
+            </motion.div>
+          ) : (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={cur.key}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -18 }}
+                transition={{ duration: 0.45 }}
               >
-                <AnimatePresence>
-                  {hoveredMetric === i && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, x: "-50%" }}
-                      animate={{ opacity: 1, y: 0, x: "-50%" }}
-                      exit={{ opacity: 0, y: 8, x: "-50%" }}
-                      className="absolute bottom-full mb-3 left-1/2 w-44 p-3 bg-zinc-900 border border-white/10 rounded-xl shadow-xl z-50 pointer-events-none"
-                    >
-                      <p className="text-[10px] leading-snug text-white/80 text-center">
-                        {t(`trust.metrics.${item.key}.tooltip`)}
-                      </p>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-zinc-900" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <p className="font-black leading-none mb-2 select-none" style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(5rem, 10vw, 9rem)", lineHeight: 1, color: cur.color }} aria-hidden>"</p>
 
-                <div className="relative py-4 px-2 rounded-2xl overflow-hidden flex flex-col items-center justify-center min-h-[110px] w-full bg-zinc-800/60 backdrop-blur-[20px] border border-white/10 transition-all duration-300 hover:border-[#FF6F00]/40">
-                  <div className="relative z-10 text-[#FF6F00] mb-2">{item.icon}</div>
-                  <div className="relative z-10 text-sm md:text-base font-bold tracking-tight mb-0.5 text-center truncate w-full px-1 text-white">
-                    {t(`trust.metrics.${item.key}.value`)}
-                  </div>
-                  <div className="relative z-10 text-[8px] font-bold uppercase tracking-widest text-white/40 text-center">
-                    {t(`trust.metrics.${item.key}.label`)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* DERECHA: Testimonios */}
-        <div className="relative min-h-[350px] flex items-center w-full">
-          <AnimatePresence mode="wait">
-            <motion.div 
-              key={current.id}
-              initial={{ opacity: 0, x: 15 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -15 }}
-              transition={{ duration: 0.5 }}
-              className="relative overflow-hidden p-8 rounded-[2.5rem] w-full bg-zinc-800/60 backdrop-blur-[20px] border border-white/20 shadow-2xl"
-            >
-              <div className="relative z-10">
-                <MessageSquare className="w-8 h-8 text-[#FF6F00] opacity-40 mb-6" />
-                <blockquote className="text-lg md:text-xl font-medium leading-relaxed text-white/90 mb-8 min-h-[120px]">
-                  "{t(`trust.testimonials.${current.id}.text`)}"
+                <blockquote
+                  className="font-black tracking-tighter leading-[1.05] mb-8"
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "clamp(1.5rem, 3.2vw, 2.8rem)",
+                    backgroundImage: quoteGrad,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {cur.text}
                 </blockquote>
+
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#FF6F00] flex items-center justify-center text-white text-sm font-bold shadow-[0_0_15px_rgba(255,111,0,0.3)]">
-                    {current.initial}
+                  <div className="w-9 h-9 flex items-center justify-center text-white text-sm font-black" style={{ fontFamily: "Poppins, sans-serif", background: cur.color }}>
+                    {cur.initial}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-white">{current.name}</h4>
-                    <p className="text-[10px] text-white/40 uppercase tracking-widest">
-                      {t(`trust.testimonials.${current.id}.role`)}
-                    </p>
+                    <p className="font-black text-sm text-white" style={{ fontFamily: "Poppins, sans-serif" }}>{cur.name}</p>
+                    <p className="text-[9px] uppercase tracking-[0.35em] text-white/30">{cur.role || (lang === "en" ? "Client" : "Cliente")}</p>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
 
+        <div className="flex items-center gap-4 mt-10">
+          {/* Nav dots */}
+          <div className="flex gap-2 flex-wrap">
+            {items.map((item, i) => (
+              <button
+                key={item.key}
+                onClick={() => setIdx(i)}
+                className="h-[2px] transition-all duration-300"
+                style={{ width: i === safeIdx ? 32 : 12, background: i === safeIdx ? cur.color : "rgba(255,255,255,0.15)" }}
+                aria-label={`Testimonio ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Leave a review button */}
+          <motion.button
+            onClick={() => setShowForm(true)}
+            onHoverStart={() => setHovBtn(true)}
+            onHoverEnd={() => setHovBtn(false)}
+            whileTap={{ scale: 0.97 }}
+            className="group relative ml-auto inline-flex items-center gap-2.5 px-6 py-3 bg-white text-[#0A0A0A] font-black text-[9px] uppercase tracking-[0.3em] overflow-hidden"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
+            <span
+              className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+              style={{ opacity: hovBtn ? 1 : 0, background: REVIEW_BTN_GRAD }}
+            />
+            <span className="relative z-10 flex items-center gap-2.5">
+              {lang === "en" ? "Leave a review" : "Dejar reseña"}
+              <MessageSquarePlus size={13} />
+            </span>
+          </motion.button>
+        </div>
       </div>
+
+      {/* Metrics */}
+      <div className="relative z-10 border-t border-white/[0.06] pt-8 grid grid-cols-3 divide-x divide-white/[0.06]">
+        {METRICS.map(({ num, color, es, en }, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            className="py-6 px-3 sm:px-8 first:pl-0 last:pr-0 flex flex-col gap-1"
+          >
+            <p className="font-black leading-none" style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.4rem, 5vw, 3rem)", color }}>{num}</p>
+            <p className="text-white/25 leading-tight" style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.55rem, 1.2vw, 0.65rem)", textTransform: "uppercase", letterSpacing: "0.3em" }}>{lang === "en" ? en : es}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Review form overlay */}
+      <AnimatePresence>
+        {showForm && (
+          <ReviewForm
+            lang={lang}
+            onClose={() => setShowForm(false)}
+            onSuccess={() => {
+              setShowForm(false);
+              // Refresh reviews so the new one appears immediately
+              setTimeout(loadReviews, 800);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };

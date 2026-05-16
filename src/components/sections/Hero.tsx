@@ -40,8 +40,8 @@ const TypewriterWord = ({ lang }: { lang: string }) => {
     <div className="flex items-center justify-center gap-2 my-5" style={{ height: 26 }}>
       <span className="text-[#CC1500]/50 font-mono text-sm select-none">{">"}</span>
       <span
-        className="font-black uppercase text-white/60"
-        style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.6rem,1vw,0.82rem)", letterSpacing: "0.38em", minWidth: "1ch" }}
+        className="font-black uppercase text-white/60 text-[0.82rem] sm:text-[clamp(0.6rem,1vw,0.82rem)]"
+        style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "0.38em", minWidth: "1ch" }}
       >
         {words[wordIdx].slice(0, charIdx)}
       </span>
@@ -129,6 +129,37 @@ const DOTS = [
   { top: "55%", left: "58%", size: 3, delay: 1.8, dur: 4.6, color: "#D97706" },
   { top: "80%", left: "70%", size: 4, delay: 0.3, dur: 5.5, color: "#EC4899" },
 ];
+
+// ── Hero proj button with blob hover ──────────────────────────────────────
+const BLOB_GRAD = [
+  "radial-gradient(ellipse 90% 160% at 8% 50%, rgba(204,21,0,0.50), transparent 55%)",
+  "radial-gradient(ellipse 80% 140% at 92% 50%, rgba(124,58,237,0.42), transparent 55%)",
+  "radial-gradient(ellipse 60% 110% at 50% -15%, rgba(6,182,212,0.30), transparent 50%)",
+  "#ffffff",
+].join(", ");
+
+const HeroProjBtn = ({ lang }: { lang: string }) => {
+  const [hov, setHov] = useState(false);
+  return (
+    <motion.a
+      href="#projects"
+      onHoverStart={() => setHov(true)}
+      onHoverEnd={() => setHov(false)}
+      whileTap={{ scale: 0.97 }}
+      className="group relative w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-2.5 px-7 py-4 bg-white text-[#0A0A0A] font-black text-[9px] uppercase tracking-[0.3em] overflow-hidden"
+      style={{ fontFamily: "Poppins, sans-serif" }}
+    >
+      <span
+        className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+        style={{ opacity: hov ? 1 : 0, background: BLOB_GRAD }}
+      />
+      <span className="relative z-10 flex items-center gap-2.5">
+        {lang === "en" ? "View work" : "Ver proyectos"}
+        <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+      </span>
+    </motion.a>
+  );
+};
 
 // ── Hero ───────────────────────────────────────────────────────────────────
 export const Hero = () => {
@@ -244,20 +275,19 @@ export const Hero = () => {
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-10 py-6">
 
           <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38, duration: 0.5 }}
-            className="text-white/30 mb-2"
+            className="text-white/30 mb-2 mt-10 sm:mt-0"
             style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(0.95rem,1.6vw,1.3rem)" }}>
             {lang === "en" ? "Hello, I'm —" : "Hola, soy —"}
           </motion.p>
 
           {/* ── MIXED-FONT NAME with LIGHT EFFECT ── */}
-          <div className="mb-1">
+          <div className="mb-1 mt-6 sm:mt-0">
             <div className="overflow-hidden">
               <motion.h1 initial={{ y: "105%" }} animate={{ y: 0 }}
                 transition={{ duration: 0.9, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                className="block font-black uppercase"
+                className="block font-black uppercase text-[clamp(2.8rem,17vw,4.5rem)] sm:text-[clamp(3.2rem,12vw,16rem)]"
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "clamp(3.2rem,12vw,16rem)",
                   letterSpacing: "-0.04em",
                   lineHeight: 0.84,
                   backgroundImage: line1Gradient,
@@ -271,12 +301,11 @@ export const Hero = () => {
             <div className="overflow-hidden">
               <motion.h1 initial={{ y: "105%" }} animate={{ y: 0 }}
                 transition={{ duration: 0.9, delay: 0.54, ease: [0.16, 1, 0.3, 1] }}
-                className="block"
+                className="block text-[clamp(2rem,13vw,3.4rem)] sm:text-[clamp(2.4rem,10vw,13rem)]"
                 style={{
                   fontFamily: "'Playfair Display', serif",
                   fontStyle: "italic",
                   fontWeight: 400,
-                  fontSize: "clamp(2.4rem,10vw,13rem)",
                   letterSpacing: "-0.015em",
                   lineHeight: 0.92,
                   backgroundImage: line2Gradient,
@@ -289,7 +318,7 @@ export const Hero = () => {
             </div>
           </div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }}>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }} className="mt-4 sm:mt-0">
             <TypewriterWord lang={lang} />
           </motion.div>
 
@@ -298,8 +327,8 @@ export const Hero = () => {
             className="h-px bg-white/12 my-7 origin-center w-full" style={{ maxWidth: "min(500px,80vw)" }} />
 
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.82, duration: 0.55 }}
-            className="text-white/50 leading-relaxed mb-10"
-            style={{ fontSize: "clamp(1rem,1.9vw,1.25rem)", maxWidth: "min(580px,88vw)" }}>
+            className="text-white/50 leading-relaxed mb-10 text-[0.72rem] sm:text-[clamp(1rem,1.9vw,1.25rem)]"
+            style={{ maxWidth: "min(580px,88vw)" }}>
             {lang === "en" ? (
               <>I design and develop{" "}<Highlight>digital experiences</Highlight>{" "}that are functional, beautiful, and built to convert.</>
             ) : (
@@ -308,27 +337,22 @@ export const Hero = () => {
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.92, duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-3 mb-12">
-            <a href="#projects"
-              className="group inline-flex items-center gap-2.5 px-7 py-4 bg-white text-[#0A0A0A] font-black text-[9px] uppercase tracking-[0.3em] hover:bg-[#CC1500] hover:text-white transition-all duration-300"
-              style={{ fontFamily: "Poppins, sans-serif" }}>
-              {lang === "en" ? "View work" : "Ver proyectos"}
-              <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+            className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-3 mb-12 w-full sm:w-auto px-2 sm:px-0">
+            <HeroProjBtn lang={lang} />
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-7 py-4 border border-white/18 text-white/50 font-black text-[9px] uppercase tracking-[0.3em] hover:border-[#CC1500] hover:text-white transition-all duration-300"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 border border-white/18 text-white/50 font-black text-[9px] uppercase tracking-[0.3em] hover:border-[#CC1500] hover:text-white transition-all duration-300"
               style={{ fontFamily: "Poppins, sans-serif" }}>
               {lang === "en" ? "Let's talk" : "Hablemos"}
             </a>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.05 }}
-            className="flex items-center justify-center gap-5">
-            <span className="text-[8px] font-black uppercase tracking-[0.45em] text-white/35" style={{ fontFamily: "Poppins, sans-serif" }}>
+            className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-5">
+            <span className="text-[8px] font-black uppercase tracking-[0.3em] sm:tracking-[0.45em] text-white/35" style={{ fontFamily: "Poppins, sans-serif" }}>
               {lang === "en" ? "Web Design & Development" : "Diseño & Desarrollo Web"}
             </span>
-            <div className="h-px w-6 bg-white/15" />
-            <span className="text-[8px] font-black uppercase tracking-[0.45em] text-white/35" style={{ fontFamily: "Poppins, sans-serif" }}>
+            <div className="hidden sm:block h-px w-6 bg-white/15" />
+            <span className="text-[8px] font-black uppercase tracking-[0.3em] sm:tracking-[0.45em] text-white/35" style={{ fontFamily: "Poppins, sans-serif" }}>
               React · Next.js · TypeScript
             </span>
           </motion.div>

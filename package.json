@@ -9,7 +9,9 @@
     "preview": "npx vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "clsx": "^2.1.0",
+    "firebase": "^12.13.0",
     "framer-motion": "^11.0.8",
     "i18next": "^26.0.3",
     "lucide-react": "^0.344.0",

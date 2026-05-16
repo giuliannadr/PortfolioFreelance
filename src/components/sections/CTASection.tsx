@@ -109,7 +109,7 @@ export const CTASection = () => {
           className="font-black uppercase leading-none"
           style={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: "clamp(3rem, 10vw, 9rem)",
+            fontSize: "clamp(1.8rem, 10vw, 9rem)",
             letterSpacing: "-0.04em",
             paddingBottom: "0.12em",
             backgroundImage: gradient,
@@ -156,9 +156,9 @@ export const CTASection = () => {
           style={{
             opacity: btnHov ? 1 : 0,
             background: [
-              "radial-gradient(ellipse 90% 160% at 8% 50%, rgba(204,21,0,0.20), transparent 55%)",
-              "radial-gradient(ellipse 80% 140% at 92% 50%, rgba(124,58,237,0.17), transparent 55%)",
-              "radial-gradient(ellipse 60% 110% at 50% -15%, rgba(6,182,212,0.12), transparent 50%)",
+              "radial-gradient(ellipse 90% 160% at 8% 50%, rgba(204,21,0,0.50), transparent 55%)",
+              "radial-gradient(ellipse 80% 140% at 92% 50%, rgba(124,58,237,0.42), transparent 55%)",
+              "radial-gradient(ellipse 60% 110% at 50% -15%, rgba(6,182,212,0.30), transparent 50%)",
               "#ffffff",
             ].join(", "),
           }}

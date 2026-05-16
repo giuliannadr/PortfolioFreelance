@@ -2,29 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400;1,700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* Light grey background */
-    --foreground: 0 0% 4%; /* Dark text */
-    --primary: 0 0% 9%; /* Dark text/buttons */
-    --secondary: 0 0% 96%; /* Light accents */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
+    --primary: 0 0% 4%;
+    --secondary: 0 0% 96%;
     --muted: 0 0% 40%;
-    --card: 0 0% 100%; /* White cards */
+    --card: 0 0% 100%;
   }
 
-  .dark {
-    --background: 0 0% 4%; /* #0a0a0a */
-    --foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --muted: 0 0% 60%;
-    --card: 0 0% 8%;
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased selection:bg-white/20;
+    @apply antialiased;
+    background-color: #ffffff;
+    color: #0A0A0A;
+    font-family: 'Inter', sans-serif;
+  }
+
+  ::selection {
+    background-color: #CC1500;
+    color: #ffffff;
   }
 }
 
@@ -32,22 +35,63 @@
   .text-balance {
     text-wrap: balance;
   }
-}
 
-@layer utilities {
-  /* Oculta la barra de scroll en Chrome, Safari y Opera */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
 
-  /* Oculta la barra de scroll en IE, Edge y Firefox */
   .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .font-display {
+    font-family: 'Poppins', sans-serif;
   }
 }
-/* Cuando el body tenga la clase lightbox-open, escondemos los controles */
-body.lightbox-open .fixed.top-4.right-4, 
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  animation: ticker 28s linear infinite;
+}
+
+/* Morphing blob keyframes */
+@keyframes blob-morph-1 {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  33%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  66%       { border-radius: 50% 50% 30% 60% / 40% 50% 60% 50%; }
+}
+@keyframes blob-morph-2 {
+  0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  50%       { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+.blob-1 { animation: blob-morph-1 14s ease-in-out infinite; }
+.blob-2 { animation: blob-morph-2 18s ease-in-out infinite; }
+
+/* Blinking cursor */
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.cursor-blink { animation: blink 0.85s step-start infinite; }
+
+/* Grain texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 250px 250px;
+  background-repeat: repeat;
+}
+
+body.lightbox-open .fixed.top-4.right-4,
 body.lightbox-open .fixed.top-6.right-6 {
   opacity: 0 !important;
   pointer-events: none !important;

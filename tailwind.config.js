@@ -8,6 +8,11 @@ export default {
   theme: {
     extend: {
       colors: {
+        cream: '#F4EFE6',
+        ink: '#0A0A0A',
+        orange: '#FF6F00',
+        'warm-grey': '#8C7B6B',
+        // legacy vars
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: "hsl(var(--primary))",
@@ -17,6 +22,8 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
+        serif: ["'Playfair Display'", 'serif'],
       }
     },
   },

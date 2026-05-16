@@ -97,6 +97,12 @@ process: {
         "description": "From a static Canva presentation to a high-performance web platform.",
         "longDescription": "The team had a portfolio designed in Canva that didn't achieve the fluidity or technical professionalism their work deserved. Staying true to the essence of the original design, I created this high-performance landing page, bringing their identity into a robust, sophisticated, and fully functional web environment."
       },
+      emme: {
+        "title": "EMME Digital",
+        "category": "Design & Development",
+        "description": "A bold digital identity for a creative agency built to stand out from the crowd.",
+        "longDescription": "EMME needed a web presence that matched the ambition behind the brand — sharp, modern, and impossible to ignore. I designed and developed a custom site that communicates their value instantly, with a visual language that commands attention and drives action from the first scroll."
+      },
       miri: {
         "title": "La Quinta Miri",
         "category": "Design & Development",
@@ -274,6 +280,12 @@ process: {
         "category": "Diseño & Desarrollo",
         "description": "De una presentación estática en Canva a una plataforma web de alto rendimiento.",
         "longDescription": "Las chicas tenían un portfolio diseñado en Canva que no lograba la fluidez ni el profesionalismo técnico que su trabajo merecía. Siendo fiel a la esencia del diseño original, creé esta landing page de alto rendimiento, llevando su identidad a un entorno web robusto, sofisticado y totalmente funcional."
+      },
+      emme: {
+        "title": "EMME Digital",
+        "category": "Diseño & Desarrollo",
+        "description": "Una identidad digital potente para una agencia creativa hecha para destacar.",
+        "longDescription": "EMME necesitaba una presencia web que estuviera a la altura de la ambición de la marca: afilada, moderna e imposible de ignorar. Diseñé y desarrollé un sitio a medida que comunica su valor desde el primer segundo, con un lenguaje visual que genera impacto y convierte desde el primer scroll."
       },
       miri: {
         "title": "La Quinta Miri",
