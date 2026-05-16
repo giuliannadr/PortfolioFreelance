@@ -182,49 +182,80 @@ export const TrustSection = () => {
           style={{ fontFamily: "Poppins, sans-serif" }}>{t("trust.badge")}</span>
       </div>
 
-      {/* Headline */}
-      <div className="mb-12 relative z-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 22 }}
+      {/* Headline + leave a review button */}
+      <div className="mb-12 relative z-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+        <div>
+          <motion.h2
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="block font-black uppercase leading-[0.85]"
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              fontSize: "clamp(3rem, 9vw, 8rem)",
+              letterSpacing: "-0.03em",
+              backgroundImage: SPOTS_DARK,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            {lang === "en" ? "What they" : "Lo que dicen"}
+          </motion.h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="block font-serif italic font-light leading-[1.05] text-white/20"
+            style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
+          >
+            {lang === "en" ? "say." : "mis clientes."}
+          </motion.h2>
+        </div>
+
+        {/* Leave a review button — next to headline */}
+        <motion.button
+          onClick={() => setShowForm(true)}
+          onHoverStart={() => setHovBtn(true)}
+          onHoverEnd={() => setHovBtn(false)}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.85]"
+          transition={{ duration: 0.6, delay: 0.25 }}
+          whileTap={{ scale: 0.97 }}
+          className="group relative inline-flex items-center gap-2.5 px-5 py-3 self-start sm:self-auto overflow-hidden shrink-0"
           style={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: "clamp(3rem, 9vw, 8rem)",
-            letterSpacing: "-0.03em",
-            backgroundImage: SPOTS_DARK,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.12)",
           }}
         >
-          {lang === "en" ? "What they" : "Lo que dicen"}
-        </motion.h2>
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-serif italic font-light leading-[1.05] text-white/20"
-          style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
-        >
-          {lang === "en" ? "say." : "mis clientes."}
-        </motion.h2>
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            animate={{ opacity: hovBtn ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+            style={{ background: "rgba(255,255,255,0.05)" }}
+          />
+          <span className="relative z-10 flex items-center gap-2.5 text-[9px] font-black uppercase tracking-[0.3em] text-white/45 group-hover:text-white/75 transition-colors duration-300">
+            {lang === "en" ? "Leave a review" : "Dejar una reseña"}
+            <MessageSquarePlus size={12} />
+          </span>
+        </motion.button>
       </div>
 
       {/* ── MOBILE: horizontal scroll carousel ── */}
       <div
         ref={carouselRef}
-        className="md:hidden relative z-10 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-3 -mx-5 px-5"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        className="md:hidden relative z-10 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5"
+        style={{ WebkitOverflowScrolling: "touch", paddingBottom: "4px" }}
       >
         {items.map((item, i) => (
           <div
             key={item.key}
-            className="snap-start shrink-0"
-            style={{ width: "84vw" }}
+            className="snap-start shrink-0 flex flex-col"
+            style={{ width: "80vw" }}
           >
             <ReviewCard item={item} lang={lang} index={i} />
           </div>
@@ -260,33 +291,6 @@ export const TrustSection = () => {
             </p>
           </motion.div>
         ))}
-      </div>
-
-      {/* Leave a review — subtle CTA below metrics */}
-      <div className="relative z-10 flex justify-center mt-8">
-        <motion.button
-          onClick={() => setShowForm(true)}
-          onHoverStart={() => setHovBtn(true)}
-          onHoverEnd={() => setHovBtn(false)}
-          whileTap={{ scale: 0.97 }}
-          className="group relative inline-flex items-center gap-2.5 px-6 py-3 overflow-hidden"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.1)",
-          }}
-        >
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            animate={{ opacity: hovBtn ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-            style={{ background: "rgba(255,255,255,0.04)" }}
-          />
-          <span className="relative z-10 flex items-center gap-2.5 text-[9px] font-black uppercase tracking-[0.3em] text-white/40 group-hover:text-white/70 transition-colors duration-300">
-            {lang === "en" ? "Leave a review" : "Dejar una reseña"}
-            <MessageSquarePlus size={12} />
-          </span>
-        </motion.button>
       </div>
 
       {/* Review form overlay */}
