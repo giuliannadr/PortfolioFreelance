@@ -80,8 +80,8 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
         </motion.span>
       </div>
 
-      {/* ── Two cards — always side-by-side ── */}
-      <div className="grid grid-cols-2 gap-2 md:gap-4">
+      {/* ── Two cards — stacked on mobile, side-by-side from sm ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
         {/* CODE card — dark, colorful, vibrant — FIRST */}
         <motion.div
@@ -100,25 +100,25 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           {/* Ambient blobs */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute blur-2xl rounded-full"
-              style={{ background: "#7C3AED", width: 160, height: 160, right: -30, bottom: -20, opacity: 0.15 }} />
+              style={{ background: "#7C3AED", width: 200, height: 200, right: -40, bottom: -30, opacity: 0.15 }} />
             <div className="absolute blur-2xl rounded-full"
-              style={{ background: "#06B6D4", width: 120, height: 120, left: -20, top: "50%", opacity: 0.10 }} />
+              style={{ background: "#06B6D4", width: 150, height: 150, left: -30, top: "40%", opacity: 0.10 }} />
           </div>
 
           {/* Card header */}
-          <div className="flex items-center gap-2 px-4 py-3 md:px-5 md:py-4 border-b border-white/[0.07] relative">
-            <div className="w-5 h-5 md:w-7 md:h-7 rounded-full border border-[#CC1500]/40 flex items-center justify-center shrink-0"
+          <div className="flex items-center gap-3 px-6 py-5 border-b border-white/[0.07] relative">
+            <div className="w-8 h-8 rounded-full border border-[#CC1500]/40 flex items-center justify-center shrink-0"
               style={{ background: "rgba(204,21,0,0.12)" }}>
-              <Code2 size={11} style={{ color: "#CC1500" }} />
+              <Code2 size={14} style={{ color: "#CC1500" }} />
             </div>
             <div>
-              <p className="hidden md:block text-[7.5px] font-black uppercase tracking-[0.38em] leading-none mb-0.5"
+              <p className="text-[7.5px] font-black uppercase tracking-[0.38em] leading-none mb-1"
                 style={{ fontFamily: "Poppins, sans-serif", color: "rgba(204,21,0,0.7)" }}>
                 {lang === "en" ? "Custom code" : "Código a medida"}
               </p>
-              <p className="text-[0.65rem] md:text-[0.8rem] font-black uppercase text-white leading-none"
+              <p className="text-[0.85rem] font-black uppercase text-white leading-none"
                 style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
-                {lang === "en" ? "Real code" : "Código real"}
+                {lang === "en" ? "With real code" : "Con código real"}
               </p>
             </div>
           </div>
@@ -134,13 +134,13 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: i * 0.07 + 0.08 }}
-                  className="flex items-center gap-2 px-4 py-2.5 md:px-5 md:py-3.5"
+                  className="flex items-center gap-3 px-6 py-4"
                 >
-                  <div className="w-5 h-5 md:w-7 md:h-7 rounded-full flex items-center justify-center shrink-0"
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: pt.bg, border: `1px solid ${pt.color}40` }}>
-                    <Icon size={11} style={{ color: pt.color }} />
+                    <Icon size={13} style={{ color: pt.color }} />
                   </div>
-                  <p className="text-[0.62rem] md:text-[0.78rem] leading-snug text-white/80 line-clamp-2 md:line-clamp-none">
+                  <p className="text-[0.8rem] leading-snug text-white/80">
                     {lang === "en" ? pt.en : pt.es}
                   </p>
                 </motion.li>
@@ -158,19 +158,19 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           className="flex flex-col bg-white border border-[#0A0A0A]/8 overflow-hidden"
         >
           {/* Card header */}
-          <div className="flex items-center gap-2 px-4 py-3 md:px-5 md:py-4 border-b border-[#0A0A0A]/6"
+          <div className="flex items-center gap-3 px-6 py-5 border-b border-[#0A0A0A]/6"
             style={{ background: "rgba(10,10,10,0.02)" }}>
-            <div className="w-5 h-5 md:w-7 md:h-7 rounded-full border border-[#0A0A0A]/10 flex items-center justify-center shrink-0">
-              <Globe size={11} className="text-[#0A0A0A]/30" />
+            <div className="w-8 h-8 rounded-full border border-[#0A0A0A]/10 flex items-center justify-center shrink-0">
+              <Globe size={14} className="text-[#0A0A0A]/30" />
             </div>
             <div>
-              <p className="hidden md:block text-[7.5px] font-black uppercase tracking-[0.38em] text-[#0A0A0A]/30 leading-none mb-0.5"
+              <p className="text-[7.5px] font-black uppercase tracking-[0.38em] text-[#0A0A0A]/30 leading-none mb-1"
                 style={{ fontFamily: "Poppins, sans-serif" }}>
                 Wix · WordPress · Shopify
               </p>
-              <p className="text-[0.65rem] md:text-[0.8rem] font-black uppercase text-[#0A0A0A]/40 leading-none"
+              <p className="text-[0.85rem] font-black uppercase text-[#0A0A0A]/40 leading-none"
                 style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
-                {lang === "en" ? "Template" : "Plantilla"}
+                {lang === "en" ? "With a template" : "Con una plantilla"}
               </p>
             </div>
           </div>
@@ -184,10 +184,10 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.07 }}
-                className="flex items-center gap-2 px-4 py-2.5 md:px-5 md:py-3.5"
+                className="flex items-center gap-3 px-6 py-4"
               >
-                <XCircle size={13} className="shrink-0" style={{ color: "rgba(204,21,0,0.35)" }} />
-                <p className="text-[0.62rem] md:text-[0.78rem] leading-snug text-[#0A0A0A]/45 line-clamp-2 md:line-clamp-none">{pt}</p>
+                <XCircle size={16} className="shrink-0" style={{ color: "rgba(204,21,0,0.35)" }} />
+                <p className="text-[0.8rem] leading-snug text-[#0A0A0A]/45">{pt}</p>
               </motion.li>
             ))}
           </ul>
