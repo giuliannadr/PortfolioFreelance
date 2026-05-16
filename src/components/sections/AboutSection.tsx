@@ -24,7 +24,6 @@ export const AboutSection = () => {
   const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
   const headGrad   = SPOTS_DARK;
-  const italicGrad = "linear-gradient(110deg, #ff4422 0%, #CC1500 45%, #ff7755 100%)";
 
   const headline = lang === "en" ? "Why work" : "Por qué trabajar";
   const italic   = lang === "en" ? "with me?" : "conmigo.";
@@ -72,8 +71,8 @@ export const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-serif italic font-light leading-[1.05]"
-          style={{ fontSize: "clamp(2rem, 5vw, 5.5rem)", backgroundImage: italicGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          className="block font-serif italic font-light leading-[1.05] text-white/20"
+          style={{ fontSize: "clamp(2rem, 5vw, 5.5rem)" }}
         >
           {italic}
         </motion.h2>
