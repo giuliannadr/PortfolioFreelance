@@ -1,6 +1,5 @@
 import { Layout }           from "@/components/layout/Layout";
 import { Hero }             from "@/components/sections/Hero";
-import { WhatIBuild }       from "@/components/sections/WhatIBuild";
 import { UseCasesSection }  from "@/components/sections/UseCasesSection";
 import { AboutSection }     from "./components/sections/AboutSection";
 import { TrustSection }     from "./components/sections/TrustSection";
@@ -27,7 +26,6 @@ function App() {
       <Layout>
         <Hero />
         <Marquee />
-        <WhatIBuild />
         <UseCasesSection />
         <AboutSection />
         <ProcessSection />
