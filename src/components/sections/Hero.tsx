@@ -234,8 +234,8 @@ export const Hero = () => {
         <SideScroller side="left" />
         <SideScroller side="right" reverse />
 
-        {/* ── MULTI-COLOR BLOBS ── */}
-        <motion.div className="hidden lg:block absolute inset-0 pointer-events-none" style={{ x: blobX, y: blobY, zIndex: 1 }}>
+        {/* ── MULTI-COLOR BLOBS — always visible, parallax only on lg+ ── */}
+        <motion.div className="absolute inset-0 pointer-events-none" style={{ x: blobX, y: blobY, zIndex: 1 }}>
           {BLOBS.map((blob, i) => (
             <div key={i}
               className={`${blob.cls} absolute blur-3xl`}
@@ -257,7 +257,7 @@ export const Hero = () => {
         </motion.div>
 
         {/* ── FLOATING DOTS (each its blob color) ── */}
-        <motion.div className="hidden lg:block absolute inset-0 pointer-events-none" style={{ x: dotsX, y: dotsY, zIndex: 3 }}>
+        <motion.div className="absolute inset-0 pointer-events-none" style={{ x: dotsX, y: dotsY, zIndex: 3 }}>
           {DOTS.map((dot, i) => (
             <motion.div key={i} className="absolute rounded-full"
               style={{ top: dot.top, left: dot.left, width: dot.size, height: dot.size, background: dot.color }}
