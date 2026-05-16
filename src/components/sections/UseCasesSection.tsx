@@ -276,8 +276,8 @@ export const UseCasesSection = () => {
           style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.85rem, 1.4vw, 1rem)", lineHeight: 1.7 }}
         >
           {lang === "en"
-            ? "Every project is different — but the goal is always the same: a site that works for you while you focus on your business."
-            : "Cada proyecto es distinto, pero el objetivo siempre es el mismo: una web que trabaje por vos mientras te enfocás en tu negocio."}
+            ? "These are just a few examples of what's possible with code. No templates, no limits — if you can imagine it, it can be built."
+            : "Estos son solo algunos ejemplos de lo que se puede hacer con código. Sin plantillas, sin límites — si lo podés imaginar, se puede construir."}
         </motion.p>
       </div>
 
@@ -371,7 +371,9 @@ export const UseCasesSection = () => {
         className="relative z-20 mt-14 text-center"
       >
         <p className="text-[#0A0A0A]/35 text-sm mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
-          {lang === "en" ? "Don't see your industry? I can still help." : "¿No ves tu rubro? También puedo ayudarte."}
+          {lang === "en"
+            ? "Don't see your industry? With code, almost anything is possible."
+            : "¿No ves tu rubro? Con código, casi todo es posible."}
         </p>
         <a
           href="#contact"

@@ -1,6 +1,7 @@
 import { Layout }           from "@/components/layout/Layout";
 import { Hero }             from "@/components/sections/Hero";
 import { UseCasesSection }  from "@/components/sections/UseCasesSection";
+import { WhyCodeSection }   from "@/components/sections/WhyCodeSection";
 import { AboutSection }     from "./components/sections/AboutSection";
 import { TrustSection }     from "./components/sections/TrustSection";
 import { ProcessSection }   from "./components/sections/ProcessSection";
@@ -27,6 +28,7 @@ function App() {
         <Hero />
         <Marquee />
         <UseCasesSection />
+        <WhyCodeSection />
         <AboutSection />
         <ProcessSection />
         <TrustSection />
