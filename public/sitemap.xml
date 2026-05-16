@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- Página principal -->
   <url>
-    <loc>https://giulianadirocco.com/</loc>
+    <loc>https://www.giulianadirocco.com/</loc>
     <lastmod>2026-05-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://giulianadirocco.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://giulianadirocco.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.giulianadirocco.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.giulianadirocco.com/" />
   </url>
 
   <!-- Secciones internas (anclas) -->
   <url>
-    <loc>https://giulianadirocco.com/#about</loc>
+    <loc>https://www.giulianadirocco.com/#about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://giulianadirocco.com/#projects</loc>
+    <loc>https://www.giulianadirocco.com/#projects</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://giulianadirocco.com/#services</loc>
+    <loc>https://www.giulianadirocco.com/#services</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://giulianadirocco.com/#trust</loc>
+    <loc>https://www.giulianadirocco.com/#trust</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://giulianadirocco.com/#contact</loc>
+    <loc>https://www.giulianadirocco.com/#contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -1,4 +1,4 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 
-Sitemap: https://giulianadirocco.com/sitemap.xml
+Sitemap: https://www.giulianadirocco.com/sitemap.xml
