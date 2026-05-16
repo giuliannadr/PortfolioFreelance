@@ -227,8 +227,15 @@ export const CTASection = () => {
         </div>
       </motion.div>
 
-      {/* Decorative horizontal rule */}
-      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      {/* Copyright line */}
+      <div className="absolute bottom-0 inset-x-0 border-t border-white/[0.07] flex items-center justify-between px-5 sm:px-8 lg:px-10 py-4">
+        <p className="text-[9px] font-black uppercase tracking-[0.4em] text-white/20" style={{ fontFamily: "Poppins, sans-serif" }}>
+          © {new Date().getFullYear()} — Giuliana Di Rocco
+        </p>
+        <p className="text-[9px] font-black uppercase tracking-[0.4em] text-white/20" style={{ fontFamily: "Poppins, sans-serif" }}>
+          Argentina
+        </p>
+      </div>
     </section>
   );
 };
