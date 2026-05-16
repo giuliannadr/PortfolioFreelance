@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { WhyCodePanel } from "./WhyCodeSection";
@@ -212,13 +212,97 @@ const cardVariants = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] as const } }),
 };
 
+// ── Shared card inner content ─────────────────────────────────────────────────
+const CardInner = ({ c, content, lang }: {
+  c: typeof CASES[0];
+  content: { service: string; who: string; title: string; hook: string };
+  lang: string;
+}) => (
+  <>
+    {/* Mockup preview */}
+    <div className="relative h-36 overflow-hidden shrink-0">
+      <c.Mockup accent={c.accent} />
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, transparent 55%, #ffffff 100%)" }} />
+      <div className="absolute top-0 left-0 right-0 h-[2.5px]" style={{ background: c.accent }} />
+    </div>
+
+    {/* Content */}
+    <div className="relative px-5 pb-5 pt-3 flex flex-col gap-2 flex-1">
+      <div className="flex items-center justify-between">
+        <span
+          className="text-[7px] font-black uppercase tracking-[0.35em] px-2 py-0.5 rounded-full"
+          style={{ fontFamily: "Poppins, sans-serif", background: `${c.accent}15`, color: c.accent }}
+        >
+          {content.service}
+        </span>
+      </div>
+      <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#0A0A0A]/30"
+        style={{ fontFamily: "Poppins, sans-serif" }}>
+        {content.who}
+      </p>
+      <h3
+        className="font-black uppercase leading-none"
+        style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.05rem, 2vw, 1.3rem)", letterSpacing: "-0.02em", color: "#0A0A0A" }}
+      >
+        {content.title}
+      </h3>
+      <p className="text-[#0A0A0A]/45 text-[0.8rem] leading-relaxed flex-1">
+        {content.hook}
+      </p>
+      {/* Hover CTA line — desktop only */}
+      <div className="hidden md:flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="h-[1px] flex-1" style={{ background: c.accent, opacity: 0.35 }} />
+        <span className="text-[7px] font-black uppercase tracking-[0.3em]"
+          style={{ fontFamily: "Poppins, sans-serif", color: c.accent }}>
+          {lang === "en" ? "I can build this" : "Puedo hacerte esto"}
+        </span>
+      </div>
+    </div>
+  </>
+);
+
 // ── Component ─────────────────────────────────────────────────────────────────
 export const UseCasesSection = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language === "en" ? "en" : "es";
   const ref = useRef<HTMLElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselIndexRef = useRef(0);
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+
+  // Auto-scroll carousel
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    let isPaused = false;
+
+    const advance = () => {
+      if (isPaused) return;
+      const cards = el.querySelectorAll<HTMLElement>("[data-carousel-card]");
+      if (!cards.length) return;
+      carouselIndexRef.current = (carouselIndexRef.current + 1) % cards.length;
+      const card = cards[carouselIndexRef.current];
+      el.scrollTo({ left: card.offsetLeft - 20, behavior: "smooth" });
+    };
+
+    const interval = setInterval(advance, 2800);
+
+    const pause = () => { isPaused = true; };
+    const resume = () => { setTimeout(() => { isPaused = false; }, 800); };
+
+    el.addEventListener("touchstart", pause, { passive: true });
+    el.addEventListener("touchend", resume, { passive: true });
+
+    return () => {
+      clearInterval(interval);
+      el.removeEventListener("touchstart", pause);
+      el.removeEventListener("touchend", resume);
+    };
+  }, []);
 
   const headGrad   = "linear-gradient(120deg, #CC1500 0%, #0A0A0A 32%, #7C3AED 65%, #06B6D4 100%)";
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)";
@@ -227,21 +311,26 @@ export const UseCasesSection = () => {
     <section ref={ref} id="what-i-build" className="py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative overflow-hidden" style={{ background: BG }}>
 
       {/* Edge fades */}
-      <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10" style={{ background: `linear-gradient(to bottom, ${BG}, transparent)` }} />
-      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10" style={{ background: `linear-gradient(to top, ${BG}, transparent)` }} />
+      <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10"
+        style={{ background: `linear-gradient(to bottom, ${BG}, transparent)` }} />
+      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10"
+        style={{ background: `linear-gradient(to top, ${BG}, transparent)` }} />
 
       {/* Ambient blobs */}
       <motion.div className="absolute inset-0 pointer-events-none" style={{ y: blobY }}>
         {BLOBS.map((b, i) => (
-          <div key={i} className="absolute blur-3xl" style={{ background: b.color, width: b.w, height: b.w, left: b.x, top: b.y, opacity: b.op, transform: "translate(-50%,-50%)", borderRadius: "50%" }} />
+          <div key={i} className="absolute blur-3xl"
+            style={{ background: b.color, width: b.w, height: b.w, left: b.x, top: b.y, opacity: b.op, transform: "translate(-50%,-50%)", borderRadius: "50%" }} />
         ))}
       </motion.div>
 
       {/* Label */}
       <div className="flex items-center gap-5 mb-14 relative z-20">
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30" style={{ fontFamily: "Poppins, sans-serif" }}>02</span>
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30"
+          style={{ fontFamily: "Poppins, sans-serif" }}>02</span>
         <div className="h-px flex-1 bg-[#0A0A0A]/12" />
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30" style={{ fontFamily: "Poppins, sans-serif" }}>
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30"
+          style={{ fontFamily: "Poppins, sans-serif" }}>
           {lang === "en" ? "What I build" : "Lo que construyo"}
         </span>
       </div>
@@ -282,8 +371,42 @@ export const UseCasesSection = () => {
         </motion.p>
       </div>
 
-      {/* Cards */}
-      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {/* ── MOBILE: auto-scroll touch carousel ── */}
+      <div
+        ref={carouselRef}
+        className="md:hidden relative z-20 flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-3 -mx-5 px-5"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
+        {CASES.map((c, i) => {
+          const content = lang === "en" ? c.en : c.es;
+          return (
+            <div
+              key={i}
+              data-carousel-card
+              className="snap-start shrink-0 flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white"
+              style={{ width: "82vw" }}
+            >
+              <CardInner c={c} content={content} lang={lang} />
+            </div>
+          );
+        })}
+        {/* Trailing spacer so last card scrolls fully into view */}
+        <div className="shrink-0 w-5" />
+      </div>
+
+      {/* Dot indicators — mobile */}
+      <div className="md:hidden relative z-20 flex justify-center gap-1.5 mt-3">
+        {CASES.map((_, i) => (
+          <div
+            key={i}
+            className="w-1 h-1 rounded-full transition-all duration-300"
+            style={{ background: i === 0 ? "#CC1500" : "rgba(10,10,10,0.15)" }}
+          />
+        ))}
+      </div>
+
+      {/* ── DESKTOP: animated grid ── */}
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-3 relative z-20">
         {CASES.map((c, i) => {
           const content = lang === "en" ? c.en : c.es;
           return (
@@ -300,7 +423,7 @@ export const UseCasesSection = () => {
                 boxShadow: `0 24px 60px ${c.accent}28, 0 8px 24px ${c.accent}15`,
                 transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
               }}
-              className="group flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white cursor-default"
+              className="group flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white cursor-default relative"
             >
               {/* Hover background glow */}
               <motion.div
@@ -310,54 +433,7 @@ export const UseCasesSection = () => {
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.35 }}
               />
-
-              {/* Mockup preview */}
-              <div className="relative h-36 overflow-hidden shrink-0">
-                <c.Mockup accent={c.accent} />
-                {/* Gradient fade to white at bottom */}
-                <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(to bottom, transparent 55%, #ffffff 100%)` }} />
-                {/* Accent top bar */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px]" style={{ background: c.accent }} />
-              </div>
-
-              {/* Content */}
-              <div className="relative px-5 pb-5 pt-3 flex flex-col gap-2 flex-1">
-                {/* Service type badge */}
-                <div className="flex items-center justify-between">
-                  <span
-                    className="text-[7px] font-black uppercase tracking-[0.35em] px-2 py-0.5 rounded-full"
-                    style={{ fontFamily: "Poppins, sans-serif", background: `${c.accent}15`, color: c.accent }}
-                  >
-                    {content.service}
-                  </span>
-                </div>
-
-                {/* Who it's for */}
-                <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#0A0A0A]/30" style={{ fontFamily: "Poppins, sans-serif" }}>
-                  {content.who}
-                </p>
-
-                {/* Title */}
-                <h3
-                  className="font-black uppercase leading-none"
-                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.05rem, 2vw, 1.3rem)", letterSpacing: "-0.02em", color: "#0A0A0A" }}
-                >
-                  {content.title}
-                </h3>
-
-                {/* Hook */}
-                <p className="text-[#0A0A0A]/45 text-[0.8rem] leading-relaxed flex-1">
-                  {content.hook}
-                </p>
-
-                {/* Hover CTA line */}
-                <div className="flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="h-[1px] flex-1" style={{ background: c.accent, opacity: 0.35 }} />
-                  <span className="text-[7px] font-black uppercase tracking-[0.3em]" style={{ fontFamily: "Poppins, sans-serif", color: c.accent }}>
-                    {lang === "en" ? "I can build this" : "Puedo hacerte esto"}
-                  </span>
-                </div>
-              </div>
+              <CardInner c={c} content={content} lang={lang} />
             </motion.div>
           );
         })}
