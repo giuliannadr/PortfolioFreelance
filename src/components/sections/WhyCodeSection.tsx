@@ -80,59 +80,15 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
         </motion.span>
       </div>
 
-      {/* ── Two cards ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* ── Two cards — always side-by-side ── */}
+      <div className="grid grid-cols-2 gap-2 md:gap-4">
 
-        {/* TEMPLATE card — light, boring, crossed out */}
+        {/* CODE card — dark, colorful, vibrant — FIRST */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-30px" }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col bg-white border border-[#0A0A0A]/8 overflow-hidden"
-        >
-          {/* Card header */}
-          <div className="flex items-center gap-3 px-5 py-4 border-b border-[#0A0A0A]/6"
-            style={{ background: "rgba(10,10,10,0.02)" }}>
-            <div className="w-7 h-7 rounded-full border border-[#0A0A0A]/10 flex items-center justify-center shrink-0">
-              <Globe size={13} className="text-[#0A0A0A]/30" />
-            </div>
-            <div>
-              <p className="text-[7.5px] font-black uppercase tracking-[0.38em] text-[#0A0A0A]/30 leading-none mb-0.5"
-                style={{ fontFamily: "Poppins, sans-serif" }}>
-                Wix · WordPress · Shopify
-              </p>
-              <p className="text-[0.8rem] font-black uppercase text-[#0A0A0A]/40 leading-none"
-                style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
-                {lang === "en" ? "With a template" : "Con una plantilla"}
-              </p>
-            </div>
-          </div>
-
-          {/* Points */}
-          <ul className="flex flex-col flex-1 divide-y divide-[#0A0A0A]/[0.05]">
-            {tPoints.map((pt, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -8 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: i * 0.07 }}
-                className="flex items-center gap-3 px-5 py-3.5"
-              >
-                <XCircle size={16} className="shrink-0" style={{ color: "rgba(204,21,0,0.35)" }} />
-                <p className="text-[0.78rem] leading-snug text-[#0A0A0A]/45">{pt}</p>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* CODE card — dark, colorful, vibrant */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-30px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col overflow-hidden border border-[#CC1500]/20 relative"
           style={{ background: "#0A0A0A" }}
         >
@@ -150,19 +106,19 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           </div>
 
           {/* Card header */}
-          <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.07] relative">
-            <div className="w-7 h-7 rounded-full border border-[#CC1500]/40 flex items-center justify-center shrink-0"
+          <div className="flex items-center gap-2 px-3 py-2.5 md:px-5 md:py-4 border-b border-white/[0.07] relative">
+            <div className="w-5 h-5 md:w-7 md:h-7 rounded-full border border-[#CC1500]/40 flex items-center justify-center shrink-0"
               style={{ background: "rgba(204,21,0,0.12)" }}>
-              <Code2 size={13} style={{ color: "#CC1500" }} />
+              <Code2 size={11} style={{ color: "#CC1500" }} />
             </div>
             <div>
-              <p className="text-[7.5px] font-black uppercase tracking-[0.38em] leading-none mb-0.5"
+              <p className="hidden md:block text-[7.5px] font-black uppercase tracking-[0.38em] leading-none mb-0.5"
                 style={{ fontFamily: "Poppins, sans-serif", color: "rgba(204,21,0,0.7)" }}>
                 {lang === "en" ? "Custom code" : "Código a medida"}
               </p>
-              <p className="text-[0.8rem] font-black uppercase text-white leading-none"
+              <p className="text-[0.65rem] md:text-[0.8rem] font-black uppercase text-white leading-none"
                 style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
-                {lang === "en" ? "With real code" : "Con código real"}
+                {lang === "en" ? "Real code" : "Código real"}
               </p>
             </div>
           </div>
@@ -178,18 +134,62 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: i * 0.07 + 0.08 }}
-                  className="flex items-center gap-3 px-5 py-3.5"
+                  className="flex items-center gap-2 px-3 py-2 md:px-5 md:py-3.5"
                 >
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                  <div className="w-5 h-5 md:w-7 md:h-7 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: pt.bg, border: `1px solid ${pt.color}40` }}>
-                    <Icon size={13} style={{ color: pt.color }} />
+                    <Icon size={11} style={{ color: pt.color }} />
                   </div>
-                  <p className="text-[0.78rem] leading-snug text-white/80">
+                  <p className="text-[0.62rem] md:text-[0.78rem] leading-snug text-white/80 line-clamp-2 md:line-clamp-none">
                     {lang === "en" ? pt.en : pt.es}
                   </p>
                 </motion.li>
               );
             })}
+          </ul>
+        </motion.div>
+
+        {/* TEMPLATE card — light, boring, crossed out — SECOND */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-30px" }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col bg-white border border-[#0A0A0A]/8 overflow-hidden"
+        >
+          {/* Card header */}
+          <div className="flex items-center gap-2 px-3 py-2.5 md:px-5 md:py-4 border-b border-[#0A0A0A]/6"
+            style={{ background: "rgba(10,10,10,0.02)" }}>
+            <div className="w-5 h-5 md:w-7 md:h-7 rounded-full border border-[#0A0A0A]/10 flex items-center justify-center shrink-0">
+              <Globe size={11} className="text-[#0A0A0A]/30" />
+            </div>
+            <div>
+              <p className="hidden md:block text-[7.5px] font-black uppercase tracking-[0.38em] text-[#0A0A0A]/30 leading-none mb-0.5"
+                style={{ fontFamily: "Poppins, sans-serif" }}>
+                Wix · WordPress · Shopify
+              </p>
+              <p className="text-[0.65rem] md:text-[0.8rem] font-black uppercase text-[#0A0A0A]/40 leading-none"
+                style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
+                {lang === "en" ? "Template" : "Plantilla"}
+              </p>
+            </div>
+          </div>
+
+          {/* Points */}
+          <ul className="flex flex-col flex-1 divide-y divide-[#0A0A0A]/[0.05]">
+            {tPoints.map((pt, i) => (
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.07 }}
+                className="flex items-center gap-2 px-3 py-2 md:px-5 md:py-3.5"
+              >
+                <XCircle size={13} className="shrink-0" style={{ color: "rgba(204,21,0,0.35)" }} />
+                <p className="text-[0.62rem] md:text-[0.78rem] leading-snug text-[#0A0A0A]/45 line-clamp-2 md:line-clamp-none">{pt}</p>
+              </motion.li>
+            ))}
           </ul>
         </motion.div>
       </div>
