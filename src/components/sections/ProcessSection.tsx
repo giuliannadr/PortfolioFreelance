@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { SPOTS_LIGHT } from "@/lib/textGradients";
 
 const BG = "#F8F7F5";
 
@@ -80,7 +81,7 @@ export const ProcessSection = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-18%", "18%"]);
 
-  const headGrad   = "linear-gradient(120deg, #CC1500 0%, #ffffff 38%, #7C3AED 72%, #06B6D4 100%)";
+  const headGrad   = SPOTS_LIGHT;
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)";
 
   return (

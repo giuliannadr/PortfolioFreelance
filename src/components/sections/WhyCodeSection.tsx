@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { XCircle, Paintbrush, Code2, Zap, BadgeCheck, ShieldCheck, Globe } from "lucide-react";
+import { SPOTS_LIGHT } from "@/lib/textGradients";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const TEMPLATE_POINTS = {
@@ -36,7 +37,7 @@ const CODE_POINTS: {
 // ── Component ─────────────────────────────────────────────────────────────────
 export const WhyCodePanel = ({ lang }: { lang: string }) => {
   const tPoints = lang === "en" ? TEMPLATE_POINTS.en : TEMPLATE_POINTS.es;
-  const headGrad   = "linear-gradient(120deg, #CC1500 0%, #7C3AED 52%, #06B6D4 100%)";
+  const headGrad   = SPOTS_LIGHT;
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 50%, #ff5533 100%)";
 
   return (
