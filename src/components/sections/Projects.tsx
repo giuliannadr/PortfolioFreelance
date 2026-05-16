@@ -467,91 +467,106 @@ export const Projects = () => {
       {/* ── MODAL (project detail) ── */}
       <AnimatePresence>
         {selectedId && selected && (
-          <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-10">
+          <>
+            {/* Backdrop — independent fixed element, covers full viewport */}
             <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setSelectedId(null)}
-              className="absolute inset-0 bg-[#0A0A0A]/96 backdrop-blur-xl"
+              className="fixed inset-0 z-[1000] bg-[#0A0A0A]/96 backdrop-blur-xl"
             />
-            {/* Close button outside scroll area so it stays visible on mobile */}
-            <button
-              onClick={() => setSelectedId(null)}
-              className="absolute top-5 right-5 md:top-7 md:right-7 z-[1002] w-10 h-10 flex items-center justify-center border border-white/10 bg-[#0A0A0A] text-white/40 hover:border-[#CC1500] hover:text-white transition-all"
-            >
-              <X size={17} />
-            </button>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.97, y: 16 }}
-              animate={{ opacity: 1, scale: 1,    y: 0 }}
-              exit={{ opacity: 0,  scale: 0.97,   y: 16 }}
-              transition={{ type: "spring", stiffness: 280, damping: 28 }}
-              className="relative w-full max-w-5xl bg-[#111] overflow-hidden border border-white/8 z-[1001] max-h-[88vh] overflow-y-auto scrollbar-hide"
-            >
 
-              <div className="flex flex-col lg:flex-row min-h-[500px]">
-                {/* media */}
-                <div className="relative lg:w-1/2 min-h-[300px] bg-[#0c0c0c] hidden lg:block">
-                  {selected.video
-                    ? <video src={selected.video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
-                    : <img src={selected.image} className="w-full h-full object-cover" alt="" />}
-                </div>
-
-                {/* info */}
-                <motion.div
-                  initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
-                  className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-[#111]"
-                >
-                  <div className="mb-8">
-                    <div className="flex items-center gap-4 mb-5 flex-wrap">
-                      <span className="text-[#CC1500] font-black uppercase tracking-[0.4em] text-[10px]" style={{ fontFamily: "Poppins, sans-serif" }}>{selected.category}</span>
-                      {selected.process && (
-                        <button
-                          onClick={() => { setSelectedId(null); setProcessId(selected.id); }}
-                          className="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest border border-[#CC1500]/30 text-[#CC1500] hover:bg-[#CC1500] hover:text-white transition-all"
-                          style={{ fontFamily: "Poppins, sans-serif" }}
-                        >
-                          <Eye size={12} /> {lang === "en" ? "See process" : "Ver proceso"}
-                        </button>
-                      )}
-                    </div>
-                    <h2
-                      className="font-black tracking-tighter italic leading-[0.88] text-white"
-                      style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
-                    >
-                      {selected.title}
-                    </h2>
-                  </div>
-
-                  <p className="text-white/50 text-base font-light leading-relaxed mb-10 max-w-md">{selected.longDescription}</p>
-
-                  <div className="space-y-8">
-                    <div>
-                      <h4 className="text-white/20 text-[10px] uppercase tracking-[0.3em] font-black mb-3" style={{ fontFamily: "Poppins, sans-serif" }}>Stack</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selected.stack.map(tech => (
-                          <span key={tech} className="px-4 py-2 bg-white/5 text-[10px] text-white/40 font-black uppercase border border-white/5 flex items-center gap-2" style={{ fontFamily: "Poppins, sans-serif" }}>
-                            <div className="w-1 h-1 bg-[#CC1500]" /> {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    {selected.liveUrl && (
-                      <a
-                        href={selected.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center justify-center gap-3 py-4 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all group"
+            {/* Modal panel — centered flex container, no padding that clips backdrop */}
+            <div className="fixed inset-0 z-[1001] flex items-center justify-center p-4 md:p-10 pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.97, y: 16 }}
+                animate={{ opacity: 1, scale: 1,    y: 0 }}
+                exit={{ opacity: 0,  scale: 0.97,   y: 16 }}
+                transition={{ type: "spring", stiffness: 280, damping: 28 }}
+                className="relative w-full max-w-5xl bg-[#111] border border-white/8 pointer-events-auto overflow-hidden max-h-[90vh] flex flex-col"
+              >
+                {/* Sticky modal header with close button — always visible, never scrolls away */}
+                <div className="flex items-center justify-between px-6 md:px-10 py-4 border-b border-white/[0.06] shrink-0">
+                  <span
+                    className="text-[#CC1500] font-black uppercase tracking-[0.4em] text-[10px]"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    {selected.category}
+                  </span>
+                  <div className="flex items-center gap-3">
+                    {selected.process && (
+                      <button
+                        onClick={() => { setSelectedId(null); setProcessId(selected.id); }}
+                        className="flex items-center gap-2 px-3 py-1.5 text-[9px] font-black uppercase tracking-widest border border-[#CC1500]/30 text-[#CC1500] hover:bg-[#CC1500] hover:text-white transition-all"
                         style={{ fontFamily: "Poppins, sans-serif" }}
                       >
-                        {lang === "en" ? "Visit site" : "Ver sitio"}
-                        <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </a>
+                        <Eye size={11} /> {lang === "en" ? "Process" : "Proceso"}
+                      </button>
                     )}
+                    <button
+                      onClick={() => setSelectedId(null)}
+                      className="w-9 h-9 flex items-center justify-center border border-white/10 bg-white/[0.03] text-white/40 hover:border-[#CC1500] hover:text-white transition-all"
+                    >
+                      <X size={15} />
+                    </button>
                   </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
+                </div>
+
+                {/* Scrollable content */}
+                <div className="overflow-y-auto scrollbar-hide flex-1">
+                  <div className="flex flex-col lg:flex-row min-h-[420px]">
+                    {/* media */}
+                    <div className="relative lg:w-1/2 min-h-[260px] bg-[#0c0c0c] hidden lg:block">
+                      {selected.video
+                        ? <video src={selected.video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                        : <img src={selected.image} className="w-full h-full object-cover" alt="" />}
+                    </div>
+
+                    {/* info */}
+                    <motion.div
+                      initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
+                      className="lg:w-1/2 p-8 md:p-10 flex flex-col justify-center bg-[#111]"
+                    >
+                      <h2
+                        className="font-black tracking-tighter italic leading-[0.88] text-white mb-6"
+                        style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+                      >
+                        {selected.title}
+                      </h2>
+
+                      <p className="text-white/50 text-base font-light leading-relaxed mb-8 max-w-md">{selected.longDescription}</p>
+
+                      <div className="space-y-7">
+                        <div>
+                          <h4 className="text-white/20 text-[10px] uppercase tracking-[0.3em] font-black mb-3" style={{ fontFamily: "Poppins, sans-serif" }}>Stack</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {selected.stack.map(tech => (
+                              <span key={tech} className="px-4 py-2 bg-white/5 text-[10px] text-white/40 font-black uppercase border border-white/5 flex items-center gap-2" style={{ fontFamily: "Poppins, sans-serif" }}>
+                                <div className="w-1 h-1 bg-[#CC1500]" /> {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        {selected.liveUrl && (
+                          <a
+                            href={selected.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center justify-center gap-3 py-4 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all group"
+                            style={{ fontFamily: "Poppins, sans-serif" }}
+                          >
+                            {lang === "en" ? "Visit site" : "Ver sitio"}
+                            <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </a>
+                        )}
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </>
         )}
       </AnimatePresence>
 

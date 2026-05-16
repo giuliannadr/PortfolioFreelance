@@ -50,22 +50,33 @@ const TypewriterWord = ({ lang }: { lang: string }) => {
   );
 };
 
-// ── Cursor dot ─────────────────────────────────────────────────────────────
+// ── Cursor dot (desktop/mouse only) ────────────────────────────────────────
 const CursorDot = () => {
   const mx = useMotionValue(-20);
   const my = useMotionValue(-20);
   const x  = useSpring(mx, { stiffness: 200, damping: 20 });
   const y  = useSpring(my, { stiffness: 200, damping: 20 });
-  const [vis, setVis] = useState(false);
+  const [vis,       setVis]       = useState(false);
+  const [isPointer, setIsPointer] = useState(false);
+
   useEffect(() => {
+    // Only show on real pointer devices (mouse/trackpad), not touch screens
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setIsPointer(mq.matches);
+    if (!mq.matches) return;
+
     const move  = (e: MouseEvent) => { mx.set(e.clientX - 6); my.set(e.clientY - 6); setVis(true); };
     const leave = () => setVis(false);
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseleave", leave);
     return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseleave", leave); };
   }, [mx, my]);
+
+  if (!isPointer) return null;
+
   return (
-    <motion.div className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[#CC1500] pointer-events-none z-[9996]"
+    <motion.div
+      className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[#CC1500] pointer-events-none z-[9999]"
       style={{ x, y }}
       animate={{ opacity: vis ? 1 : 0, scale: vis ? 1 : 0.4 }}
       transition={{ opacity: { duration: 0.15 }, scale: { duration: 0.15 } }}

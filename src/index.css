@@ -97,3 +97,8 @@ body.lightbox-open .fixed.top-6.right-6 {
   pointer-events: none !important;
   transition: opacity 0.3s ease;
 }
+
+/* ── Custom cursor: hide default on desktop, keep on mobile ── */
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
+}

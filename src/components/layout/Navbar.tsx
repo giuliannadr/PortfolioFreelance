@@ -60,7 +60,7 @@ export const Navbar = () => {
       {/* ── DESKTOP NAV ── */}
       <nav
         className={`hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 items-center justify-between px-10 lg:px-14 transition-all duration-300 ${
-          scrolled ? "bg-white/95 backdrop-blur-sm border-b border-[#0A0A0A]/10" : "bg-transparent"
+          scrolled ? "bg-white border-b border-[#0A0A0A]/10 shadow-[0_1px_0_0_rgba(10,10,10,0.06)]" : "bg-transparent"
         }`}
       >
         {/* Left: name */}
@@ -108,7 +108,7 @@ export const Navbar = () => {
 
       {/* ── MOBILE HEADER ── */}
       <div className={`md:hidden fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-5 transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-sm border-b border-[#0A0A0A]/10" : "bg-transparent"
+        scrolled ? "bg-white border-b border-[#0A0A0A]/10 shadow-[0_1px_0_0_rgba(10,10,10,0.06)]" : "bg-transparent"
       }`}>
         <a
           href="#home"
