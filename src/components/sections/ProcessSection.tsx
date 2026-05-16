@@ -80,7 +80,7 @@ export const ProcessSection = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-18%", "18%"]);
 
-  const headGrad   = "linear-gradient(120deg, #7C3AED 0%, #0A0A0A 32%, #CC1500 66%, #D97706 100%)";
+  const headGrad   = "linear-gradient(120deg, #CC1500 0%, #ffffff 38%, #7C3AED 72%, #06B6D4 100%)";
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)";
 
   return (
