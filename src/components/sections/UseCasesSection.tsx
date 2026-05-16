@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { WhyCodePanel } from "./WhyCodeSection";
 
 const BG = "#F8F7F5";
 
@@ -360,6 +361,11 @@ export const UseCasesSection = () => {
             </motion.div>
           );
         })}
+      </div>
+
+      {/* Why code panel — floating dark card within the light section */}
+      <div className="relative z-20 mt-12">
+        <WhyCodePanel lang={lang} />
       </div>
 
       {/* Bottom CTA */}
