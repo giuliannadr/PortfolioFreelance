@@ -4,6 +4,29 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
 
+// React has a known bug where the `muted` prop isn't applied to the real DOM node,
+// which causes browsers to block autoplay. This component forces it via a ref.
+const AutoplayVideo = ({ src, className }: { src: string; className?: string }) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    v.play().catch(() => {});
+  }, [src]);
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      loop
+      playsInline
+      autoPlay
+      className={className}
+    />
+  );
+};
+
 const BG = "#ffffff";
 const BLOBS = [
   { color: "#CC1500", w: 420, x: "90%", y: "20%", op: 0.06, cls: "blob-1" },
@@ -338,7 +361,7 @@ export const Projects = () => {
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
                 {p.video
-                  ? <video src={p.video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                  ? <AutoplayVideo src={p.video} className="w-full h-full object-cover" />
                   : <img src={p.image} alt="" className="w-full h-full object-cover" />
                 }
               </motion.div>
@@ -444,7 +467,7 @@ export const Projects = () => {
           >
             <div className="absolute inset-0">
               {p.video
-                ? <video src={p.video} autoPlay muted loop playsInline className="w-full h-full object-cover opacity-60 group-active:opacity-75 transition-opacity" />
+                ? <AutoplayVideo src={p.video} className="w-full h-full object-cover opacity-60" />
                 : <img src={p.image} alt="" className="w-full h-full object-cover opacity-60" />
               }
             </div>
@@ -520,7 +543,7 @@ export const Projects = () => {
                     {/* media */}
                     <div className="relative lg:w-1/2 min-h-[260px] bg-[#0c0c0c] hidden lg:block">
                       {selected.video
-                        ? <video src={selected.video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                        ? <AutoplayVideo src={selected.video} className="w-full h-full object-cover" />
                         : <img src={selected.image} className="w-full h-full object-cover" alt="" />}
                     </div>
 
