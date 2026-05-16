@@ -122,7 +122,7 @@ export const ServicesSection = () => {
       </div>
 
       {/* 2×2 Service Cards */}
-      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/[0.05] mb-20">
+      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 gap-4 mb-20">
         {SERVICES.map(({ key, num, accent }, i) => {
           const details = t(`services.items.${key}.details`, { returnObjects: true }) as string[];
           return (
@@ -132,44 +132,68 @@ export const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="group bg-[#0A0A0A] p-8 lg:p-10 relative"
-              style={{ borderTop: `2px solid ${accent}28` }}
+              className="group relative p-8 lg:p-10 overflow-hidden"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
+                borderTop: `2px solid ${accent}55`,
+              }}
             >
+              {/* Subtle inner glow from accent at top */}
+              <div
+                className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
+                style={{ background: `linear-gradient(to bottom, ${accent}12, transparent)` }}
+              />
+
               {/* Hover radial glow */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ background: `radial-gradient(ellipse 65% 55% at 25% 25%, ${accent}0C, transparent)` }}
+                style={{ background: `radial-gradient(ellipse 70% 60% at 20% 20%, ${accent}14, transparent)` }}
+              />
+
+              {/* Glass inner highlight — thin top edge */}
+              <div
+                className="absolute top-0 left-6 right-6 h-px pointer-events-none"
+                style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent)" }}
               />
 
               {/* Number row */}
-              <div className="flex items-center gap-3 mb-7">
+              <div className="flex items-center gap-3 mb-7 relative">
                 <span className="font-black leading-none shrink-0"
                   style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.6rem", letterSpacing: "0.18em", color: accent }}>
                   {num}
                 </span>
-                <div className="h-px flex-1" style={{ background: `${accent}28` }} />
+                <div className="h-px flex-1" style={{ background: `${accent}30` }} />
               </div>
 
               {/* Title */}
               <h3
-                className="font-black uppercase text-white leading-none mb-4"
+                className="font-black uppercase text-white leading-none mb-4 relative"
                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.25rem, 2.8vw, 2rem)", letterSpacing: "-0.02em" }}
               >
                 {t(`services.items.${key}.title`)}
               </h3>
 
               {/* Description */}
-              <p className="text-white/35 text-sm leading-relaxed mb-7">
+              <p className="text-white/45 text-sm leading-relaxed mb-7 relative">
                 {t(`services.items.${key}.description`)}
               </p>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 relative">
                 {details.map((d, di) => (
                   <span
                     key={di}
-                    className="text-[9px] font-black uppercase tracking-[0.18em] px-3 py-1.5 border"
-                    style={{ fontFamily: "Poppins, sans-serif", color: accent, borderColor: `${accent}35` }}
+                    className="text-[9px] font-black uppercase tracking-[0.18em] px-3 py-1.5"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      color: accent,
+                      background: `${accent}12`,
+                      border: `1px solid ${accent}30`,
+                    }}
                   >
                     {d}
                   </span>
