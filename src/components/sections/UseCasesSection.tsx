@@ -2,6 +2,8 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
+const BG = "#F8F7F5";
+
 // ── CSS-only mockups (zero images, instant load) ──────────────────────────────
 
 const MenuMockup = ({ accent }: { accent: string }) => (
@@ -162,46 +164,52 @@ const CASES = [
   {
     accent: "#CC1500",
     Mockup: MenuMockup,
-    emoji: "🍽️",
-    es: { who: "Restaurantes · Bares · Cafeterías", title: "Menú digital", hook: "Tus clientes escanean un QR y ven el menú actualizado al instante. Sin impresiones, sin llamadas, sin confusión." },
-    en: { who: "Restaurants · Bars · Cafés", title: "Digital menu", hook: "Customers scan a QR and see your updated menu instantly. No printing, no calls, no confusion." },
+    es: { service: "Sitio Web", who: "Restaurantes · Bares · Cafeterías", title: "Menú digital", hook: "Tus clientes escanean un QR y ven el menú actualizado al instante. Sin impresiones, sin llamadas, sin confusión." },
+    en: { service: "Website", who: "Restaurants · Bars · Cafés", title: "Digital menu", hook: "Customers scan a QR and see your updated menu instantly. No printing, no calls, no confusion." },
   },
   {
     accent: "#7C3AED",
     Mockup: TurnosMockup,
-    emoji: "📅",
-    es: { who: "Peluquerías · Spas · Médicos · Coaches", title: "Gestión de turnos", hook: "Tus clientes reservan su turno solos, cualquier hora. Vos te olvidás de los mensajes de WhatsApp a las 11pm." },
-    en: { who: "Hair salons · Spas · Doctors · Coaches", title: "Booking system", hook: "Clients book appointments on their own, any time. You forget about WhatsApp messages at 11pm." },
+    es: { service: "Web App", who: "Peluquerías · Spas · Médicos · Coaches", title: "Gestión de turnos", hook: "Tus clientes reservan su turno solos, cualquier hora. Vos te olvidás de los mensajes de WhatsApp a las 11pm." },
+    en: { service: "Web App", who: "Hair salons · Spas · Doctors · Coaches", title: "Booking system", hook: "Clients book appointments on their own, any time. You forget about WhatsApp messages at 11pm." },
   },
   {
     accent: "#06B6D4",
     Mockup: PortfolioMockup,
-    emoji: "📸",
-    es: { who: "Fotógrafos · Diseñadores · Artistas", title: "Portfolio creativo", hook: "Tu trabajo merece una vitrina a la altura. Una web que impresione antes de que abran la primera foto." },
-    en: { who: "Photographers · Designers · Artists", title: "Creative portfolio", hook: "Your work deserves a proper showcase. A site that impresses before they open the first photo." },
+    es: { service: "Portfolio", who: "Fotógrafos · Diseñadores · Artistas", title: "Portfolio creativo", hook: "Tu trabajo merece una vitrina a la altura. Una web que impresione antes de que abran la primera foto." },
+    en: { service: "Portfolio", who: "Photographers · Designers · Artists", title: "Creative portfolio", hook: "Your work deserves a proper showcase. A site that impresses before they open the first photo." },
   },
   {
     accent: "#EC4899",
     Mockup: BeautyMockup,
-    emoji: "💅",
-    es: { who: "Maquilladores · Nail art · Estilistas", title: "Beauty studio web", hook: "Galería de trabajos, precios, turnos online y redes en un solo lugar. Tu marca, profesional y lista para crecer." },
-    en: { who: "MUAs · Nail techs · Stylists", title: "Beauty studio site", hook: "Portfolio, pricing, bookings and socials in one place. Your brand, professional and ready to grow." },
+    es: { service: "Sitio Web", who: "Maquilladores · Nail art · Estilistas", title: "Beauty studio", hook: "Galería de trabajos, precios, turnos online y redes en un solo lugar. Tu marca, profesional y lista para crecer." },
+    en: { service: "Website", who: "MUAs · Nail techs · Stylists", title: "Beauty studio", hook: "Portfolio, pricing, bookings and socials in one place. Your brand, professional and ready to grow." },
   },
   {
     accent: "#D97706",
     Mockup: TiendaMockup,
-    emoji: "🛍️",
-    es: { who: "Tiendas · Floristerías · Artesanías", title: "Tienda online", hook: "Vendés mientras dormís. Catálogo, carrito y pagos, todo integrado. Sin comisiones de terceros." },
-    en: { who: "Shops · Florists · Crafts", title: "Online store", hook: "You sell while you sleep. Catalog, cart and payments, all integrated. No third-party commissions." },
+    es: { service: "Tienda Online", who: "Tiendas · Floristerías · Artesanías", title: "Tienda online", hook: "Vendés mientras dormís. Catálogo, carrito y pagos, todo integrado. Sin comisiones de terceros." },
+    en: { service: "Online Store", who: "Shops · Florists · Crafts", title: "Online store", hook: "You sell while you sleep. Catalog, cart and payments, all integrated. No third-party commissions." },
   },
   {
     accent: "#10B981",
     Mockup: LandingMockup,
-    emoji: "🎯",
-    es: { who: "Coaches · Nutricionistas · Entrenadores", title: "Landing de servicios", hook: "Una página que explica lo que hacés, por qué sos la mejor opción y que convierte a visitantes en clientes." },
-    en: { who: "Coaches · Nutritionists · Trainers", title: "Services landing page", hook: "A page that explains what you do, why you're the best option and turns visitors into clients." },
+    es: { service: "Landing Page", who: "Coaches · Nutricionistas · Entrenadores", title: "Landing de servicios", hook: "Una página que explica lo que hacés, por qué sos la mejor opción y que convierte visitas en clientes." },
+    en: { service: "Landing Page", who: "Coaches · Nutritionists · Trainers", title: "Services landing", hook: "A page that explains what you do, why you're the best option and turns visitors into clients." },
   },
 ];
+
+const BLOBS = [
+  { color: "#CC1500", w: 500, x: "90%", y: "20%", op: 0.07 },
+  { color: "#7C3AED", w: 400, x: "4%",  y: "60%", op: 0.06 },
+  { color: "#06B6D4", w: 320, x: "52%", y: "88%", op: 0.05 },
+  { color: "#EC4899", w: 240, x: "30%", y: "5%",  op: 0.04 },
+];
+
+const cardVariants = {
+  hidden:  { opacity: 0, y: 32 },
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] as const } }),
+};
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export const UseCasesSection = () => {
@@ -209,113 +217,142 @@ export const UseCasesSection = () => {
   const lang = i18n.language === "en" ? "en" : "es";
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const blobY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const blobY = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+
+  const headGrad   = "linear-gradient(120deg, #CC1500 0%, #0A0A0A 32%, #7C3AED 65%, #06B6D4 100%)";
+  const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)";
 
   return (
-    <section ref={ref} className="bg-[#0A0A0A] text-white py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative overflow-hidden" id="use-cases">
+    <section ref={ref} id="what-i-build" className="py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative overflow-hidden" style={{ background: BG }}>
 
       {/* Edge fades */}
-      <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #0A0A0A, transparent)" }} />
-      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10" style={{ background: "linear-gradient(to top, #0A0A0A, transparent)" }} />
+      <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10" style={{ background: `linear-gradient(to bottom, ${BG}, transparent)` }} />
+      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10" style={{ background: `linear-gradient(to top, ${BG}, transparent)` }} />
 
       {/* Ambient blobs */}
       <motion.div className="absolute inset-0 pointer-events-none" style={{ y: blobY }}>
-        <div className="blob-1 absolute blur-3xl" style={{ background: "#CC1500", width: 400, height: 400, left: "90%", top: "20%", opacity: 0.07, transform: "translate(-50%,-50%)" }} />
-        <div className="blob-2 absolute blur-3xl" style={{ background: "#7C3AED", width: 350, height: 350, left: "5%", top: "70%", opacity: 0.06, transform: "translate(-50%,-50%)" }} />
+        {BLOBS.map((b, i) => (
+          <div key={i} className="absolute blur-3xl" style={{ background: b.color, width: b.w, height: b.w, left: b.x, top: b.y, opacity: b.op, transform: "translate(-50%,-50%)", borderRadius: "50%" }} />
+        ))}
       </motion.div>
 
       {/* Label */}
-      <div className="flex items-center gap-5 mb-14 relative z-10">
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>03</span>
-        <div className="h-px flex-1 bg-white/[0.06]" />
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>
-          {lang === "en" ? "Made for you" : "Hecho para vos"}
+      <div className="flex items-center gap-5 mb-14 relative z-20">
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30" style={{ fontFamily: "Poppins, sans-serif" }}>02</span>
+        <div className="h-px flex-1 bg-[#0A0A0A]/12" />
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30" style={{ fontFamily: "Poppins, sans-serif" }}>
+          {lang === "en" ? "What I build" : "Lo que construyo"}
         </span>
       </div>
 
       {/* Headline */}
-      <div className="mb-14 relative z-10 max-w-4xl">
+      <div className="mb-14 relative z-20 max-w-4xl">
         <motion.h2
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-black uppercase leading-[0.88] block"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 6vw, 6.5rem)", letterSpacing: "-0.03em", backgroundImage: "linear-gradient(118deg, #CC1500 0%, #ffffff 35%, #7C3AED 70%, #06B6D4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          className="block font-black uppercase leading-[0.88]"
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 6.5vw, 6.5rem)", letterSpacing: "-0.03em", backgroundImage: headGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
         >
-          {lang === "en" ? "Does this sound" : "¿Te suena"}
+          {lang === "en" ? "A site built" : "Una web hecha"}
         </motion.h2>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif italic font-light leading-[1.05] block"
-          style={{ fontSize: "clamp(2rem, 5vw, 5.5rem)", backgroundImage: "linear-gradient(110deg, #ff4422 0%, #CC1500 45%, #ff7755 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          className="block font-serif italic font-light leading-[1.1]"
+          style={{ fontSize: "clamp(1.8rem, 5vw, 5rem)", backgroundImage: italicGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
         >
-          {lang === "en" ? "like you?" : "familiar?"}
+          {lang === "en" ? "for your business." : "para tu negocio."}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 text-white/40 max-w-xl"
+          className="mt-5 text-[#0A0A0A]/45 max-w-xl"
           style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.85rem, 1.4vw, 1rem)", lineHeight: 1.7 }}
         >
           {lang === "en"
-            ? "Each project is different, but the goal is always the same: a site that works for you while you focus on your business."
+            ? "Every project is different — but the goal is always the same: a site that works for you while you focus on your business."
             : "Cada proyecto es distinto, pero el objetivo siempre es el mismo: una web que trabaje por vos mientras te enfocás en tu negocio."}
         </motion.p>
       </div>
 
       {/* Cards */}
-      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {CASES.map((c, i) => {
           const content = lang === "en" ? c.en : c.es;
           return (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -4, transition: { duration: 0.25 } }}
-              className="group flex flex-col overflow-hidden border"
-              style={{ borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.025)" }}
+              whileHover={{
+                y: -6,
+                scale: 1.015,
+                boxShadow: `0 24px 60px ${c.accent}28, 0 8px 24px ${c.accent}15`,
+                transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+              }}
+              className="group flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white cursor-default"
             >
+              {/* Hover background glow */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse 90% 90% at 50% 40%, ${c.accent}12 0%, transparent 70%)` }}
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.35 }}
+              />
+
               {/* Mockup preview */}
-              <div className="relative h-36 overflow-hidden">
+              <div className="relative h-36 overflow-hidden shrink-0">
                 <c.Mockup accent={c.accent} />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(to bottom, transparent 60%, #0A0A0A 100%)` }} />
+                {/* Gradient fade to white at bottom */}
+                <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(to bottom, transparent 55%, #ffffff 100%)` }} />
                 {/* Accent top bar */}
-                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: c.accent }} />
+                <div className="absolute top-0 left-0 right-0 h-[2.5px]" style={{ background: c.accent }} />
               </div>
 
               {/* Content */}
-              <div className="p-5 flex flex-col gap-3 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg">{c.emoji}</span>
-                  <p className="text-[8px] font-black uppercase tracking-[0.3em] text-white/25" style={{ fontFamily: "Poppins, sans-serif" }}>
-                    {content.who}
-                  </p>
+              <div className="relative px-5 pb-5 pt-3 flex flex-col gap-2 flex-1">
+                {/* Service type badge */}
+                <div className="flex items-center justify-between">
+                  <span
+                    className="text-[7px] font-black uppercase tracking-[0.35em] px-2 py-0.5 rounded-full"
+                    style={{ fontFamily: "Poppins, sans-serif", background: `${c.accent}15`, color: c.accent }}
+                  >
+                    {content.service}
+                  </span>
                 </div>
 
+                {/* Who it's for */}
+                <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#0A0A0A]/30" style={{ fontFamily: "Poppins, sans-serif" }}>
+                  {content.who}
+                </p>
+
+                {/* Title */}
                 <h3
                   className="font-black uppercase leading-none"
-                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.1rem, 2vw, 1.4rem)", letterSpacing: "-0.02em", color: c.accent }}
+                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.05rem, 2vw, 1.3rem)", letterSpacing: "-0.02em", color: "#0A0A0A" }}
                 >
                   {content.title}
                 </h3>
 
-                <p className="text-white/45 text-sm leading-relaxed flex-1">
+                {/* Hook */}
+                <p className="text-[#0A0A0A]/45 text-[0.8rem] leading-relaxed flex-1">
                   {content.hook}
                 </p>
 
+                {/* Hover CTA line */}
                 <div className="flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="h-[1px] flex-1" style={{ background: c.accent, opacity: 0.4 }} />
-                  <span className="text-[8px] font-black uppercase tracking-[0.3em]" style={{ fontFamily: "Poppins, sans-serif", color: c.accent }}>
+                  <div className="h-[1px] flex-1" style={{ background: c.accent, opacity: 0.35 }} />
+                  <span className="text-[7px] font-black uppercase tracking-[0.3em]" style={{ fontFamily: "Poppins, sans-serif", color: c.accent }}>
                     {lang === "en" ? "I can build this" : "Puedo hacerte esto"}
                   </span>
                 </div>
@@ -331,14 +368,14 @@ export const UseCasesSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="relative z-10 mt-14 text-center"
+        className="relative z-20 mt-14 text-center"
       >
-        <p className="text-white/30 text-sm mb-5" style={{ fontFamily: "Poppins, sans-serif" }}>
+        <p className="text-[#0A0A0A]/35 text-sm mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
           {lang === "en" ? "Don't see your industry? I can still help." : "¿No ves tu rubro? También puedo ayudarte."}
         </p>
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.4em] text-[#0A0A0A]/35 hover:text-[#CC1500] transition-colors duration-300"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
           {lang === "en" ? "Let's talk" : "Hablemos"} →
