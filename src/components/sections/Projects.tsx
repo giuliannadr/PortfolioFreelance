@@ -9,7 +9,7 @@ const BLOBS = [
   { color: "#7C3AED", w: 360, x: "5%",  y: "65%", op: 0.05, cls: "blob-2" },
   { color: "#D97706", w: 260, x: "55%", y: "90%", op: 0.04, cls: "blob-1" },
 ];
-const headGrad = "linear-gradient(120deg, #CC1500 0%, #0A0A0A 30%, #7C3AED 65%, #D97706 100%)";
+const headGrad = "linear-gradient(120deg, #CC1500 0%, #7C3AED 52%, #06B6D4 100%)";
 const ACCENTS  = ["#CC1500", "#7C3AED", "#06B6D4"];
 
 interface Project {
@@ -300,7 +300,7 @@ export const Projects = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="block font-serif italic font-light leading-[1.1]"
-          style={{ fontSize: "clamp(1.8rem, 5vw, 4.5rem)", backgroundImage: "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          style={{ fontSize: "clamp(1.8rem, 5vw, 4.5rem)", backgroundImage: "linear-gradient(110deg, #CC1500 0%, #ff4422 55%, #ff7744 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
         >
           {lang === "en" ? "selected." : "seleccionado."}
         </motion.h2>

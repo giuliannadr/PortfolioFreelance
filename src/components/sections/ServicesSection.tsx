@@ -62,7 +62,7 @@ export const ServicesSection = () => {
   const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
   const headGrad = "linear-gradient(120deg, #CC1500 0%, #ffffff 38%, #7C3AED 72%, #D97706 100%)";
-  const ctaGrad  = "linear-gradient(120deg, #CC1500 0%, #0A0A0A 35%, #7C3AED 68%, #06B6D4 100%)";
+  const ctaGrad  = "linear-gradient(120deg, #CC1500 0%, #7C3AED 52%, #06B6D4 100%)";
 
   const handleGeneral = () => {
     const msg = lang === "en"
