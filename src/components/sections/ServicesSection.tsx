@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { SPOTS_DARK, SPOTS_LIGHT } from "@/lib/textGradients";
+import { SPOTS_DARK } from "@/lib/textGradients";
 
 const SERVICES = [
   { key: "web",         num: "01", accent: "#CC1500" },
@@ -63,7 +63,6 @@ export const ServicesSection = () => {
   const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
   const headGrad = SPOTS_DARK;
-  const ctaGrad  = SPOTS_LIGHT;
 
   const handleGeneral = () => {
     const msg = lang === "en"
@@ -239,7 +238,7 @@ export const ServicesSection = () => {
         <div className="relative z-10 mb-3">
           <h3
             className="font-black uppercase leading-none"
-            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2rem, 6vw, 5rem)", letterSpacing: "-0.03em", backgroundImage: ctaGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2rem, 6vw, 5rem)", letterSpacing: "-0.03em", color: "#0A0A0A" }}
           >
             {t("services.cta.title")}
           </h3>

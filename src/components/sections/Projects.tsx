@@ -2,7 +2,7 @@ import { ArrowUpRight, X, Eye, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { SPOTS_LIGHT } from "@/lib/textGradients";
+import { SPOTS_DARK } from "@/lib/textGradients";
 
 const BG = "#ffffff";
 const BLOBS = [
@@ -10,7 +10,7 @@ const BLOBS = [
   { color: "#7C3AED", w: 360, x: "5%",  y: "65%", op: 0.05, cls: "blob-2" },
   { color: "#D97706", w: 260, x: "55%", y: "90%", op: 0.04, cls: "blob-1" },
 ];
-const headGrad = SPOTS_LIGHT;
+const headGrad = SPOTS_DARK; // usado en el modal (fondo oscuro)
 const ACCENTS  = ["#CC1500", "#7C3AED", "#06B6D4"];
 
 interface Project {
@@ -291,7 +291,7 @@ export const Projects = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="block font-black uppercase leading-[0.88]"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 7.5rem)", letterSpacing: "-0.03em", backgroundImage: headGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 7.5rem)", letterSpacing: "-0.03em", color: "#0A0A0A" }}
         >
           {lang === "en" ? "My work." : "Mi trabajo."}
         </motion.h2>
