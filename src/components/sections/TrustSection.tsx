@@ -281,8 +281,8 @@ export const TrustSection = () => {
             transition={{ duration: 0.5, delay: i * 0.1 }}
             className="py-6 px-3 sm:px-8 first:pl-0 last:pr-0 flex flex-col gap-1"
           >
-            <p className="font-black leading-none"
-              style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.4rem, 5vw, 3rem)", color }}>
+            <p className="font-black leading-none text-white"
+              style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.4rem, 5vw, 3rem)" }}>
               {num}
             </p>
             <p className="text-white/25 leading-tight"
