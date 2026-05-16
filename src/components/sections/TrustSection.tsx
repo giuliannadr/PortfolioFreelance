@@ -51,7 +51,7 @@ const ReviewCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-40px" }}
     transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-    className="flex flex-col relative overflow-hidden"
+    className="flex flex-col relative overflow-hidden h-full"
     style={{
       background: "rgba(255,255,255,0.04)",
       backdropFilter: "blur(20px)",
@@ -193,7 +193,7 @@ export const TrustSection = () => {
             className="block font-black uppercase leading-[0.85]"
             style={{
               fontFamily: "Poppins, sans-serif",
-              fontSize: "clamp(3rem, 9vw, 8rem)",
+              fontSize: "clamp(1.85rem, 9vw, 8rem)",
               letterSpacing: "-0.03em",
               backgroundImage: SPOTS_DARK,
               WebkitBackgroundClip: "text",
@@ -209,7 +209,7 @@ export const TrustSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="block font-serif italic font-light leading-[1.05] text-white/20"
-            style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
+            style={{ fontSize: "clamp(1.2rem, 6vw, 5.5rem)" }}
           >
             {lang === "en" ? "say." : "mis clientes."}
           </motion.h2>
@@ -254,7 +254,7 @@ export const TrustSection = () => {
         {items.map((item, i) => (
           <div
             key={item.key}
-            className="snap-start shrink-0 flex flex-col"
+            className="snap-start shrink-0"
             style={{ width: "80vw" }}
           >
             <ReviewCard item={item} lang={lang} index={i} />
