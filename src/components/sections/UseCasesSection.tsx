@@ -327,7 +327,7 @@ export const UseCasesSection = () => {
       {/* Label */}
       <div className="flex items-center gap-5 mb-14 relative z-20">
         <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30"
-          style={{ fontFamily: "Poppins, sans-serif" }}>02</span>
+          style={{ fontFamily: "Poppins, sans-serif" }}>01</span>
         <div className="h-px flex-1 bg-[#0A0A0A]/12" />
         <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30"
           style={{ fontFamily: "Poppins, sans-serif" }}>

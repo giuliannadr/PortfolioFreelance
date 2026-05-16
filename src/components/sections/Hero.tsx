@@ -54,8 +54,8 @@ const TypewriterWord = ({ lang }: { lang: string }) => {
 const CursorDot = () => {
   const mx = useMotionValue(-20);
   const my = useMotionValue(-20);
-  const x  = useSpring(mx, { stiffness: 200, damping: 20 });
-  const y  = useSpring(my, { stiffness: 200, damping: 20 });
+  const x  = useSpring(mx, { stiffness: 70, damping: 20, restDelta: 0.001 });
+  const y  = useSpring(my, { stiffness: 70, damping: 20, restDelta: 0.001 });
   const [vis,       setVis]       = useState(false);
   const [isPointer, setIsPointer] = useState(false);
 

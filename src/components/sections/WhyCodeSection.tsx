@@ -106,7 +106,7 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           </div>
 
           {/* Card header */}
-          <div className="flex items-center gap-3 px-6 py-5 border-b border-white/[0.07] relative">
+          <div className="flex items-center gap-3 px-6 py-5 md:px-8 md:py-6 border-b border-white/[0.07] relative">
             <div className="w-8 h-8 rounded-full border border-[#CC1500]/40 flex items-center justify-center shrink-0"
               style={{ background: "rgba(204,21,0,0.12)" }}>
               <Code2 size={14} style={{ color: "#CC1500" }} />
@@ -134,7 +134,7 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: i * 0.07 + 0.08 }}
-                  className="flex items-center gap-3 px-6 py-4"
+                  className="flex items-center gap-3 px-6 py-4 md:px-8 md:py-5"
                 >
                   <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: pt.bg, border: `1px solid ${pt.color}40` }}>
@@ -158,7 +158,7 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           className="flex flex-col bg-white border border-[#0A0A0A]/8 overflow-hidden"
         >
           {/* Card header */}
-          <div className="flex items-center gap-3 px-6 py-5 border-b border-[#0A0A0A]/6"
+          <div className="flex items-center gap-3 px-6 py-5 md:px-8 md:py-6 border-b border-[#0A0A0A]/6"
             style={{ background: "rgba(10,10,10,0.02)" }}>
             <div className="w-8 h-8 rounded-full border border-[#0A0A0A]/10 flex items-center justify-center shrink-0">
               <Globe size={14} className="text-[#0A0A0A]/30" />
@@ -184,7 +184,7 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.07 }}
-                className="flex items-center gap-3 px-6 py-4"
+                className="flex items-center gap-3 px-6 py-4 md:px-8 md:py-5"
               >
                 <XCircle size={16} className="shrink-0" style={{ color: "rgba(204,21,0,0.35)" }} />
                 <p className="text-[0.8rem] leading-snug text-[#0A0A0A]/45">{pt}</p>
