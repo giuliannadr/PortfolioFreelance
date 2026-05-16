@@ -9,22 +9,38 @@ const BG = "#F8F7F5";
 
 const MenuMockup = ({ accent }: { accent: string }) => (
   <div className="w-full h-full flex flex-col" style={{ background: "#1a1a1a" }}>
-    <div className="flex items-center justify-between px-3 py-2" style={{ background: "#111" }}>
-      <div className="flex gap-1.5">
-        {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
+    {/* Browser bar */}
+    <div className="flex items-center gap-1.5 px-3 py-1.5 shrink-0" style={{ background: "#111" }}>
+      {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
+      <div className="h-1.5 flex-1 rounded-full ml-1" style={{ background: "rgba(255,255,255,0.07)" }} />
+    </div>
+    {/* Nav */}
+    <div className="flex items-center justify-between px-3 py-1.5 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+      <div className="h-2 w-10 rounded-full" style={{ background: accent, opacity: 0.9 }} />
+      <div className="flex gap-2">
+        {[14,10,12].map((w,i) => <div key={i} className="h-1 rounded-full" style={{ width: w, background: "rgba(255,255,255,0.2)" }} />)}
       </div>
-      <div className="h-1.5 w-20 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }} />
     </div>
-    <div className="px-3 pt-2 pb-1">
-      <div className="h-2 w-16 rounded-full mb-1" style={{ background: accent, opacity: 0.8 }} />
-      <div className="h-1 w-10 rounded-full" style={{ background: "rgba(255,255,255,0.2)" }} />
+    {/* Category chips */}
+    <div className="flex gap-1 px-3 pt-1.5 pb-1 shrink-0">
+      {[accent, "rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)"].map((bg, i) => (
+        <div key={i} className="h-3 rounded-full px-1.5 flex items-center" style={{ background: bg, minWidth: i===0?28:20 }}>
+          <div className="h-0.5 w-full rounded-full" style={{ background: i===0?"rgba(255,255,255,0.9)":"rgba(255,255,255,0.25)" }} />
+        </div>
+      ))}
     </div>
-    <div className="px-3 grid grid-cols-2 gap-1.5 mt-1">
+    {/* Menu items */}
+    <div className="px-3 grid grid-cols-2 gap-1.5 flex-1 pb-1.5">
       {[1,2,3,4].map(i => (
-        <div key={i} className="rounded" style={{ background: "rgba(255,255,255,0.06)", padding: "6px" }}>
-          <div className="h-5 rounded mb-1" style={{ background: "rgba(255,255,255,0.08)" }} />
-          <div className="h-1 w-8 rounded-full mb-0.5" style={{ background: "rgba(255,255,255,0.25)" }} />
-          <div className="h-1 w-5 rounded-full" style={{ background: accent, opacity: 0.7 }} />
+        <div key={i} className="rounded flex flex-col overflow-hidden" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="h-6" style={{ background: i%2===0 ? `${accent}25` : "rgba(255,255,255,0.06)" }} />
+          <div className="p-1 flex flex-col gap-0.5">
+            <div className="h-1 w-full rounded-full" style={{ background: "rgba(255,255,255,0.3)" }} />
+            <div className="flex items-center justify-between">
+              <div className="h-1 w-5 rounded-full" style={{ background: "rgba(255,255,255,0.12)" }} />
+              <div className="h-1 w-4 rounded-full" style={{ background: accent, opacity: 0.8 }} />
+            </div>
+          </div>
         </div>
       ))}
     </div>
@@ -68,46 +84,66 @@ const TurnosMockup = ({ accent }: { accent: string }) => (
 
 const PortfolioMockup = ({ accent }: { accent: string }) => (
   <div className="w-full h-full flex flex-col" style={{ background: "#0d0d0d" }}>
-    <div className="flex items-center justify-between px-3 py-2" style={{ background: "#080808" }}>
-      <div className="flex gap-1.5">
-        {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
-      </div>
-      <div className="h-1.5 w-20 rounded-full" style={{ background: "rgba(255,255,255,0.08)" }} />
+    {/* Browser bar */}
+    <div className="flex items-center gap-1.5 px-3 py-1.5 shrink-0" style={{ background: "#080808" }}>
+      {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
+      <div className="h-1.5 flex-1 rounded-full ml-1" style={{ background: "rgba(255,255,255,0.06)" }} />
     </div>
-    <div className="px-3 pt-2 flex-1">
-      <div className="h-1.5 w-14 rounded-full mb-0.5" style={{ background: "rgba(255,255,255,0.6)" }} />
-      <div className="h-1 w-8 rounded-full mb-2" style={{ background: accent, opacity: 0.8 }} />
-      <div className="grid grid-cols-3 gap-1">
-        {[1.4, 1, 1.8, 1, 1.6, 1.2].map((h, i) => (
-          <div key={i} className="rounded-sm" style={{ height: `${h * 18}px`, background: i%2===0 ? `${accent}40` : "rgba(255,255,255,0.07)" }} />
-        ))}
+    {/* Nav */}
+    <div className="flex items-center justify-between px-3 py-1.5 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="h-1.5 w-8 rounded-full" style={{ background: "rgba(255,255,255,0.5)" }} />
+      <div className="flex gap-2">
+        {[10,10,10].map((w,i) => <div key={i} className="h-1 rounded-full" style={{ width: w, background: "rgba(255,255,255,0.15)" }} />)}
       </div>
+    </div>
+    {/* Hero */}
+    <div className="px-3 pt-2 pb-1 shrink-0">
+      <div className="h-2.5 w-20 rounded-full mb-1" style={{ background: "rgba(255,255,255,0.75)" }} />
+      <div className="h-1 w-14 rounded-full mb-0.5" style={{ background: "rgba(255,255,255,0.2)" }} />
+      <div className="h-2.5 w-10 rounded flex items-center justify-center mt-1.5" style={{ background: accent }}>
+        <div className="h-0.5 w-6 rounded-full" style={{ background: "rgba(255,255,255,0.8)" }} />
+      </div>
+    </div>
+    {/* Grid */}
+    <div className="px-3 pb-1.5 grid grid-cols-3 gap-1 flex-1">
+      {[28,22,32,18,26,20].map((h, i) => (
+        <div key={i} className="rounded-sm overflow-hidden" style={{ height: h, background: i%2===0 ? `${accent}35` : "rgba(255,255,255,0.07)" }} />
+      ))}
     </div>
   </div>
 );
 
 const LandingMockup = ({ accent }: { accent: string }) => (
   <div className="w-full h-full flex flex-col" style={{ background: "#fff" }}>
-    <div className="flex items-center justify-between px-3 py-2" style={{ background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
-      <div className="flex gap-1.5">
-        {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
-      </div>
-      <div className="h-1.5 w-20 rounded-full" style={{ background: "rgba(0,0,0,0.08)" }} />
+    {/* Browser bar */}
+    <div className="flex items-center gap-1.5 px-3 py-1.5 shrink-0" style={{ background: "#f5f5f5", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+      {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
+      <div className="h-1.5 flex-1 rounded-full ml-1" style={{ background: "rgba(0,0,0,0.08)" }} />
     </div>
-    <div className="flex-1 px-3 pt-2 flex flex-col justify-between pb-2">
-      <div>
-        <div className="h-2 w-20 rounded-full mb-1" style={{ background: "rgba(0,0,0,0.7)" }} />
-        <div className="h-1 w-16 rounded-full mb-1" style={{ background: "rgba(0,0,0,0.2)" }} />
-        <div className="h-1 w-12 rounded-full mb-2" style={{ background: "rgba(0,0,0,0.15)" }} />
-        <div className="h-4 w-14 rounded flex items-center justify-center" style={{ background: accent }}>
-          <div className="h-1 w-8 rounded-full" style={{ background: "rgba(255,255,255,0.8)" }} />
-        </div>
+    {/* Nav */}
+    <div className="flex items-center justify-between px-3 py-1.5 shrink-0" style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+      <div className="h-1.5 w-10 rounded-full" style={{ background: accent, opacity: 0.8 }} />
+      <div className="flex gap-2">
+        {[10,10,10].map((w,i) => <div key={i} className="h-1 rounded-full" style={{ width: w, background: "rgba(0,0,0,0.15)" }} />)}
       </div>
-      <div className="grid grid-cols-3 gap-1">
+    </div>
+    {/* Hero */}
+    <div className="px-3 pt-2 pb-1 shrink-0">
+      <div className="h-2.5 w-24 rounded-full mb-1" style={{ background: "rgba(0,0,0,0.75)" }} />
+      <div className="h-1 w-20 rounded-full mb-0.5" style={{ background: "rgba(0,0,0,0.18)" }} />
+      <div className="h-1 w-16 rounded-full mb-2" style={{ background: "rgba(0,0,0,0.12)" }} />
+      <div className="h-3.5 w-12 rounded flex items-center justify-center" style={{ background: accent }}>
+        <div className="h-0.5 w-7 rounded-full" style={{ background: "rgba(255,255,255,0.85)" }} />
+      </div>
+    </div>
+    {/* Trust + services */}
+    <div className="px-3 pb-1.5 flex flex-col gap-1 flex-1 justify-end">
+      <div className="flex gap-1">
         {[1,2,3].map(i => (
-          <div key={i} className="rounded p-1" style={{ background: "rgba(0,0,0,0.04)", border: `1px solid ${accent}30` }}>
-            <div className="h-1 w-full rounded-full mb-0.5" style={{ background: accent, opacity: 0.6 }} />
-            <div className="h-1 w-3/4 rounded-full" style={{ background: "rgba(0,0,0,0.15)" }} />
+          <div key={i} className="flex-1 rounded p-1" style={{ background: `${accent}10`, border: `1px solid ${accent}25` }}>
+            <div className="w-3 h-3 rounded-full mb-0.5" style={{ background: `${accent}30` }} />
+            <div className="h-1 w-full rounded-full mb-0.5" style={{ background: "rgba(0,0,0,0.2)" }} />
+            <div className="h-1 w-2/3 rounded-full" style={{ background: "rgba(0,0,0,0.1)" }} />
           </div>
         ))}
       </div>
@@ -117,19 +153,37 @@ const LandingMockup = ({ accent }: { accent: string }) => (
 
 const TiendaMockup = ({ accent }: { accent: string }) => (
   <div className="w-full h-full flex flex-col" style={{ background: "#fafafa" }}>
-    <div className="flex items-center justify-between px-3 py-2" style={{ background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
-      <div className="flex gap-1.5">
-        {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
-      </div>
-      <div className="h-1.5 w-20 rounded-full" style={{ background: "rgba(0,0,0,0.08)" }} />
+    {/* Browser bar */}
+    <div className="flex items-center gap-1.5 px-3 py-1.5 shrink-0" style={{ background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+      {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
+      <div className="h-1.5 flex-1 rounded-full ml-1" style={{ background: "rgba(0,0,0,0.08)" }} />
     </div>
-    <div className="px-3 pt-2 grid grid-cols-2 gap-1.5">
+    {/* Nav with cart */}
+    <div className="flex items-center justify-between px-3 py-1.5 shrink-0" style={{ background:"#fff", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+      <div className="h-1.5 w-10 rounded-full" style={{ background: accent, opacity: 0.9 }} />
+      <div className="flex items-center gap-1.5">
+        {[10,10].map((w,i) => <div key={i} className="h-1 rounded-full" style={{ width: w, background: "rgba(0,0,0,0.15)" }} />)}
+        {/* Cart icon */}
+        <div className="w-3.5 h-3.5 rounded-sm flex items-center justify-center" style={{ background: `${accent}15`, border:`1px solid ${accent}40` }}>
+          <div className="w-1.5 h-1.5 rounded-sm" style={{ background: accent, opacity: 0.7 }} />
+        </div>
+      </div>
+    </div>
+    {/* Products */}
+    <div className="px-3 pt-1.5 pb-1.5 grid grid-cols-2 gap-1.5 flex-1">
       {[1,2,3,4].map(i => (
-        <div key={i} className="rounded overflow-hidden" style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.06)" }}>
-          <div className="h-8" style={{ background: i%2===0 ? `${accent}25` : "rgba(0,0,0,0.05)" }} />
-          <div className="p-1">
-            <div className="h-1 w-full rounded-full mb-0.5" style={{ background: "rgba(0,0,0,0.2)" }} />
-            <div className="h-1 w-8 rounded-full" style={{ background: accent, opacity: 0.8 }} />
+        <div key={i} className="rounded overflow-hidden flex flex-col" style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.07)" }}>
+          <div className="h-7 flex items-end px-1 pb-0.5" style={{ background: i%2===0 ? `${accent}20` : "rgba(0,0,0,0.05)" }}>
+            <div className="h-1 w-3 rounded-full" style={{ background: i%2===0 ? accent : "rgba(0,0,0,0.15)", opacity: 0.7 }} />
+          </div>
+          <div className="px-1 pt-0.5 pb-1 flex flex-col gap-0.5">
+            <div className="h-1 w-full rounded-full" style={{ background: "rgba(0,0,0,0.2)" }} />
+            <div className="flex items-center justify-between">
+              <div className="h-1 w-4 rounded-full" style={{ background: accent, opacity: 0.9 }} />
+              <div className="h-2 w-5 rounded flex items-center justify-center" style={{ background: accent }}>
+                <div className="h-0.5 w-3 rounded-full" style={{ background: "rgba(255,255,255,0.9)" }} />
+              </div>
+            </div>
           </div>
         </div>
       ))}
@@ -139,23 +193,27 @@ const TiendaMockup = ({ accent }: { accent: string }) => (
 
 const BeautyMockup = ({ accent }: { accent: string }) => (
   <div className="w-full h-full flex flex-col" style={{ background: "#1a1015" }}>
-    <div className="flex items-center justify-between px-3 py-2" style={{ background: "#120e12" }}>
-      <div className="flex gap-1.5">
-        {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
-      </div>
-      <div className="h-1.5 w-20 rounded-full" style={{ background: "rgba(255,255,255,0.08)" }} />
+    {/* Browser bar */}
+    <div className="flex items-center gap-1.5 px-3 py-1.5 shrink-0" style={{ background: "#120e12" }}>
+      {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
+      <div className="h-1.5 flex-1 rounded-full ml-1" style={{ background: "rgba(255,255,255,0.06)" }} />
     </div>
-    <div className="px-3 pt-2">
-      <div className="h-1.5 w-16 rounded-full mb-0.5" style={{ background: "rgba(255,255,255,0.7)" }} />
-      <div className="h-1 w-10 rounded-full mb-2" style={{ background: accent, opacity: 0.7 }} />
-      <div className="grid grid-cols-3 gap-1 mb-2">
-        {[1,2,3,4,5,6].map(i => (
-          <div key={i} className="rounded-sm" style={{ height: "22px", background: i%3===0 ? `${accent}50` : "rgba(255,255,255,0.06)" }} />
-        ))}
+    {/* Profile strip */}
+    <div className="flex items-center gap-2 px-3 pt-2 pb-1.5 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+      <div className="w-7 h-7 rounded-full shrink-0" style={{ background: `${accent}50`, border: `1.5px solid ${accent}` }} />
+      <div>
+        <div className="h-1.5 w-12 rounded-full mb-0.5" style={{ background: "rgba(255,255,255,0.65)" }} />
+        <div className="h-1 w-8 rounded-full" style={{ background: accent, opacity: 0.6 }} />
       </div>
-      <div className="h-4 rounded flex items-center justify-center" style={{ background: accent }}>
-        <div className="h-1 w-10 rounded-full" style={{ background: "rgba(255,255,255,0.8)" }} />
+      <div className="ml-auto h-4 w-10 rounded flex items-center justify-center" style={{ background: accent }}>
+        <div className="h-0.5 w-6 rounded-full" style={{ background: "rgba(255,255,255,0.85)" }} />
       </div>
+    </div>
+    {/* Gallery masonry */}
+    <div className="px-3 pt-1.5 pb-1.5 grid grid-cols-3 gap-1 flex-1">
+      {[32,20,28,18,30,22].map((h, i) => (
+        <div key={i} className="rounded-sm" style={{ height: h, background: i%3===0 ? `${accent}45` : i%3===1 ? "rgba(255,255,255,0.07)" : `${accent}20` }} />
+      ))}
     </div>
   </div>
 );

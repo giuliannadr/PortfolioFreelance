@@ -64,7 +64,7 @@ export const CTASection = () => {
   const note     = lang === "en" ? "No commitment. Just a conversation." : "Sin compromiso. Solo una charla.";
 
   return (
-    <section ref={ref} id="contact" className="relative bg-[#0A0A0A] py-28 md:py-40 px-5 sm:px-8 lg:px-10 flex flex-col items-center justify-center text-center">
+    <section ref={ref} className="relative bg-[#0A0A0A] py-28 md:py-40 px-5 sm:px-8 lg:px-10 flex flex-col items-center justify-center text-center">
 
       {/* Edge fades */}
       <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #0A0A0A, transparent)" }} />
@@ -188,13 +188,13 @@ export const CTASection = () => {
         transition={{ delay: 0.6, duration: 0.5 }}
         className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-0 border border-white/10 overflow-hidden w-full sm:w-auto max-w-[min(400px,90vw)] sm:max-w-none"
       >
-        {/* Email */}
+        {/* Email — label only, click to copy (never shows address in plain text) */}
         <button
           onClick={handleCopy}
           className="group flex items-center justify-between sm:justify-start gap-3 px-5 py-3.5 text-white/40 hover:text-white hover:bg-white/5 transition-all duration-300 border-b sm:border-b-0 sm:border-r border-white/10"
         >
           <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ fontFamily: "Poppins, sans-serif" }}>
-            {copied ? (lang === "en" ? "Copied!" : "¡Copiado!") : email}
+            {copied ? (lang === "en" ? "Copied!" : "¡Copiado!") : (lang === "en" ? "Copy email" : "Copiar email")}
           </span>
           <motion.div animate={{ scale: copied ? 1.2 : 1 }} transition={{ type: "spring", stiffness: 400, damping: 15 }}>
             {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}

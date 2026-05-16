@@ -52,12 +52,12 @@ process: {
   "steps": {
     "step1": {
       "title": "Chat & Strategy",
-      "description": "We take a moment to understand your business. I don't design just for the sake of it; I design so your project grows and you feel at ease.",
+      "description": "I take a moment to understand your business. I don't design just for the sake of it; I design so your project grows and you feel at ease.",
       "tags": ["Active listening", "Your vision", "Action plan"]
     },
     "step2": {
-      "title": "Team Sketching",
-      "description": "I present the visual idea and we polish it together. I want you to feel that the web has your essence in every corner before coding.",
+      "title": "Sketching Together",
+      "description": "I present the visual idea and we refine it together. I want you to feel that the web has your essence in every corner before any code is written.",
       "tags": ["Real feedback", "Back and forth", "Your brand"]
     },
     "step3": {
@@ -238,12 +238,12 @@ process: {
   "steps": {
     "step1": {
       "title": "Charla & Estrategia",
-      "description": "Nos tomamos un momento para entender tu negocio. No diseño por diseñar; diseño para que tu proyecto crezca y vos estés tranquila.",
+      "description": "Me tomo el tiempo de entender tu negocio a fondo. No diseño por diseñar; diseño para que tu proyecto crezca y vos estés tranquila.",
       "tags": ["Escucha activa", "Tu visión", "Plan de acción"]
     },
     "step2": {
-      "title": "Boceto en Equipo",
-      "description": "Te presento la idea visual y la pulimos juntos. Quiero que sientas que la web tiene tu esencia en cada rincón antes de programar.",
+      "title": "Boceto Juntos",
+      "description": "Te presento la idea visual y la refinamos juntos. Quiero que sientas que la web tiene tu esencia en cada rincón antes de escribir una línea de código.",
       "tags": ["Feedback real", "Idas y vueltas", "Tu marca"]
     },
     "step3": {

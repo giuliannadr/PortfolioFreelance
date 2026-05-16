@@ -12,6 +12,20 @@ import { MessageSquarePlus } from "lucide-react";
 import { ReviewForm } from "@/components/ui/ReviewForm";
 import { fetchPublishedReviews, type Review as DynReview } from "@/lib/firebase";
 
+// ─── Static fallback reviews (shown while Firebase loads or when no reviews yet) ─
+const STATIC_REVIEWS = {
+  es: [
+    { key: "s1", name: "Camila Grondona", initial: "C", color: "#06B6D4", isStatic: true, text: "Pasar de un PDF en Canva a una web profesional cambió totalmente cómo nos ven los clientes. Giuliana logró una identidad digital con animaciones que realmente rompe lo convencional.", role: "UNIK — Estrategia de negocio" },
+    { key: "s2", name: "Iara Rotela",     initial: "I", color: "#7C3AED", isStatic: true, text: "Buscábamos que el acceso a nuestro trabajo y el contacto por WhatsApp fuera directo y profesional. Giuliana nos dio una solución impecable que simplificó la llegada de nuevos clientes.", role: "UNIK — Directora Creativa" },
+    { key: "s3", name: "Miri G.",         initial: "M", color: "#CC1500", isStatic: true, text: "Giuliana entendió de inmediato la calidez que quería transmitir. Desde que lanzamos la web, las consultas se volvieron más profesionales y el proceso de reservas es mucho más fluido.", role: "La Quinta Miri — Propietaria" },
+  ],
+  en: [
+    { key: "s1", name: "Camila Grondona", initial: "C", color: "#06B6D4", isStatic: true, text: "Moving from a Canva PDF to a professional website totally changed how clients see us. Giuliana achieved a digital identity with animations that really breaks the mold.", role: "UNIK — Business Strategy" },
+    { key: "s2", name: "Iara Rotela",     initial: "I", color: "#7C3AED", isStatic: true, text: "We wanted access to our work and WhatsApp contact to be direct and professional. Giuliana gave us a flawless solution that simplified the arrival of new clients.", role: "UNIK — Creative Director" },
+    { key: "s3", name: "Miri G.",         initial: "M", color: "#CC1500", isStatic: true, text: "Giuliana immediately understood the warmth I wanted to convey. Since we launched the web, inquiries have become more professional and the booking process is much smoother.", role: "La Quinta Miri — Owner" },
+  ],
+};
+
 // ─── Color palette for dynamic reviews ────────────────────────────────────────
 
 const METRICS = [
@@ -59,18 +73,21 @@ export const TrustSection = () => {
 
   useEffect(() => { loadReviews(); }, [loadReviews]);
 
-  // ── build carousel items from Firebase only ───────────────────────────────
-  const items = useMemo<CarouselItem[]>(() =>
-    dynReviews.map(r => ({
-      key:      r.id,
-      name:     r.name,
-      initial:  r.name.charAt(0).toUpperCase() || "?",
-      color:    colorFor(r.name),
-      isStatic: false,
-      text:     r.comment,
-      role:     r.role,
-    })),
-  [dynReviews]);
+  // ── build carousel items: Firebase reviews when available, static fallback otherwise ─
+  const items = useMemo<CarouselItem[]>(() => {
+    if (dynReviews.length > 0) {
+      return dynReviews.map(r => ({
+        key:      r.id,
+        name:     r.name,
+        initial:  r.name.charAt(0).toUpperCase() || "?",
+        color:    colorFor(r.name),
+        isStatic: false,
+        text:     r.comment,
+        role:     r.role,
+      }));
+    }
+    return STATIC_REVIEWS[lang === "en" ? "en" : "es"];
+  }, [dynReviews, lang]);
 
   // ── auto-advance ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -86,16 +103,15 @@ export const TrustSection = () => {
   const cur      = items[safeIdx];
   const hasItems = items.length > 0;
 
-  const quoteGrad = cur
-    ? `linear-gradient(120deg, ${cur.color} 0%, #ffffff 45%, ${cur.color}99 100%)`
-    : "linear-gradient(120deg, #CC1500 0%, #ffffff 45%, #CC150099 100%)";
+  // Clean white for quote text — color accent comes from the quote mark and avatar only
+  const quoteGrad = "none";
 
   return (
-    <section ref={ref} className="bg-[#0A0A0A] text-white py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative" id="trust">
+    <section ref={ref} className="bg-[#0A0A0A] text-white pt-16 pb-10 md:pt-24 md:pb-14 px-5 sm:px-8 lg:px-10 relative" id="trust">
 
       {/* Edge fades */}
       <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #0A0A0A, transparent)" }} />
-      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10" style={{ background: "linear-gradient(to top, #0A0A0A, transparent)" }} />
+      <div className="absolute inset-x-0 bottom-0 h-16 pointer-events-none z-10" style={{ background: "linear-gradient(to top, #0A0A0A, transparent)" }} />
 
       {/* Ambient blob — shifts color with active testimonial */}
       <motion.div className="absolute inset-0 pointer-events-none" style={{ y: blobY }}>
@@ -124,7 +140,7 @@ export const TrustSection = () => {
       <div className="relative z-10 max-w-5xl mb-16">
 
         {/* Fixed-height quote area so controls below never jump */}
-        <div className="min-h-[320px] sm:min-h-[360px]">
+        <div className="min-h-[240px] sm:min-h-[280px]">
           {!hasItems ? (
             /* Empty state — shown while loading or no reviews yet */
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col justify-center h-full py-10">
@@ -145,14 +161,10 @@ export const TrustSection = () => {
                 <p className="font-black leading-none mb-2 select-none" style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(5rem, 10vw, 9rem)", lineHeight: 1, color: cur.color }} aria-hidden>"</p>
 
                 <blockquote
-                  className="font-black tracking-tighter leading-[1.05] mb-8"
+                  className="font-black tracking-tighter leading-[1.05] mb-8 text-white/90"
                   style={{
                     fontFamily: "Poppins, sans-serif",
                     fontSize: "clamp(1.5rem, 3.2vw, 2.8rem)",
-                    backgroundImage: quoteGrad,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
                   }}
                 >
                   {cur.text}

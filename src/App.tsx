@@ -7,6 +7,7 @@ import { ProcessSection }   from "./components/sections/ProcessSection";
 import { Projects }         from "@/components/sections/Projects";
 import { ServicesSection }  from "@/components/sections/ServicesSection";
 import { CTASection }       from "@/components/sections/CTASection";
+import { Footer }           from "@/components/layout/Footer";
 import { Marquee }          from "@/components/ui/Marquee";
 import { Loader }           from "@/components/ui/Loader";
 import { DeleteReview }     from "@/components/ui/DeleteReview";
@@ -33,6 +34,7 @@ function App() {
         <Projects />
         <ServicesSection />
         <CTASection />
+        <Footer />
       </Layout>
     </>
   );
