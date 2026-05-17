@@ -4,32 +4,47 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
 
-// Mobile browsers block autoplay unless the video is visible in the viewport.
-// This component uses IntersectionObserver to play only when visible,
-// and also forces muted via ref (React doesn't apply it to the real DOM node).
+// Reliable autoplay for mobile:
+// - preload="auto" starts loading immediately
+// - IntersectionObserver (threshold 0) triggers as soon as any pixel is visible
+// - Listens to canplay/loadeddata so play() is called once data is ready
+// - isVisible ref tracks viewport state so both conditions must be true
 const AutoplayVideo = ({ src, className }: { src: string; className?: string }) => {
-  const ref = useRef<HTMLVideoElement>(null);
+  const ref        = useRef<HTMLVideoElement>(null);
+  const isVisible  = useRef(false);
 
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
     v.muted = true;
 
+    const tryPlay = () => {
+      if (isVisible.current && v.readyState >= 2) {
+        v.play().catch(() => {});
+      }
+    };
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            v.play().catch(() => {});
-          } else {
-            v.pause();
-          }
-        });
+      ([entry]) => {
+        isVisible.current = entry.isIntersecting;
+        if (isVisible.current) tryPlay();
+        else v.pause();
       },
-      { threshold: 0.2 }
+      { threshold: 0 }
     );
 
+    v.addEventListener("canplay",    tryPlay);
+    v.addEventListener("loadeddata", tryPlay);
     observer.observe(v);
-    return () => observer.disconnect();
+
+    // In case it's already in view and ready
+    tryPlay();
+
+    return () => {
+      observer.disconnect();
+      v.removeEventListener("canplay",    tryPlay);
+      v.removeEventListener("loadeddata", tryPlay);
+    };
   }, [src]);
 
   return (
@@ -40,6 +55,7 @@ const AutoplayVideo = ({ src, className }: { src: string; className?: string }) 
       loop
       playsInline
       autoPlay
+      preload="auto"
       className={className}
     />
   );
