@@ -4,62 +4,20 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
 
-// Reliable autoplay for mobile:
-// - preload="auto" starts loading immediately
-// - IntersectionObserver (threshold 0) triggers as soon as any pixel is visible
-// - Listens to canplay/loadeddata so play() is called once data is ready
-// - isVisible ref tracks viewport state so both conditions must be true
-const AutoplayVideo = ({ src, className }: { src: string; className?: string }) => {
-  const ref        = useRef<HTMLVideoElement>(null);
-  const isVisible  = useRef(false);
-
-  useEffect(() => {
-    const v = ref.current;
-    if (!v) return;
-    v.muted = true;
-
-    const tryPlay = () => {
-      if (isVisible.current && v.readyState >= 2) {
-        v.play().catch(() => {});
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible.current = entry.isIntersecting;
-        if (isVisible.current) tryPlay();
-        else v.pause();
-      },
-      { threshold: 0 }
-    );
-
-    v.addEventListener("canplay",    tryPlay);
-    v.addEventListener("loadeddata", tryPlay);
-    observer.observe(v);
-
-    // In case it's already in view and ready
-    tryPlay();
-
-    return () => {
-      observer.disconnect();
-      v.removeEventListener("canplay",    tryPlay);
-      v.removeEventListener("loadeddata", tryPlay);
-    };
-  }, [src]);
-
-  return (
-    <video
-      ref={ref}
-      src={src}
-      muted
-      loop
-      playsInline
-      autoPlay
-      preload="auto"
-      className={className}
-    />
-  );
-};
+// iOS Safari + Android autoplay: the HTML attributes autoplay+muted+playsinline
+// are natively respected. The only React-specific fix needed is forcing muted=true
+// on the real DOM node via a callback ref (React doesn't apply the muted prop correctly).
+const AutoplayVideo = ({ src, className }: { src: string; className?: string }) => (
+  <video
+    ref={(el) => { if (el) el.muted = true; }}
+    src={src}
+    muted
+    loop
+    playsInline
+    autoPlay
+    className={className}
+  />
+);
 
 const BG = "#ffffff";
 const BLOBS = [
