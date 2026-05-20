@@ -191,6 +191,48 @@ const TiendaMockup = ({ accent }: { accent: string }) => (
   </div>
 );
 
+const InvitacionMockup = ({ accent }: { accent: string }) => (
+  <div className="w-full h-full flex flex-col" style={{ background: "#fdf8f2" }}>
+    {/* Browser bar */}
+    <div className="flex items-center gap-1.5 px-3 py-1.5 shrink-0" style={{ background: "#f5ede0", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+      {["#ff5f57","#ffbd2e","#28ca42"].map(c => <div key={c} className="w-1.5 h-1.5 rounded-full" style={{ background: c }} />)}
+      <div className="h-1.5 flex-1 rounded-full ml-1" style={{ background: "rgba(0,0,0,0.08)" }} />
+    </div>
+    {/* Decorative accent line */}
+    <div className="w-full h-0.5 shrink-0" style={{ background: `linear-gradient(to right, transparent, ${accent}80, transparent)` }} />
+    {/* Monogram / ornament */}
+    <div className="flex flex-col items-center pt-2 shrink-0">
+      <div className="w-5 h-5 rounded-full flex items-center justify-center mb-0.5" style={{ border: `1px solid ${accent}60` }}>
+        <div className="w-1.5 h-1.5 rounded-full" style={{ background: accent, opacity: 0.75 }} />
+      </div>
+      {/* Couple names */}
+      <div className="h-2 w-18 rounded-full mb-0.5" style={{ background: "rgba(0,0,0,0.55)", width: 72 }} />
+      <div className="h-1 w-8 rounded-full" style={{ background: accent, opacity: 0.45 }} />
+    </div>
+    {/* Divider with date */}
+    <div className="flex items-center justify-center gap-1.5 my-1.5 shrink-0 px-3">
+      <div className="h-px flex-1" style={{ background: `${accent}35` }} />
+      <div className="flex gap-0.5">
+        {["1","4",".","0","6",".","2","6"].map((l, i) => (
+          <span key={i} className="text-[5px] font-black" style={{ color: accent, fontFamily: "Poppins, sans-serif", opacity: 0.85 }}>{l}</span>
+        ))}
+      </div>
+      <div className="h-px flex-1" style={{ background: `${accent}35` }} />
+    </div>
+    {/* Venue + details */}
+    <div className="flex flex-col items-center gap-0.5 px-3 shrink-0">
+      <div className="h-1 w-20 rounded-full" style={{ background: "rgba(0,0,0,0.18)" }} />
+      <div className="h-1 w-14 rounded-full" style={{ background: "rgba(0,0,0,0.10)" }} />
+    </div>
+    {/* RSVP button */}
+    <div className="flex flex-col items-center flex-1 justify-end pb-2">
+      <div className="h-4 w-16 rounded-full flex items-center justify-center" style={{ border: `1px solid ${accent}60`, background: `${accent}12` }}>
+        <div className="h-0.5 w-9 rounded-full" style={{ background: accent, opacity: 0.7 }} />
+      </div>
+    </div>
+  </div>
+);
+
 const BeautyMockup = ({ accent }: { accent: string }) => (
   <div className="w-full h-full flex flex-col" style={{ background: "#1a1015" }}>
     {/* Browser bar */}
@@ -255,6 +297,12 @@ const CASES = [
     Mockup: LandingMockup,
     es: { service: "Landing Page", who: "Coaches · Nutricionistas · Entrenadores", title: "Landing de servicios", hook: "Una página que explica lo que hacés, por qué sos la mejor opción y que convierte visitas en clientes." },
     en: { service: "Landing Page", who: "Coaches · Nutritionists · Trainers", title: "Services landing", hook: "A page that explains what you do, why you're the best option and turns visitors into clients." },
+  },
+  {
+    accent: "#C084FC",
+    Mockup: InvitacionMockup,
+    es: { service: "Sitio Web", who: "Bodas · Quinceañeras · Cumpleaños · Eventos", title: "Invitación digital", hook: "Elegante, interactiva y sin imprimir nada. Los invitados confirman asistencia desde el link y vos tenés todo organizado en un solo lugar." },
+    en: { service: "Website", who: "Weddings · Quinceañeras · Birthdays · Events", title: "Digital invitation", hook: "Elegant, interactive and paperless. Guests confirm attendance from the link and you have everything organized in one place." },
   },
 ];
 
