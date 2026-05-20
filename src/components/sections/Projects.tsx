@@ -26,7 +26,7 @@ const BLOBS = [
   { color: "#D97706", w: 260, x: "55%", y: "90%", op: 0.04, cls: "blob-1" },
 ];
 const headGrad = SPOTS_DARK; // usado en el modal (fondo oscuro)
-const ACCENTS  = ["#CC1500", "#7C3AED", "#06B6D4"];
+const ACCENTS  = ["#CC1500", "#7C3AED", "#06B6D4", "#EC4899", "#D4A017"];
 
 interface Project {
   id: string;
@@ -243,13 +243,18 @@ export const Projects = () => {
   const [processId,  setProcessId]  = useState<string | null>(null);
 
   const rawData = [
-    { id: "unik",           video: "./Unik-web.mp4",    liveUrl: "https://unik-kappa.vercel.app/",   stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
-    { id: "emme",           video: "./emme.mp4",         liveUrl: "https://www.emmedigital.com.ar/",  stack: ["React.js", "TypeScript", "Framer Motion"] },
-    { id: "la-quinta-miri", video: "./LaQuintaMiri.mp4", liveUrl: "https://laquintamiri.vercel.app/", stack: ["React.js", "TypeScript", "EmailJS"] },
+    { id: "unik",           video: "./Unik-web.mp4",    liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
+    { id: "emme",           video: "./emme.mp4",         liveUrl: "https://www.emmedigital.com.ar/",              stack: ["React.js", "TypeScript", "Framer Motion"] },
+    { id: "la-quinta-miri", video: "./LaQuintaMiri.mp4", liveUrl: "https://laquintamiri.vercel.app/",            stack: ["React.js", "TypeScript", "EmailJS"] },
+    { id: "inv-xv",                                      liveUrl: "https://invitacion-xv-muestra.vercel.app/",   stack: ["React.js", "Framer Motion", "Vite"] },
+    { id: "inv-boda",                                    liveUrl: "https://invitacion-muestra.vercel.app/",      stack: ["React.js", "Framer Motion", "Vite"] },
   ];
 
   const projects: Project[] = rawData.map(p => {
-    const key = p.id === "la-quinta-miri" ? "miri" : p.id;
+    const key = p.id === "la-quinta-miri" ? "miri"
+      : p.id === "inv-xv"   ? "invXv"
+      : p.id === "inv-boda" ? "invBoda"
+      : p.id;
     return {
       ...p,
       title:           t(`projects.items.${key}.title`),
@@ -270,8 +275,8 @@ export const Projects = () => {
   }, [selectedId, processId]);
 
   const panelWidth = (id: string) => {
-    if (!hoveredId) return "33.33%";
-    return id === hoveredId ? "52%" : "24%";
+    if (!hoveredId) return "20%";
+    return id === hoveredId ? "44%" : "14%";
   };
 
   return (
@@ -354,7 +359,13 @@ export const Projects = () => {
               >
                 {p.video
                   ? <AutoplayVideo src={p.video} className="w-full h-full object-cover" />
-                  : <img src={p.image} alt="" className="w-full h-full object-cover" />
+                  : p.image
+                    ? <img src={p.image} alt="" className="w-full h-full object-cover" />
+                    : <div className="w-full h-full" style={{
+                        background: `radial-gradient(ellipse 70% 80% at 30% 40%, ${accent}40 0%, transparent 65%),
+                                     radial-gradient(ellipse 50% 60% at 75% 70%, ${accent}20 0%, transparent 55%),
+                                     #0A0A0A`
+                      }} />
                 }
               </motion.div>
 
@@ -460,7 +471,11 @@ export const Projects = () => {
             <div className="absolute inset-0">
               {p.video
                 ? <AutoplayVideo src={p.video} className="w-full h-full object-cover opacity-60" />
-                : <img src={p.image} alt="" className="w-full h-full object-cover opacity-60" />
+                : p.image
+                  ? <img src={p.image} alt="" className="w-full h-full object-cover opacity-60" />
+                  : <div className="w-full h-full" style={{
+                      background: `radial-gradient(ellipse 70% 80% at 30% 40%, ${ACCENTS[i]}40 0%, transparent 65%), #0A0A0A`
+                    }} />
               }
             </div>
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.15) 55%, transparent 100%)" }} />
@@ -536,7 +551,18 @@ export const Projects = () => {
                     <div className="relative lg:w-1/2 min-h-[260px] bg-[#0c0c0c] hidden lg:block">
                       {selected.video
                         ? <AutoplayVideo src={selected.video} className="w-full h-full object-cover" />
-                        : <img src={selected.image} className="w-full h-full object-cover" alt="" />}
+                        : selected.image
+                          ? <img src={selected.image} className="w-full h-full object-cover" alt="" />
+                          : (() => {
+                              const idx = projects.findIndex(p => p.id === selected.id);
+                              const ac = ACCENTS[idx] ?? "#CC1500";
+                              return <div className="w-full h-full" style={{
+                                background: `radial-gradient(ellipse 80% 80% at 35% 45%, ${ac}45 0%, transparent 60%),
+                                             radial-gradient(ellipse 60% 60% at 70% 65%, ${ac}20 0%, transparent 55%),
+                                             #0A0A0A`
+                              }} />;
+                            })()
+                      }
                     </div>
 
                     {/* info */}
