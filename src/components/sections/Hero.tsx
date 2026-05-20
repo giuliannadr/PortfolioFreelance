@@ -50,39 +50,6 @@ const TypewriterWord = ({ lang }: { lang: string }) => {
   );
 };
 
-// ── Cursor dot (desktop/mouse only) ────────────────────────────────────────
-const CursorDot = () => {
-  const mx = useMotionValue(-20);
-  const my = useMotionValue(-20);
-  const x  = useSpring(mx, { stiffness: 70, damping: 20, restDelta: 0.001 });
-  const y  = useSpring(my, { stiffness: 70, damping: 20, restDelta: 0.001 });
-  const [vis,       setVis]       = useState(false);
-  const [isPointer, setIsPointer] = useState(false);
-
-  useEffect(() => {
-    // Only show on real pointer devices (mouse/trackpad), not touch screens
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointer(mq.matches);
-    if (!mq.matches) return;
-
-    const move  = (e: MouseEvent) => { mx.set(e.clientX - 6); my.set(e.clientY - 6); setVis(true); };
-    const leave = () => setVis(false);
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseleave", leave);
-    return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseleave", leave); };
-  }, [mx, my]);
-
-  if (!isPointer) return null;
-
-  return (
-    <motion.div
-      className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[#CC1500] pointer-events-none z-[9999]"
-      style={{ x, y }}
-      animate={{ opacity: vis ? 1 : 0, scale: vis ? 1 : 0.4 }}
-      transition={{ opacity: { duration: 0.15 }, scale: { duration: 0.15 } }}
-    />
-  );
-};
 
 // ── Vertical side scroller ─────────────────────────────────────────────────
 const SIDE_ITEMS = ["DISEÑO WEB","DESARROLLO","REACT","NEXT.JS","TYPESCRIPT","FIGMA","UI/UX","BRANDING","MOTION","FRONTEND","ARGENTINA"];
@@ -228,7 +195,6 @@ export const Hero = () => {
 
   return (
     <>
-      <CursorDot />
       <section id="home" className="relative bg-[#0A0A0A] min-h-screen flex flex-col pt-14 overflow-hidden">
 
         <SideScroller side="left" />
