@@ -4,13 +4,16 @@ import { ArrowUpRight, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
 
+interface Maintenance {
+  price: string;
+  es: string;
+  en: string;
+}
 interface PlanContent {
   name: string;
-  subtitle?: string;
   tag: string;
   price: string | null;
   originalPrice?: string | null;
-  period?: string | null;
   includes: string[];
 }
 interface Plan {
@@ -18,6 +21,7 @@ interface Plan {
   accent: string;
   quote?: boolean;
   featured?: boolean;
+  maintenance?: Maintenance;
   es: PlanContent;
   en: PlanContent;
 }
@@ -26,6 +30,7 @@ const PLANS: Plan[] = [
   {
     id: "landing",
     accent: "#CC1500",
+    maintenance: { price: "15.000", es: "Mantenimiento disponible · $15.000/mes", en: "Maintenance available · $15,000/mo" },
     es: {
       name: "Landing Page", tag: "Sitio Web", price: "150.000",
       includes: ["Diseño UI/UX exclusivo", "Desarrollo con código propio", "Deploy incluido en Vercel", "100% adaptada a mobile", "Formulario de contacto"],
@@ -39,6 +44,7 @@ const PLANS: Plan[] = [
     id: "multiseccion",
     accent: "#7C3AED",
     featured: true,
+    maintenance: { price: "15.000", es: "Mantenimiento disponible · $15.000/mes", en: "Maintenance available · $15,000/mo" },
     es: {
       name: "Multi-sección", tag: "Sitio Web", price: "180.000",
       includes: ["Todo lo de Landing", "Múltiples secciones", "Galería o portfolio", "Animaciones premium", "SEO optimizado"],
@@ -51,6 +57,7 @@ const PLANS: Plan[] = [
   {
     id: "tienda",
     accent: "#06B6D4",
+    maintenance: { price: "30.000", es: "Mantenimiento disponible · $30.000/mes", en: "Maintenance available · $30,000/mo" },
     es: {
       name: "Tienda Online", tag: "E-commerce", price: "360.000", originalPrice: "400.000",
       includes: ["Diseño UI/UX exclusivo", "Carrito de compras", "Pasarelas de pago", "Panel de administración", "Gestión de stock"],
@@ -61,33 +68,10 @@ const PLANS: Plan[] = [
     },
   },
   {
-    id: "mant-landing",
-    accent: "#EC4899",
-    es: {
-      name: "Mantenimiento", subtitle: "Landing & Multi-sección", tag: "Soporte", price: "15.000", period: "/mes",
-      includes: ["Backups periódicos", "Actualizaciones de seguridad", "Soporte técnico", "Monitoreo de uptime"],
-    },
-    en: {
-      name: "Maintenance", subtitle: "Landing & Multi-section", tag: "Support", price: "15.000", period: "/month",
-      includes: ["Periodic backups", "Security updates", "Technical support", "Uptime monitoring"],
-    },
-  },
-  {
-    id: "mant-tienda",
-    accent: "#D97706",
-    es: {
-      name: "Mantenimiento", subtitle: "Tienda & Personalizados", tag: "Soporte", price: "30.000", period: "/mes",
-      includes: ["Todo el plan básico", "Soporte prioritario", "Optimización de performance", "Actualizaciones de contenido"],
-    },
-    en: {
-      name: "Maintenance", subtitle: "Store & Custom", tag: "Support", price: "30.000", period: "/month",
-      includes: ["Everything in basic plan", "Priority support", "Performance optimization", "Content updates"],
-    },
-  },
-  {
     id: "custom",
     accent: "#10B981",
     quote: true,
+    maintenance: { price: "30.000", es: "Mantenimiento disponible · $30.000/mes", en: "Maintenance available · $30,000/mo" },
     es: {
       name: "Sistemas & Webs a medida", tag: "A presupuestar", price: null,
       includes: ["Web apps complejas", "Sistemas de gestión", "Integraciones de APIs", "Bases de datos personalizadas"],
@@ -179,8 +163,8 @@ export const ServicesSection = () => {
         </motion.h2>
       </div>
 
-      {/* Pricing grid — 1 col / 2 col sm / 3 col lg */}
-      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      {/* Pricing grid — 1 col / 2 col sm+ */}
+      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         {PLANS.map((plan, i) => {
           const c = lang === "en" ? plan.en : plan.es;
           return (
@@ -258,17 +242,11 @@ export const ServicesSection = () => {
                   )}
                 </div>
 
-                {/* Name + subtitle */}
+                {/* Name */}
                 <h3 className="font-black uppercase text-white leading-tight"
                   style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.95rem, 1.8vw, 1.15rem)", letterSpacing: "-0.01em" }}>
                   {c.name}
                 </h3>
-                {c.subtitle && (
-                  <p className="text-white/30 text-[9.5px] font-black uppercase tracking-[0.22em] mt-0.5 mb-0"
-                    style={{ fontFamily: "Poppins, sans-serif" }}>
-                    {c.subtitle}
-                  </p>
-                )}
 
                 {/* Divider */}
                 <div className="h-px w-full my-5" style={{ background: "rgba(255,255,255,0.07)" }} />
@@ -285,6 +263,18 @@ export const ServicesSection = () => {
                     </li>
                   ))}
                 </ul>
+
+                {/* Maintenance note */}
+                {plan.maintenance && (
+                  <div className="flex items-center gap-2 mb-4 py-2.5 px-3"
+                    style={{ background: `${plan.accent}08`, border: `1px solid ${plan.accent}20` }}>
+                    <div className="w-1 h-1 rounded-full shrink-0" style={{ background: plan.accent }} />
+                    <span className="text-[9px] font-black uppercase tracking-[0.18em]"
+                      style={{ fontFamily: "Poppins, sans-serif", color: `${plan.accent}99` }}>
+                      {lang === "en" ? plan.maintenance.en : plan.maintenance.es}
+                    </span>
+                  </div>
+                )}
 
                 {/* CTA button */}
                 <button
