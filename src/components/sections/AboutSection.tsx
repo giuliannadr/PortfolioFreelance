@@ -9,6 +9,12 @@ const BLOBS = [
   { color: "#EC4899", w: 260, x: "46%", y: "95%", op: 0.05, cls: "blob-1" },
 ];
 
+const STATS = [
+  { es: "5 proyectos entregados",    en: "5 projects delivered",    color: "#CC1500" },
+  { es: "6 proyectos en curso",      en: "6 projects in progress",  color: "#7C3AED" },
+  { es: "UNLAM · Egreso jul. 2026",  en: "UNLAM · Graduating Jul. 2026", color: "#06B6D4" },
+];
+
 const PILLARS = [
   { num: "01", color: "#CC1500", es: { title: "Diseño que vende", body: "No diseño para que quede bonito. Diseño para que tus clientes digan que sí. Cada decisión visual tiene un propósito concreto." }, en: { title: "Design that sells", body: "I don't design to look pretty. I design so your clients say yes. Every visual decision has a concrete purpose." } },
   { num: "02", color: "#7C3AED", es: { title: "Atención directa", body: "Hablás conmigo, no con un equipo que no conoce tu negocio. Entiendo tu idea a la primera y la ejecuto con precisión." }, en: { title: "Direct attention", body: "You talk to me, not a team that doesn't know your business. I understand your idea first time, every time." } },
@@ -121,7 +127,7 @@ export const AboutSection = () => {
               </span>
               <span className="text-white/15">·</span>
               <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/30" style={{ fontFamily: "Poppins, sans-serif" }}>
-                {lang === "en" ? "Web Dev Tech. · UNLAM" : "Tec. Desarrollo Web · UNLAM"}
+                {lang === "en" ? "Web Developer · UNLAM · Jul. 2026" : "Desarrolladora Web · UNLAM · Jul. 2026"}
               </span>
               <span className="text-white/15">·</span>
               <div className="flex items-center gap-1.5">
@@ -133,6 +139,30 @@ export const AboutSection = () => {
             </div>
           </div>
         </div>
+      </motion.div>
+
+      {/* Stats strip */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 flex flex-wrap justify-center sm:justify-start gap-3 mb-14"
+      >
+        {STATS.map((s, i) => (
+          <span
+            key={i}
+            className="text-[8.5px] font-black uppercase tracking-[0.25em] px-3 py-1.5"
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              color: s.color,
+              background: `${s.color}12`,
+              border: `1px solid ${s.color}28`,
+            }}
+          >
+            {lang === "en" ? s.en : s.es}
+          </span>
+        ))}
       </motion.div>
 
       {/* Pillars — side by side */}
