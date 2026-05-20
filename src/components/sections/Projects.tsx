@@ -238,6 +238,7 @@ export const Projects = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);
 
+  const [hoveredId,  setHoveredId]  = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [processId,  setProcessId]  = useState<string | null>(null);
 
@@ -324,8 +325,9 @@ export const Projects = () => {
       {/* ── PROJECT GRID: 1 col mobile · 2 col desktop ── */}
       <div className="relative z-20 grid grid-cols-1 md:grid-cols-2 gap-3">
         {projects.map((p, i) => {
-          const accent = ACCENTS[i];
-          const isLast = i === projects.length - 1 && projects.length % 2 !== 0;
+          const accent  = ACCENTS[i];
+          const isLast  = i === projects.length - 1 && projects.length % 2 !== 0;
+          const isHov   = hoveredId === p.id;
 
           return (
             <motion.div
@@ -334,11 +336,17 @@ export const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              onHoverStart={() => setHoveredId(p.id)}
+              onHoverEnd={() => setHoveredId(null)}
               onClick={() => setSelectedId(p.id)}
               className={`group relative overflow-hidden cursor-pointer bg-[#0A0A0A] aspect-[16/9]${isLast ? " md:col-span-2 md:aspect-[32/9]" : ""}`}
             >
               {/* media */}
-              <div className="absolute inset-0 group-hover:scale-[1.04] transition-transform duration-700">
+              <motion.div
+                className="absolute inset-0"
+                animate={{ scale: isHov ? 1.05 : 1 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              >
                 {p.video
                   ? <AutoplayVideo src={p.video} className="w-full h-full object-cover" />
                   : p.image
@@ -349,70 +357,99 @@ export const Projects = () => {
                                      #0A0A0A`
                       }} />
                 }
-              </div>
+              </motion.div>
 
-              {/* dark overlay — lightens on hover */}
-              <div className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-60"
-                style={{ background: "rgba(10,10,10,0.55)" }} />
+              {/* dark overlay */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{ opacity: isHov ? 0.4 : 0.55 }}
+                transition={{ duration: 0.4 }}
+                style={{ background: "#0A0A0A" }}
+              />
 
               {/* bottom gradient */}
               <div className="absolute inset-0 pointer-events-none"
-                style={{ background: "linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.3) 45%, transparent 100%)" }} />
+                style={{ background: "linear-gradient(to top, rgba(10,10,10,0.98) 0%, rgba(10,10,10,0.25) 50%, transparent 100%)" }} />
 
-              {/* accent top line — slides in on hover */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-10"
-                style={{ background: accent }} />
+              {/* accent top line */}
+              <motion.div
+                className="absolute top-0 left-0 right-0 h-[2px] origin-left z-10"
+                animate={{ scaleX: isHov ? 1 : 0, opacity: isHov ? 1 : 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                style={{ background: accent }}
+              />
 
               {/* number + category */}
               <div className="absolute top-0 left-0 right-0 p-5 flex items-center justify-between z-10">
-                <span className="font-black text-white/35 group-hover:text-white/70 transition-colors duration-300"
-                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.58rem", letterSpacing: "0.18em" }}>
+                <motion.span
+                  animate={{ color: isHov ? accent : "rgba(255,255,255,0.35)" }}
+                  transition={{ duration: 0.3 }}
+                  className="font-black"
+                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.58rem", letterSpacing: "0.18em" }}
+                >
                   0{i + 1}
-                </span>
-                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 group-hover:text-white/55 transition-colors duration-300"
-                  style={{ fontFamily: "Poppins, sans-serif" }}>
+                </motion.span>
+                <motion.span
+                  animate={{ opacity: isHov ? 0.6 : 0.3 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-[9px] font-black uppercase tracking-[0.3em] text-white"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   {p.category}
-                </span>
+                </motion.span>
               </div>
 
-              {/* bottom info */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+              {/* ── Bottom content: desc expands above title on hover ── */}
+              <div className="absolute bottom-0 left-0 right-0 px-6 pb-5 z-10">
+
+                {/* Extra (desc + buttons) — height 0→auto, pushes title up */}
+                <AnimatePresence>
+                  {isHov && (
+                    <motion.div
+                      key={`extra-${p.id}`}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="text-white/50 text-sm leading-relaxed line-clamp-2 mb-3">{p.description}</p>
+                      <div className="flex items-center gap-3 mb-4">
+                        {p.liveUrl && (
+                          <a
+                            href={p.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className="flex items-center gap-2 px-4 py-2 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all"
+                            style={{ fontFamily: "Poppins, sans-serif" }}
+                          >
+                            {lang === "en" ? "Visit site" : "Ver sitio"}
+                            <ArrowUpRight size={11} />
+                          </a>
+                        )}
+                        {p.process && (
+                          <button
+                            onClick={e => { e.stopPropagation(); setProcessId(p.id); }}
+                            className="flex items-center gap-2 px-4 py-2 border border-white/20 text-white/60 font-black text-[10px] uppercase tracking-widest hover:border-white/50 hover:text-white transition-all"
+                            style={{ fontFamily: "Poppins, sans-serif" }}
+                          >
+                            <Eye size={11} />
+                            {lang === "en" ? "Process" : "Proceso"}
+                          </button>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Title — always visible, sits at bottom edge */}
                 <h3
-                  className="font-black tracking-tighter italic leading-none text-white mb-3"
+                  className="font-black tracking-tighter italic leading-none text-white"
                   style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(1.5rem, 2.8vw, 2.8rem)" }}
                 >
                   {p.title}
                 </h3>
-
-                {/* description + buttons — fade up on hover */}
-                <div className="opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                  <p className="text-white/50 text-sm leading-relaxed line-clamp-2 mb-3 max-w-xl">{p.description}</p>
-                  <div className="flex items-center gap-3">
-                    {p.liveUrl && (
-                      <a
-                        href={p.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="flex items-center gap-2 px-4 py-2 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all"
-                        style={{ fontFamily: "Poppins, sans-serif" }}
-                      >
-                        {lang === "en" ? "Visit site" : "Ver sitio"}
-                        <ArrowUpRight size={11} />
-                      </a>
-                    )}
-                    {p.process && (
-                      <button
-                        onClick={e => { e.stopPropagation(); setProcessId(p.id); }}
-                        className="flex items-center gap-2 px-4 py-2 border border-white/20 text-white/60 font-black text-[10px] uppercase tracking-widest hover:border-white/50 hover:text-white transition-all"
-                        style={{ fontFamily: "Poppins, sans-serif" }}
-                      >
-                        <Eye size={11} />
-                        {lang === "en" ? "Process" : "Proceso"}
-                      </button>
-                    )}
-                  </div>
-                </div>
               </div>
             </motion.div>
           );
