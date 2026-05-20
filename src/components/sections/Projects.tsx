@@ -246,8 +246,8 @@ export const Projects = () => {
     { id: "unik",           video: "./Unik-web.mp4",    liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
     { id: "emme",           video: "./emme.mp4",         liveUrl: "https://www.emmedigital.com.ar/",              stack: ["React.js", "TypeScript", "Framer Motion"] },
     { id: "la-quinta-miri", video: "./LaQuintaMiri.mp4", liveUrl: "https://laquintamiri.vercel.app/",            stack: ["React.js", "TypeScript", "EmailJS"] },
-    { id: "inv-xv",   image: "./xv.png",   liveUrl: "https://invitacion-xv-muestra.vercel.app/",   stack: ["React.js", "Framer Motion", "Vite"] },
-    { id: "inv-boda", image: "./boda.png", liveUrl: "https://invitacion-muestra.vercel.app/",      stack: ["React.js", "Framer Motion", "Vite"] },
+    { id: "inv-xv",   image: "./xv.webp",   liveUrl: "https://invitacion-xv-muestra.vercel.app/",   stack: ["React.js", "Framer Motion", "Vite"] },
+    { id: "inv-boda", image: "./boda.webp", liveUrl: "https://invitacion-muestra.vercel.app/",      stack: ["React.js", "Framer Motion", "Vite"] },
   ];
 
   const projects: Project[] = rawData.map(p => {
@@ -350,7 +350,7 @@ export const Projects = () => {
                 {p.video
                   ? <AutoplayVideo src={p.video} className="w-full h-full object-cover" />
                   : p.image
-                    ? <img src={p.image} alt="" className="w-full h-full object-cover" />
+                    ? <img src={p.image} alt="" className="w-full h-full object-cover" fetchPriority="high" decoding="async" />
                     : <div className="w-full h-full" style={{
                         background: `radial-gradient(ellipse 65% 80% at 28% 40%, ${accent}45 0%, transparent 62%),
                                      radial-gradient(ellipse 45% 55% at 72% 68%, ${accent}22 0%, transparent 55%),
