@@ -243,9 +243,9 @@ export const Projects = () => {
   const [processId,  setProcessId]  = useState<string | null>(null);
 
   const rawData = [
-    { id: "unik",           video: "./Unik-web.mp4",    liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
-    { id: "emme",           video: "./emme.mp4",         liveUrl: "https://www.emmedigital.com.ar/",              stack: ["React.js", "TypeScript", "Framer Motion"] },
-    { id: "la-quinta-miri", video: "./LaQuintaMiri.mp4", liveUrl: "https://laquintamiri.vercel.app/",            stack: ["React.js", "TypeScript", "EmailJS"] },
+    { id: "unik",           image: "./unik-mockup.webp", liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
+    { id: "emme",           image: "./emme-mockup.webp", liveUrl: "https://www.emmedigital.com.ar/",              stack: ["React.js", "TypeScript", "Framer Motion"] },
+    { id: "la-quinta-miri", image: "./miri-mockup.webp", liveUrl: "https://laquintamiri.vercel.app/",            stack: ["React.js", "TypeScript", "EmailJS"] },
     { id: "inv-boda", image: "./boda.webp", liveUrl: "https://invitacion-muestra.vercel.app/",      stack: ["React.js", "Framer Motion", "Vite"] },
     { id: "inv-xv",   image: "./xv.webp",   liveUrl: "https://invitacion-xv-muestra.vercel.app/",   stack: ["React.js", "Framer Motion", "Vite"] },
   ];
