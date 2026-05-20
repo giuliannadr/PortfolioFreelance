@@ -109,6 +109,18 @@ process: {
         "description": "Warm digital presence for a vacation spot, without the social media pressure.",
         "longDescription": "Miriam had no social media presence and wanted to highlight her space without the extreme exposure of constantly managing notifications. Besides positioning her place on Google Maps, I created this landing page to be as warm and eye-catching as possible, capturing the essence of the spot and facilitating direct contact."
       },
+      invXv: {
+        "title": "Mis XV · Valentina",
+        "category": "Digital Invitation",
+        "description": "Dark, dramatic editorial invitation with real-time countdown and a full event program for a quinceañera in Buenos Aires.",
+        "longDescription": "Valentina's quinceañera invitation was designed to be as unforgettable as the night itself. A full-screen black-and-white hero photo with a fuchsia color splash, animated real-time countdown (days, hours, minutes, seconds), a detailed event timeline with timed entries — Recepción, Cena, Show Sorpresa, La Tanda — and one-tap access to the venue on Google Maps. Every detail crafted to build anticipation from the first click."
+      },
+      invBoda: {
+        "title": "Wedding Invitation",
+        "category": "Digital Invitation",
+        "description": "Elegant digital wedding invitation: countdown, photo gallery and RSVP — all in one link.",
+        "longDescription": "A digital wedding invitation designed to replace the traditional paper card. Real-time countdown to the big day, photo gallery, venue details with direct Google Maps access, and an RSVP section so the couple knows who's attending. Designed to be shared in a single link — elegant, fully personalized and always up to date."
+      },
         trivia: {
           title: "Distributed Trivia Engine",
           category: "Java / Spring MVC / WebSockets / MySQL",
@@ -292,6 +304,18 @@ process: {
         "category": "Diseño & Desarrollo",
         "description": "Presencia digital cálida para un espacio de descanso, sin la presión de las redes sociales.",
         "longDescription": "Miriam no tenía presencia en las redes y buscaba destacar su espacio sin la exposición extrema de estar siempre pendiente de las notificaciones. Aparte de posicionar su quinta en Google Maps, creé esta landing para que sea lo más cálida y llamativa posible, capturando la esencia del lugar y facilitando el contacto directo."
+      },
+      invXv: {
+        "title": "Mis XV · Valentina",
+        "category": "Invitación Digital",
+        "description": "Invitación editorial oscura y dramática con cuenta regresiva en tiempo real y programa completo para una quinceañera en Buenos Aires.",
+        "longDescription": "La invitación de los XV de Valentina fue diseñada para estar a la altura de la noche. Foto hero en blanco y negro con splash de fucsia, cuenta regresiva animada en tiempo real (días, horas, minutos, segundos), programa de eventos detallado con horarios — Recepción, Cena, Show Sorpresa y La Tanda — y acceso al salón directo desde Google Maps. Cada detalle pensado para generar anticipación desde el primer click."
+      },
+      invBoda: {
+        "title": "Invitación de Boda",
+        "category": "Invitación Digital",
+        "description": "Invitación digital elegante que reemplaza la tarjeta física: cuenta regresiva, galería y confirmación de asistencia en un solo link.",
+        "longDescription": "Una invitación de boda digital que reemplaza la tarjeta física tradicional. Cuenta regresiva en tiempo real hasta el gran día, galería de fotos, información del venue con acceso directo en Google Maps, y confirmación de asistencia para que los novios sepan quiénes van. Diseñada para compartir en un solo link — elegante, completamente personalizada y siempre al día."
       },
         trivia: {
           title: "Motor de Trivia Distribuido",
