@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { WhyCodePanel } from "./WhyCodeSection";
@@ -342,42 +342,55 @@ export const UseCasesSection = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language === "en" ? "en" : "es";
   const ref = useRef<HTMLElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const carouselIndexRef = useRef(0);
+
+  // ── Mobile carousel state ──────────────────────────────────────────────────
+  const [activeIdx, setActiveIdx]   = useState(0);
+  const [cardW,     setCardW]       = useState(0);
+  const containerRef  = useRef<HTMLDivElement>(null);
+  const touchStartX   = useRef(0);
+  const touchStartT   = useRef(0);
+  const isPausedRef   = useRef(false);
+  const resumeTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const goTo = (idx: number) => setActiveIdx(Math.max(0, Math.min(CASES.length - 1, idx)));
+
+  // Measure card width from container
+  useEffect(() => {
+    const measure = () => {
+      if (containerRef.current) setCardW(containerRef.current.offsetWidth - 40);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  // Auto-advance (pauses while user is swiping)
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (!isPausedRef.current) setActiveIdx(i => (i + 1) % CASES.length);
+    }, 3200);
+    return () => clearInterval(id);
+  }, []);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartT.current = Date.now();
+    isPausedRef.current = true;
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dx = touchStartX.current - e.changedTouches[0].clientX;
+    const dt = Date.now() - touchStartT.current;
+    if (Math.abs(dx) > 40 || (Math.abs(dx) > 15 && dt < 250)) {
+      if (dx > 0) goTo(activeIdx + 1);
+      else goTo(activeIdx - 1);
+    }
+    resumeTimer.current = setTimeout(() => { isPausedRef.current = false; }, 3000);
+  };
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
-
-  // Auto-scroll carousel
-  useEffect(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-
-    let isPaused = false;
-
-    const advance = () => {
-      if (isPaused) return;
-      const cards = el.querySelectorAll<HTMLElement>("[data-carousel-card]");
-      if (!cards.length) return;
-      carouselIndexRef.current = (carouselIndexRef.current + 1) % cards.length;
-      const card = cards[carouselIndexRef.current];
-      el.scrollTo({ left: card.offsetLeft - 20, behavior: "smooth" });
-    };
-
-    const interval = setInterval(advance, 2800);
-
-    const pause = () => { isPaused = true; };
-    const resume = () => { setTimeout(() => { isPaused = false; }, 800); };
-
-    el.addEventListener("touchstart", pause, { passive: true });
-    el.addEventListener("touchend", resume, { passive: true });
-
-    return () => {
-      clearInterval(interval);
-      el.removeEventListener("touchstart", pause);
-      el.removeEventListener("touchend", resume);
-    };
-  }, []);
 
   const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)";
 
@@ -445,36 +458,49 @@ export const UseCasesSection = () => {
         </motion.p>
       </div>
 
-      {/* ── MOBILE: auto-scroll touch carousel ── */}
+      {/* ── MOBILE: transform-based swipe carousel ── */}
       <div
-        ref={carouselRef}
-        className="md:hidden relative z-20 flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-3 -mx-5 px-5"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        ref={containerRef}
+        className="md:hidden relative z-20 overflow-hidden pb-3 -mx-5 px-5"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
-        {CASES.map((c, i) => {
-          const content = lang === "en" ? c.en : c.es;
-          return (
-            <div
-              key={i}
-              data-carousel-card
-              className="snap-start shrink-0 flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white"
-              style={{ width: "82vw" }}
-            >
-              <CardInner c={c} content={content} lang={lang} />
-            </div>
-          );
-        })}
-        {/* Trailing spacer so last card scrolls fully into view */}
-        <div className="shrink-0 w-5" />
+        <div
+          className="flex gap-3"
+          style={{
+            transform: `translateX(-${activeIdx * (cardW + 12)}px)`,
+            transition: "transform 0.42s cubic-bezier(0.16, 1, 0.3, 1)",
+            willChange: "transform",
+          }}
+        >
+          {CASES.map((c, i) => {
+            const content = lang === "en" ? c.en : c.es;
+            return (
+              <div
+                key={i}
+                className="shrink-0 flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white"
+                style={{ width: cardW || "82vw" }}
+              >
+                <CardInner c={c} content={content} lang={lang} />
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Dot indicators — mobile */}
-      <div className="md:hidden relative z-20 flex justify-center gap-1.5 mt-3">
-        {CASES.map((_, i) => (
-          <div
+      {/* Dot indicators — mobile, synced to activeIdx */}
+      <div className="md:hidden relative z-20 flex justify-center gap-1.5 mt-4">
+        {CASES.map((c, i) => (
+          <button
             key={i}
-            className="w-1 h-1 rounded-full transition-all duration-300"
-            style={{ background: i === 0 ? "#CC1500" : "rgba(10,10,10,0.15)" }}
+            onClick={() => goTo(i)}
+            className="transition-all duration-300"
+            style={{
+              width: i === activeIdx ? 18 : 6,
+              height: 6,
+              borderRadius: 3,
+              background: i === activeIdx ? c.accent : "rgba(10,10,10,0.15)",
+            }}
           />
         ))}
       </div>
