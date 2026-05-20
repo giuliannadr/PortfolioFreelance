@@ -8,7 +8,6 @@ const STEPS = [
   { number: "01", key: "step1", accent: "#CC1500" },
   { number: "02", key: "step2", accent: "#7C3AED" },
   { number: "03", key: "step3", accent: "#06B6D4" },
-  { number: "04", key: "step4", accent: "#D97706" },
 ];
 
 const BLOBS = [
@@ -37,7 +36,7 @@ const StepRow = ({ number, stepKey, index, accent }: { number: string; stepKey: 
       {/* Step num + animated connector */}
       <div className="flex flex-col items-center pt-1">
         <span className="font-black leading-none" style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.65rem", letterSpacing: "0.12em", color: accent }}>{number}</span>
-        {index < 4 && (
+        {index < 2 && (
           <div className="mt-3 w-px bg-[#0A0A0A]/10" style={{ height: 44 }}>
             <motion.div className="w-full origin-top h-full" style={{ scaleY: lineScaleY, background: accent }} />
           </div>

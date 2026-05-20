@@ -1,14 +1,102 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
 
-const SERVICES = [
-  { key: "web",         num: "01", accent: "#CC1500" },
-  { key: "store",       num: "02", accent: "#7C3AED" },
-  { key: "systems",     num: "03", accent: "#06B6D4" },
-  { key: "maintenance", num: "04", accent: "#D97706" },
+interface PlanContent {
+  name: string;
+  subtitle?: string;
+  tag: string;
+  price: string | null;
+  originalPrice?: string | null;
+  period?: string | null;
+  includes: string[];
+}
+interface Plan {
+  id: string;
+  accent: string;
+  quote?: boolean;
+  featured?: boolean;
+  es: PlanContent;
+  en: PlanContent;
+}
+
+const PLANS: Plan[] = [
+  {
+    id: "landing",
+    accent: "#CC1500",
+    es: {
+      name: "Landing Page", tag: "Sitio Web", price: "150.000",
+      includes: ["Diseño UI/UX exclusivo", "Desarrollo con código propio", "Deploy incluido en Vercel", "100% adaptada a mobile", "Formulario de contacto"],
+    },
+    en: {
+      name: "Landing Page", tag: "Website", price: "150.000",
+      includes: ["Custom UI/UX design", "Custom code development", "Deploy included on Vercel", "100% mobile responsive", "Contact form"],
+    },
+  },
+  {
+    id: "multiseccion",
+    accent: "#7C3AED",
+    featured: true,
+    es: {
+      name: "Multi-sección", tag: "Sitio Web", price: "180.000",
+      includes: ["Todo lo de Landing", "Múltiples secciones", "Galería o portfolio", "Animaciones premium", "SEO optimizado"],
+    },
+    en: {
+      name: "Multi-section", tag: "Website", price: "180.000",
+      includes: ["Everything in Landing", "Multiple sections", "Gallery or portfolio", "Premium animations", "SEO optimized"],
+    },
+  },
+  {
+    id: "tienda",
+    accent: "#06B6D4",
+    es: {
+      name: "Tienda Online", tag: "E-commerce", price: "360.000", originalPrice: "400.000",
+      includes: ["Diseño UI/UX exclusivo", "Carrito de compras", "Pasarelas de pago", "Panel de administración", "Gestión de stock"],
+    },
+    en: {
+      name: "Online Store", tag: "E-commerce", price: "360.000", originalPrice: "400.000",
+      includes: ["Custom UI/UX design", "Shopping cart", "Payment gateways", "Admin panel", "Stock management"],
+    },
+  },
+  {
+    id: "mant-landing",
+    accent: "#EC4899",
+    es: {
+      name: "Mantenimiento", subtitle: "Landing & Multi-sección", tag: "Soporte", price: "15.000", period: "/mes",
+      includes: ["Backups periódicos", "Actualizaciones de seguridad", "Soporte técnico", "Monitoreo de uptime"],
+    },
+    en: {
+      name: "Maintenance", subtitle: "Landing & Multi-section", tag: "Support", price: "15.000", period: "/month",
+      includes: ["Periodic backups", "Security updates", "Technical support", "Uptime monitoring"],
+    },
+  },
+  {
+    id: "mant-tienda",
+    accent: "#D97706",
+    es: {
+      name: "Mantenimiento", subtitle: "Tienda & Personalizados", tag: "Soporte", price: "30.000", period: "/mes",
+      includes: ["Todo el plan básico", "Soporte prioritario", "Optimización de performance", "Actualizaciones de contenido"],
+    },
+    en: {
+      name: "Maintenance", subtitle: "Store & Custom", tag: "Support", price: "30.000", period: "/month",
+      includes: ["Everything in basic plan", "Priority support", "Performance optimization", "Content updates"],
+    },
+  },
+  {
+    id: "custom",
+    accent: "#10B981",
+    quote: true,
+    es: {
+      name: "Sistemas & Webs a medida", tag: "A presupuestar", price: null,
+      includes: ["Web apps complejas", "Sistemas de gestión", "Integraciones de APIs", "Bases de datos personalizadas"],
+    },
+    en: {
+      name: "Custom Systems & Websites", tag: "Custom quote", price: null,
+      includes: ["Complex web apps", "Management systems", "API integrations", "Custom databases"],
+    },
+  },
 ];
 
 const BG_BLOBS = [
@@ -17,57 +105,17 @@ const BG_BLOBS = [
   { color: "#06B6D4", w: 280, x: "55%", y: "92%", op: 0.05, cls: "blob-1" },
 ];
 
-const CTA_BLOBS = [
-  { color: "#CC1500", w: 340, x: "80%", y: "40%", op: 0.22 },
-  { color: "#7C3AED", w: 280, x: "18%", y: "60%", op: 0.16 },
-  { color: "#D97706", w: 200, x: "50%", y: "110%", op: 0.12 },
-  { color: "#06B6D4", w: 180, x: "88%", y: "8%",  op: 0.10 },
-];
-
-const SVC_BLOB_GRAD = [
-  "radial-gradient(ellipse 90% 160% at 8% 50%, rgba(204,21,0,0.50), transparent 55%)",
-  "radial-gradient(ellipse 80% 140% at 92% 50%, rgba(124,58,237,0.42), transparent 55%)",
-  "radial-gradient(ellipse 60% 110% at 50% -15%, rgba(6,182,212,0.30), transparent 50%)",
-  "#ffffff",
-].join(", ");
-
-const ServiceCtaBtn = ({ lang, onClick }: { lang: string; onClick: () => void }) => {
-  const [hov, setHov] = useState(false);
-  return (
-    <motion.button
-      onClick={onClick}
-      onHoverStart={() => setHov(true)}
-      onHoverEnd={() => setHov(false)}
-      whileTap={{ scale: 0.97 }}
-      className="relative z-10 flex items-center gap-3 bg-white text-[#0A0A0A] font-black text-[10px] uppercase tracking-[0.3em] px-10 py-5 group overflow-hidden mb-4"
-      style={{ fontFamily: "Poppins, sans-serif" }}
-    >
-      <span
-        className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-        style={{ opacity: hov ? 1 : 0, background: SVC_BLOB_GRAD }}
-      />
-      <span className="relative z-10 flex items-center gap-3">
-        {lang === "en" ? "Write on WhatsApp" : "Escribime por WhatsApp"}
-        <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-      </span>
-    </motion.button>
-  );
-};
-
 export const ServicesSection = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const lang = i18n.language === "en" ? "en" : "es";
   const ref  = useRef<HTMLElement>(null);
-
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
-  const headGrad = SPOTS_DARK;
-
-  const handleGeneral = () => {
+  const handleWA = (planName: string) => {
     const msg = lang === "en"
-      ? "Hi! I'd like to request a quote for a project."
-      : "¡Hola! Me gustaría solicitar un presupuesto para un proyecto.";
+      ? `Hi! I'm interested in the "${planName}" plan. I'd like to know more.`
+      : `¡Hola! Me interesa el plan "${planName}". Me gustaría saber más.`;
     window.open(`https://wa.me/5491150403408?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -80,7 +128,7 @@ export const ServicesSection = () => {
       <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10"
         style={{ background: "linear-gradient(to top, #0A0A0A, transparent)" }} />
 
-      {/* Background blobs */}
+      {/* Blobs */}
       <motion.div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ y: blobY }}>
         {BG_BLOBS.map((b, i) => (
           <div key={i} className={`${b.cls} absolute blur-3xl`}
@@ -94,7 +142,9 @@ export const ServicesSection = () => {
           style={{ fontFamily: "Poppins, sans-serif" }}>06</span>
         <div className="h-px flex-1 bg-white/[0.06]" />
         <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25"
-          style={{ fontFamily: "Poppins, sans-serif" }}>{t("services.badge")}</span>
+          style={{ fontFamily: "Poppins, sans-serif" }}>
+          {lang === "en" ? "Investment" : "Inversión"}
+        </span>
       </div>
 
       {/* Headline */}
@@ -105,9 +155,17 @@ export const ServicesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="block font-black uppercase leading-[0.85]"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 8rem)", letterSpacing: "-0.03em", backgroundImage: headGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "clamp(3rem, 9vw, 8rem)",
+            letterSpacing: "-0.03em",
+            backgroundImage: SPOTS_DARK,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
         >
-          {t("services.title")}
+          {lang === "en" ? "Prices" : "Precios"}
         </motion.h2>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -117,154 +175,152 @@ export const ServicesSection = () => {
           className="block font-serif italic font-light leading-[1.05] text-white/20"
           style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
         >
-          {t("services.titleItalic")}
+          {lang === "en" ? "clear & direct." : "claros y directos."}
         </motion.h2>
       </div>
 
-      {/* 2×2 Service Cards */}
-      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 gap-4 mb-20">
-        {SERVICES.map(({ key, num, accent }, i) => {
-          const details = t(`services.items.${key}.details`, { returnObjects: true }) as string[];
+      {/* Pricing grid — 1 col / 2 col sm / 3 col lg */}
+      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        {PLANS.map((plan, i) => {
+          const c = lang === "en" ? plan.en : plan.es;
           return (
             <motion.div
-              key={key}
+              key={plan.id}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative p-8 lg:p-10 overflow-hidden"
+              transition={{ duration: 0.6, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative flex flex-col overflow-hidden"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 backdropFilter: "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
                 border: "1px solid rgba(255,255,255,0.07)",
                 boxShadow: "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
-                borderTop: `2px solid ${accent}55`,
+                borderTop: `2px solid ${plan.featured ? plan.accent : `${plan.accent}55`}`,
               }}
             >
-              {/* Subtle inner glow from accent at top */}
-              <div
-                className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
-                style={{ background: `linear-gradient(to bottom, ${accent}12, transparent)` }}
-              />
+              {/* Top glow */}
+              <div className="absolute top-0 left-0 right-0 h-28 pointer-events-none"
+                style={{ background: `linear-gradient(to bottom, ${plan.accent}18, transparent)` }} />
+              {/* Hover glow */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse 70% 50% at 20% 15%, ${plan.accent}14, transparent)` }} />
 
-              {/* Hover radial glow */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ background: `radial-gradient(ellipse 70% 60% at 20% 20%, ${accent}14, transparent)` }}
-              />
+              <div className="relative p-6 lg:p-8 flex flex-col flex-1">
 
-              {/* Glass inner highlight — thin top edge */}
-              <div
-                className="absolute top-0 left-6 right-6 h-px pointer-events-none"
-                style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent)" }}
-              />
-
-              {/* Number row */}
-              <div className="flex items-center gap-3 mb-7 relative">
-                <span className="font-black leading-none shrink-0"
-                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.6rem", letterSpacing: "0.18em", color: accent }}>
-                  {num}
-                </span>
-                <div className="h-px flex-1" style={{ background: `${accent}30` }} />
-              </div>
-
-              {/* Title */}
-              <h3
-                className="font-black uppercase text-white leading-none mb-4 relative"
-                style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.25rem, 2.8vw, 2rem)", letterSpacing: "-0.02em" }}
-              >
-                {t(`services.items.${key}.title`)}
-              </h3>
-
-              {/* Description */}
-              <p className="text-white/45 text-sm leading-relaxed mb-7 relative">
-                {t(`services.items.${key}.description`)}
-              </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 relative">
-                {details.map((d, di) => (
+                {/* Tag + badge row */}
+                <div className="flex items-center justify-between mb-5">
                   <span
-                    key={di}
-                    className="text-[9px] font-black uppercase tracking-[0.18em] px-3 py-1.5"
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      color: accent,
-                      background: `${accent}12`,
-                      border: `1px solid ${accent}30`,
-                    }}
+                    className="text-[8px] font-black uppercase tracking-[0.28em] px-2.5 py-1"
+                    style={{ fontFamily: "Poppins, sans-serif", color: plan.accent, background: `${plan.accent}15`, border: `1px solid ${plan.accent}30` }}
                   >
-                    {d}
+                    {c.tag}
                   </span>
-                ))}
+                  {c.originalPrice && (
+                    <span className="text-[8px] font-black uppercase tracking-[0.18em] px-2 py-1"
+                      style={{ fontFamily: "Poppins, sans-serif", color: "#D97706", background: "rgba(217,119,6,0.15)", border: "1px solid rgba(217,119,6,0.35)" }}>
+                      PROMO
+                    </span>
+                  )}
+                  {plan.featured && !c.originalPrice && (
+                    <span className="text-[8px] font-black uppercase tracking-[0.18em] px-2 py-1"
+                      style={{ fontFamily: "Poppins, sans-serif", color: plan.accent, background: `${plan.accent}20`, border: `1px solid ${plan.accent}40` }}>
+                      {lang === "en" ? "Popular" : "Popular"}
+                    </span>
+                  )}
+                </div>
+
+                {/* Price */}
+                <div className="mb-3">
+                  {plan.quote ? (
+                    <p className="font-black text-white leading-none"
+                      style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)", letterSpacing: "-0.02em" }}>
+                      {lang === "en" ? "Custom quote" : "A presupuestar"}
+                    </p>
+                  ) : (
+                    <div className="flex items-baseline gap-1.5 flex-wrap">
+                      <span className="text-white/30 font-black text-base" style={{ fontFamily: "Poppins, sans-serif" }}>$</span>
+                      <span className="font-black text-white leading-none"
+                        style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", letterSpacing: "-0.03em" }}>
+                        {c.price}
+                      </span>
+                      <span className="text-white/30 font-black text-xs" style={{ fontFamily: "Poppins, sans-serif" }}>ARS</span>
+                      {c.period && (
+                        <span className="text-white/35 font-black text-sm" style={{ fontFamily: "Poppins, sans-serif" }}>{c.period}</span>
+                      )}
+                    </div>
+                  )}
+                  {c.originalPrice && (
+                    <p className="text-white/22 text-sm line-through mt-0.5" style={{ fontFamily: "Poppins, sans-serif" }}>
+                      $ {c.originalPrice} ARS
+                    </p>
+                  )}
+                </div>
+
+                {/* Name + subtitle */}
+                <h3 className="font-black uppercase text-white leading-tight"
+                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.95rem, 1.8vw, 1.15rem)", letterSpacing: "-0.01em" }}>
+                  {c.name}
+                </h3>
+                {c.subtitle && (
+                  <p className="text-white/30 text-[9.5px] font-black uppercase tracking-[0.22em] mt-0.5 mb-0"
+                    style={{ fontFamily: "Poppins, sans-serif" }}>
+                    {c.subtitle}
+                  </p>
+                )}
+
+                {/* Divider */}
+                <div className="h-px w-full my-5" style={{ background: "rgba(255,255,255,0.07)" }} />
+
+                {/* Includes list */}
+                <ul className="flex flex-col gap-2.5 flex-1 mb-6">
+                  {c.includes.map((item, ii) => (
+                    <li key={ii} className="flex items-start gap-2.5">
+                      <div className="w-3.5 h-3.5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                        style={{ background: `${plan.accent}20`, border: `1px solid ${plan.accent}45` }}>
+                        <Check size={7} style={{ color: plan.accent }} strokeWidth={3} />
+                      </div>
+                      <span className="text-white/50 text-[11.5px] leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA button */}
+                <button
+                  onClick={() => handleWA(c.name)}
+                  className="flex items-center justify-center gap-2 py-3 font-black text-[10px] uppercase tracking-widest transition-all duration-300 group/btn hover:gap-3"
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    background: plan.featured ? plan.accent : "rgba(255,255,255,0.06)",
+                    color: plan.featured ? "#fff" : "rgba(255,255,255,0.5)",
+                    border: plan.featured ? "none" : "1px solid rgba(255,255,255,0.10)",
+                  }}
+                >
+                  {plan.quote
+                    ? (lang === "en" ? "Request a quote" : "Pedir presupuesto")
+                    : (lang === "en" ? "Get started" : "Empezar")}
+                  <ArrowUpRight size={11} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                </button>
               </div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* CTA Container — blobs clipped inside with overflow-hidden */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+      {/* Footnote */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 overflow-hidden flex flex-col items-center text-center px-8 py-16 md:py-20"
-        style={{ background: "#F8F7F5" }}
+        transition={{ duration: 0.6 }}
+        className="relative z-20 text-white/18 text-[10.5px] leading-relaxed max-w-2xl"
+        style={{ fontFamily: "Poppins, sans-serif" }}
       >
-        {/* Blobs clipped inside the box */}
-        {CTA_BLOBS.map((b, i) => (
-          <div
-            key={i}
-            className="absolute blur-3xl pointer-events-none"
-            style={{ background: b.color, width: b.w, height: b.w, left: b.x, top: b.y, opacity: b.op, transform: "translate(-50%,-50%)", borderRadius: "50%" }}
-          />
-        ))}
-
-        {/* Badge */}
-        <div className="relative z-10 flex items-center gap-4 mb-8">
-          <div className="h-px w-10" style={{ background: "rgba(10,10,10,0.12)" }} />
-          <span
-            className="text-[9px] font-black uppercase tracking-[0.5em]"
-            style={{ fontFamily: "Poppins, sans-serif", color: "rgba(10,10,10,0.35)" }}
-          >
-            {t("services.cta.badge")}
-          </span>
-          <div className="h-px w-10" style={{ background: "rgba(10,10,10,0.12)" }} />
-        </div>
-
-        {/* Headline */}
-        <div className="relative z-10 mb-3">
-          <h3
-            className="font-black uppercase leading-none"
-            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2rem, 6vw, 5rem)", letterSpacing: "-0.03em", color: "#0A0A0A" }}
-          >
-            {t("services.cta.title")}
-          </h3>
-        </div>
-
-        {/* Subtext */}
-        <p
-          className="relative z-10 text-[#0A0A0A]/40 leading-relaxed mb-10 text-sm"
-          style={{ maxWidth: "min(440px, 88vw)" }}
-        >
-          {lang === "en"
-            ? "Tell me about your idea. I'll get back to you in less than 24 hours."
-            : "Contame tu idea. Te respondo en menos de 24 horas."}
-        </p>
-
-        {/* Button */}
-        <ServiceCtaBtn lang={lang} onClick={handleGeneral} />
-
-        <span
-          className="relative z-10 text-[9px] font-black uppercase tracking-[0.4em]"
-          style={{ fontFamily: "Poppins, sans-serif", color: "rgba(10,10,10,0.20)" }}
-        >
-          {lang === "en" ? "No commitment. Just a conversation." : "Sin compromiso. Solo una charla."}
-        </span>
-      </motion.div>
-
+        {lang === "en"
+          ? "* Prices do not include the annual domain or external hosting if the project cannot be deployed on Vercel. Landing pages and multi-section sites include deployment. Prices in Argentine pesos."
+          : "* Los precios no incluyen el dominio anual ni hosting externo en caso de que el proyecto no pueda deployarse en Vercel. Las landing pages y sitios multi-sección incluyen el deploy. Precios en pesos argentinos."}
+      </motion.p>
     </section>
   );
 };
