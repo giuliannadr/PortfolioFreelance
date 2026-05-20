@@ -28,12 +28,12 @@ interface Plan {
 
 const MAINT_INCLUDES = {
   basic: {
-    es: ["Backups periódicos", "Actualizaciones de seguridad", "Soporte técnico", "Monitoreo de uptime"],
-    en: ["Periodic backups", "Security updates", "Technical support", "Uptime monitoring"],
+    es: ["Cambios de textos e imágenes", "Agregar o quitar secciones", "Ajustes de diseño o funcionalidad", "Soporte ante dudas o problemas"],
+    en: ["Text & image updates", "Add or remove sections", "Design or functionality tweaks", "Support for questions or issues"],
   },
   full: {
-    es: ["Todo lo básico", "Soporte prioritario", "Optimización de performance", "Actualizaciones de contenido"],
-    en: ["Everything in basic", "Priority support", "Performance optimization", "Content updates"],
+    es: ["Todo lo del plan básico", "Cambios más complejos o frecuentes", "Nuevas funcionalidades", "Respuesta prioritaria"],
+    en: ["Everything in basic", "More complex or frequent changes", "New features", "Priority response time"],
   },
 };
 
