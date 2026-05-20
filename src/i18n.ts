@@ -51,24 +51,19 @@ process: {
   "quote": "\"My process is designed so you enjoy the journey as much as the final result.\"",
   "steps": {
     "step1": {
-      "title": "Chat & Strategy",
-      "description": "I take a moment to understand your business. I don't design just for the sake of it; I design so your project grows and you feel at ease.",
-      "tags": ["Active listening", "Your vision", "Action plan"]
+      "title": "Initial Chat",
+      "description": "I listen and understand your business before anything else. No generic templates — everything starts from your vision and your goals.",
+      "tags": ["Discovery"]
     },
     "step2": {
-      "title": "Sketching Together",
-      "description": "I present the visual idea and we refine it together. I want you to feel that the web has your essence in every corner before any code is written.",
-      "tags": ["Real feedback", "Back and forth", "Your brand"]
+      "title": "Design & Development",
+      "description": "I design and build your web with constant feedback. You follow every step through a live preview link — no surprises, no waiting in the dark.",
+      "tags": ["Live preview"]
     },
     "step3": {
-      "title": "Magic & Development",
-      "description": "I bring the design to code with animations that guide your customers. You'll have a link to see your web come to life step by step.",
-      "tags": ["Transparency", "Zero surprises", "Quality"]
-    },
-    "step4": {
-      "title": "Flight & Company",
-      "description": "We launch your web, but I won't let go of your hand. I'll teach you how to manage everything so you're free to update content whenever you want.",
-      "tags": ["Autonomy", "Support", "Shared success"]
+      "title": "Launch & Support",
+      "description": "We go live and I stay available. I hand off the keys so you can manage your content independently, with support whenever you need it.",
+      "tags": ["Always available"]
     }
   }
 },
@@ -249,24 +244,19 @@ process: {
   "quote": "\"Mi proceso está diseñado para que disfrutes el camino tanto como el resultado final.\"",
   "steps": {
     "step1": {
-      "title": "Charla & Estrategia",
-      "description": "Me tomo el tiempo de entender tu negocio a fondo. No diseño por diseñar; diseño para que tu proyecto crezca y vos estés tranquila.",
-      "tags": ["Escucha activa", "Tu visión", "Plan de acción"]
+      "title": "Charla inicial",
+      "description": "Escucho y entiendo tu negocio antes de arrancar. Sin plantillas genéricas — todo parte de tu visión y tus objetivos reales.",
+      "tags": ["Descubrimiento"]
     },
     "step2": {
-      "title": "Boceto Juntos",
-      "description": "Te presento la idea visual y la refinamos juntos. Quiero que sientas que la web tiene tu esencia en cada rincón antes de escribir una línea de código.",
-      "tags": ["Feedback real", "Idas y vueltas", "Tu marca"]
+      "title": "Diseño & Desarrollo",
+      "description": "Diseño y construyo tu web con feedback constante. Seguís cada paso a través de un link en vivo — sin sorpresas ni esperas a ciegas.",
+      "tags": ["Preview en vivo"]
     },
     "step3": {
-      "title": "Magia & Desarrollo",
-      "description": "Llevo el diseño al código con animaciones que guían a tus clientes. Vas a tener un link para ver cómo tu web cobra vida paso a paso.",
-      "tags": ["Transparencia", "Cero sorpresas", "Calidad"]
-    },
-    "step4": {
-      "title": "Vuelo & Compañía",
-      "description": "Lanzamos tu web, pero no te suelto la mano. Te enseño a manejar todo para que seas libre de actualizar tu contenido cuando quieras.",
-      "tags": ["Autonomía", "Soporte", "Éxito compartido"]
+      "title": "Lanzamiento & Soporte",
+      "description": "Salimos al aire y quedo disponible. Te entrego las riendas para que puedas manejar tu contenido con autonomía, con soporte cuando lo necesitás.",
+      "tags": ["Siempre disponible"]
     }
   }
 },
