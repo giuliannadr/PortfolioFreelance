@@ -1,13 +1,13 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Check } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Check, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
 
 interface Maintenance {
   price: string;
-  es: string;
-  en: string;
+  includesEs: string[];
+  includesEn: string[];
 }
 interface PlanContent {
   name: string;
@@ -26,11 +26,22 @@ interface Plan {
   en: PlanContent;
 }
 
+const MAINT_INCLUDES = {
+  basic: {
+    es: ["Backups periódicos", "Actualizaciones de seguridad", "Soporte técnico", "Monitoreo de uptime"],
+    en: ["Periodic backups", "Security updates", "Technical support", "Uptime monitoring"],
+  },
+  full: {
+    es: ["Todo lo básico", "Soporte prioritario", "Optimización de performance", "Actualizaciones de contenido"],
+    en: ["Everything in basic", "Priority support", "Performance optimization", "Content updates"],
+  },
+};
+
 const PLANS: Plan[] = [
   {
     id: "landing",
     accent: "#CC1500",
-    maintenance: { price: "15.000", es: "Mantenimiento disponible · $15.000/mes", en: "Maintenance available · $15,000/mo" },
+    maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
       name: "Landing Page", tag: "Sitio Web", price: "150.000",
       includes: ["Diseño UI/UX exclusivo", "Desarrollo con código propio", "Deploy incluido en Vercel", "100% adaptada a mobile", "Formulario de contacto"],
@@ -44,7 +55,7 @@ const PLANS: Plan[] = [
     id: "multiseccion",
     accent: "#7C3AED",
     featured: true,
-    maintenance: { price: "15.000", es: "Mantenimiento disponible · $15.000/mes", en: "Maintenance available · $15,000/mo" },
+    maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
       name: "Multi-sección", tag: "Sitio Web", price: "180.000",
       includes: ["Todo lo de Landing", "Múltiples secciones", "Galería o portfolio", "Animaciones premium", "SEO optimizado"],
@@ -57,7 +68,7 @@ const PLANS: Plan[] = [
   {
     id: "tienda",
     accent: "#06B6D4",
-    maintenance: { price: "30.000", es: "Mantenimiento disponible · $30.000/mes", en: "Maintenance available · $30,000/mo" },
+    maintenance: { price: "30.000", includesEs: MAINT_INCLUDES.full.es, includesEn: MAINT_INCLUDES.full.en },
     es: {
       name: "Tienda Online", tag: "E-commerce", price: "360.000", originalPrice: "400.000",
       includes: ["Diseño UI/UX exclusivo", "Carrito de compras", "Pasarelas de pago", "Panel de administración", "Gestión de stock"],
@@ -71,7 +82,6 @@ const PLANS: Plan[] = [
     id: "custom",
     accent: "#10B981",
     quote: true,
-    maintenance: { price: "30.000", es: "Mantenimiento disponible · $30.000/mes", en: "Maintenance available · $30,000/mo" },
     es: {
       name: "Sistemas & Webs a medida", tag: "A presupuestar", price: null,
       includes: ["Web apps complejas", "Sistemas de gestión", "Integraciones de APIs", "Bases de datos personalizadas"],
@@ -93,6 +103,7 @@ export const ServicesSection = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language === "en" ? "en" : "es";
   const ref  = useRef<HTMLElement>(null);
+  const [tooltip, setTooltip] = useState<string | null>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
@@ -163,8 +174,8 @@ export const ServicesSection = () => {
         </motion.h2>
       </div>
 
-      {/* Pricing grid — 1 col / 2 col sm+ */}
-      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+      {/* Pricing grid — 1 col / 2 col sm / 4 col xl */}
+      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
         {PLANS.map((plan, i) => {
           const c = lang === "en" ? plan.en : plan.es;
           return (
@@ -266,13 +277,56 @@ export const ServicesSection = () => {
 
                 {/* Maintenance note */}
                 {plan.maintenance && (
-                  <div className="flex items-center gap-2 mb-4 py-2.5 px-3"
-                    style={{ background: `${plan.accent}08`, border: `1px solid ${plan.accent}20` }}>
-                    <div className="w-1 h-1 rounded-full shrink-0" style={{ background: plan.accent }} />
-                    <span className="text-[9px] font-black uppercase tracking-[0.18em]"
-                      style={{ fontFamily: "Poppins, sans-serif", color: `${plan.accent}99` }}>
-                      {lang === "en" ? plan.maintenance.en : plan.maintenance.es}
-                    </span>
+                  <div className="relative mb-4">
+                    <div className="flex items-center gap-2 py-2.5 px-3"
+                      style={{ background: `${plan.accent}08`, border: `1px solid ${plan.accent}20` }}>
+                      <div className="w-1 h-1 rounded-full shrink-0" style={{ background: plan.accent }} />
+                      <span className="flex-1 text-[9px] font-black uppercase tracking-[0.18em]"
+                        style={{ fontFamily: "Poppins, sans-serif", color: `${plan.accent}99` }}>
+                        {lang === "en"
+                          ? `Maintenance · $${plan.maintenance.price}/mo`
+                          : `Mantenimiento · $${plan.maintenance.price}/mes`}
+                      </span>
+                      <button
+                        onMouseEnter={() => setTooltip(plan.id)}
+                        onMouseLeave={() => setTooltip(null)}
+                        onFocus={() => setTooltip(plan.id)}
+                        onBlur={() => setTooltip(null)}
+                        className="shrink-0 outline-none"
+                        aria-label={lang === "en" ? "Maintenance info" : "Info sobre mantenimiento"}
+                      >
+                        <Info size={11} style={{ color: `${plan.accent}80` }} />
+                      </button>
+                    </div>
+                    <AnimatePresence>
+                      {tooltip === plan.id && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 4 }}
+                          transition={{ duration: 0.18 }}
+                          className="absolute bottom-full left-0 right-0 mb-2 z-50 p-3"
+                          style={{
+                            background: "#161616",
+                            border: `1px solid ${plan.accent}30`,
+                            boxShadow: `0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px ${plan.accent}15`,
+                          }}
+                        >
+                          <p className="text-[8.5px] font-black uppercase tracking-[0.2em] mb-2"
+                            style={{ fontFamily: "Poppins, sans-serif", color: plan.accent }}>
+                            {lang === "en" ? "Optional · Highly recommended" : "Opcional · Muy recomendable"}
+                          </p>
+                          <ul className="flex flex-col gap-1">
+                            {(lang === "en" ? plan.maintenance.includesEn : plan.maintenance.includesEs).map((item, ii) => (
+                              <li key={ii} className="flex items-center gap-1.5">
+                                <div className="w-1 h-1 rounded-full shrink-0" style={{ background: plan.accent }} />
+                                <span className="text-white/50 text-[10px] leading-snug">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 )}
 

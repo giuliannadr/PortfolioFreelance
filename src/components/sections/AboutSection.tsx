@@ -112,7 +112,7 @@ export const AboutSection = () => {
             </div>
           </div>
 
-          {/* Quote + identity stacked */}
+          {/* Quote + identity + stats stacked */}
           <div className="flex flex-col gap-4 text-center sm:text-left">
             <p
               className="font-serif italic text-white/60 leading-snug"
@@ -137,33 +137,27 @@ export const AboutSection = () => {
                 </span>
               </div>
             </div>
+            {/* Stats badges — aligned under identity */}
+            <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+              {STATS.map((s, i) => (
+                <span
+                  key={i}
+                  className="text-[8.5px] font-black uppercase tracking-[0.2em] px-3 py-1.5"
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    color: s.color,
+                    background: `${s.color}12`,
+                    border: `1px solid ${s.color}28`,
+                  }}
+                >
+                  {lang === "en" ? s.en : s.es}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>
 
-      {/* Stats strip */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 flex flex-wrap justify-center sm:justify-start gap-3 mb-14"
-      >
-        {STATS.map((s, i) => (
-          <span
-            key={i}
-            className="text-[8.5px] font-black uppercase tracking-[0.25em] px-3 py-1.5"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              color: s.color,
-              background: `${s.color}12`,
-              border: `1px solid ${s.color}28`,
-            }}
-          >
-            {lang === "en" ? s.en : s.es}
-          </span>
-        ))}
-      </motion.div>
 
       {/* Pillars — side by side */}
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
