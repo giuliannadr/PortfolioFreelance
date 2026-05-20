@@ -238,7 +238,6 @@ export const Projects = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);
 
-  const [hoveredId,  setHoveredId]  = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [processId,  setProcessId]  = useState<string | null>(null);
 
@@ -273,11 +272,6 @@ export const Projects = () => {
     const nav = document.querySelector("nav") as HTMLElement | null;
     if (nav) nav.style.opacity = locked ? "0" : "1";
   }, [selectedId, processId]);
-
-  const panelWidth = (id: string) => {
-    if (!hoveredId) return "20%";
-    return id === hoveredId ? "44%" : "14%";
-  };
 
   return (
     <section ref={ref} id="projects" className="bg-white pt-14 md:pt-20 pb-20 md:pb-28 px-5 sm:px-8 lg:px-10 relative overflow-hidden">
@@ -327,172 +321,102 @@ export const Projects = () => {
         </motion.h2>
       </div>
 
-      {/* ── DESKTOP: expanding panels ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 hidden md:flex gap-3"
-        style={{ height: "clamp(400px, 62vh, 640px)" }}
-        onMouseLeave={() => setHoveredId(null)}
-      >
+      {/* ── PROJECT GRID: 1 col mobile · 2 col desktop ── */}
+      <div className="relative z-20 grid grid-cols-1 md:grid-cols-2 gap-3">
         {projects.map((p, i) => {
           const accent = ACCENTS[i];
-          const isHov  = hoveredId === p.id;
-          const anyHov = hoveredId !== null;
+          const isLast = i === projects.length - 1 && projects.length % 2 !== 0;
 
           return (
             <motion.div
               key={p.id}
-              animate={{ width: panelWidth(p.id) }}
-              transition={{ type: "spring", stiffness: 260, damping: 30 }}
-              className="relative overflow-hidden cursor-pointer flex-shrink-0"
-              onHoverStart={() => setHoveredId(p.id)}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => setSelectedId(p.id)}
+              className={`group relative overflow-hidden cursor-pointer bg-[#0A0A0A] aspect-[16/9]${isLast ? " md:col-span-2 md:aspect-[32/9]" : ""}`}
             >
               {/* media */}
-              <motion.div
-                className="absolute inset-0"
-                animate={{ scale: isHov ? 1.05 : 1 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <div className="absolute inset-0 group-hover:scale-[1.04] transition-transform duration-700">
                 {p.video
                   ? <AutoplayVideo src={p.video} className="w-full h-full object-cover" />
                   : p.image
                     ? <img src={p.image} alt="" className="w-full h-full object-cover" />
                     : <div className="w-full h-full" style={{
-                        background: `radial-gradient(ellipse 70% 80% at 30% 40%, ${accent}40 0%, transparent 65%),
-                                     radial-gradient(ellipse 50% 60% at 75% 70%, ${accent}20 0%, transparent 55%),
+                        background: `radial-gradient(ellipse 65% 80% at 28% 40%, ${accent}45 0%, transparent 62%),
+                                     radial-gradient(ellipse 45% 55% at 72% 68%, ${accent}22 0%, transparent 55%),
                                      #0A0A0A`
                       }} />
                 }
-              </motion.div>
-
-              {/* dark overlay */}
-              <motion.div
-                className="absolute inset-0"
-                animate={{ opacity: isHov ? 0.45 : (anyHov ? 0.75 : 0.55) }}
-                transition={{ duration: 0.4 }}
-                style={{ background: "#0A0A0A" }}
-              />
-
-              {/* gradient bottom */}
-              <div className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.55) 50%, transparent 100%)" }} />
-
-              {/* top: number + category */}
-              <div className="absolute top-0 left-0 right-0 p-5 flex items-start justify-between z-10">
-                <span
-                  className="font-black transition-colors duration-300"
-                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.58rem", letterSpacing: "0.18em", color: isHov ? accent : "rgba(255,255,255,0.35)" }}
-                >
-                  0{i + 1}
-                </span>
-                <motion.span
-                  animate={{ opacity: isHov ? 1 : 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="text-[9px] font-black uppercase tracking-[0.3em] text-white/50"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  {p.category}
-                </motion.span>
               </div>
 
-              {/* accent top line */}
-              <motion.div
-                className="absolute top-0 left-0 right-0 h-[2px] origin-left z-10"
-                animate={{ scaleX: isHov ? 1 : 0, opacity: isHov ? 1 : 0 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                style={{ background: accent }}
-              />
+              {/* dark overlay — lightens on hover */}
+              <div className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-60"
+                style={{ background: "rgba(10,10,10,0.55)" }} />
 
-              {/* description + buttons — above title, only on hover */}
-              <motion.div
-                className="absolute left-0 right-0 px-6 z-10 space-y-3"
-                style={{ bottom: "calc(3.8rem + 36px)" }}
-                animate={{ opacity: isHov ? 1 : 0, y: isHov ? 0 : 16 }}
-                transition={{ duration: 0.3, delay: isHov ? 0.08 : 0, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <p className="text-white/55 text-sm leading-relaxed line-clamp-2">{p.description}</p>
-                <div className="flex items-center gap-3">
-                  {p.liveUrl && (
-                    <a
-                      href={p.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="flex items-center gap-2 px-4 py-2.5 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all group/btn"
-                      style={{ fontFamily: "Poppins, sans-serif" }}
-                    >
-                      {lang === "en" ? "Visit site" : "Ver sitio"}
-                      <ArrowUpRight size={12} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                    </a>
-                  )}
-                  {p.process && (
-                    <button
-                      onClick={e => { e.stopPropagation(); setProcessId(p.id); }}
-                      className="flex items-center gap-2 px-4 py-2.5 border border-white/20 text-white/60 font-black text-[10px] uppercase tracking-widest hover:border-white/50 hover:text-white transition-all"
-                      style={{ fontFamily: "Poppins, sans-serif" }}
-                    >
-                      <Eye size={11} />
-                      {lang === "en" ? "Process" : "Proceso"}
-                    </button>
-                  )}
-                </div>
-              </motion.div>
+              {/* bottom gradient */}
+              <div className="absolute inset-0 pointer-events-none"
+                style={{ background: "linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.3) 45%, transparent 100%)" }} />
 
-              {/* title — always visible, pegado al borde */}
-              <div className="absolute bottom-0 left-0 right-0 px-6 pb-5 z-10">
+              {/* accent top line — slides in on hover */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-10"
+                style={{ background: accent }} />
+
+              {/* number + category */}
+              <div className="absolute top-0 left-0 right-0 p-5 flex items-center justify-between z-10">
+                <span className="font-black text-white/35 group-hover:text-white/70 transition-colors duration-300"
+                  style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.58rem", letterSpacing: "0.18em" }}>
+                  0{i + 1}
+                </span>
+                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 group-hover:text-white/55 transition-colors duration-300"
+                  style={{ fontFamily: "Poppins, sans-serif" }}>
+                  {p.category}
+                </span>
+              </div>
+
+              {/* bottom info */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                 <h3
-                  className="font-black tracking-tighter italic leading-none text-white"
-                  style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(2rem, 3.2vw, 3.8rem)" }}
+                  className="font-black tracking-tighter italic leading-none text-white mb-3"
+                  style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(1.5rem, 2.8vw, 2.8rem)" }}
                 >
                   {p.title}
                 </h3>
+
+                {/* description + buttons — fade up on hover */}
+                <div className="opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  <p className="text-white/50 text-sm leading-relaxed line-clamp-2 mb-3 max-w-xl">{p.description}</p>
+                  <div className="flex items-center gap-3">
+                    {p.liveUrl && (
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="flex items-center gap-2 px-4 py-2 bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-[#CC1500] hover:text-white transition-all"
+                        style={{ fontFamily: "Poppins, sans-serif" }}
+                      >
+                        {lang === "en" ? "Visit site" : "Ver sitio"}
+                        <ArrowUpRight size={11} />
+                      </a>
+                    )}
+                    {p.process && (
+                      <button
+                        onClick={e => { e.stopPropagation(); setProcessId(p.id); }}
+                        className="flex items-center gap-2 px-4 py-2 border border-white/20 text-white/60 font-black text-[10px] uppercase tracking-widest hover:border-white/50 hover:text-white transition-all"
+                        style={{ fontFamily: "Poppins, sans-serif" }}
+                      >
+                        <Eye size={11} />
+                        {lang === "en" ? "Process" : "Proceso"}
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
             </motion.div>
           );
         })}
-      </motion.div>
-
-      {/* ── MOBILE ── */}
-      <div className="flex flex-col gap-6 md:hidden relative z-20">
-        {projects.map((p, i) => (
-          <motion.div
-            key={p.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            onClick={() => setSelectedId(p.id)}
-            className="group relative overflow-hidden bg-[#0A0A0A] cursor-pointer aspect-[4/3]"
-          >
-            <div className="absolute inset-0">
-              {p.video
-                ? <AutoplayVideo src={p.video} className="w-full h-full object-cover opacity-60" />
-                : p.image
-                  ? <img src={p.image} alt="" className="w-full h-full object-cover opacity-60" />
-                  : <div className="w-full h-full" style={{
-                      background: `radial-gradient(ellipse 70% 80% at 30% 40%, ${ACCENTS[i]}40 0%, transparent 65%), #0A0A0A`
-                    }} />
-              }
-            </div>
-            <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.15) 55%, transparent 100%)" }} />
-            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: ACCENTS[i] }} />
-            <div className="absolute top-0 left-0 right-0 p-4 flex justify-between">
-              <span className="font-black" style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.55rem", letterSpacing: "0.18em", color: ACCENTS[i] }}>0{i + 1}</span>
-              <span className="text-[9px] font-black uppercase tracking-[0.28em] text-white/40" style={{ fontFamily: "Poppins, sans-serif" }}>{p.category}</span>
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 p-5">
-              <h3 className="font-black tracking-tighter italic leading-none text-white mb-1.5 text-2xl" style={{ fontFamily: "Playfair Display, serif" }}>{p.title}</h3>
-              <p className="text-white/45 text-sm line-clamp-1">{p.description}</p>
-            </div>
-            <div className="absolute top-4 right-4 w-8 h-8 border border-white/20 flex items-center justify-center text-white/50">
-              <ArrowUpRight size={14} />
-            </div>
-          </motion.div>
-        ))}
       </div>
 
       {/* ── MODAL (project detail) ── */}
