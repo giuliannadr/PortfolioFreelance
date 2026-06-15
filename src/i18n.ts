@@ -96,7 +96,7 @@ process: {
         "title": "MUDA",
         "category": "Design & Development",
         "description": "Full digital presence for a creative fashion studio in Buenos Aires — public site + custom admin panel.",
-        "longDescription": "Complete end-to-end digital solution for MUDA, a creative production studio in Buenos Aires. Multi-section SPA with editorial aesthetics covering productions, art direction, social content, talent agency, events and studio rental. Includes an interactive talent database where models, photographers and makeup artists apply to join the agency. The custom admin panel lets the founders manage talents, productions and applications in real time. Full technical SEO: local business structured data, sitemap, Open Graph and Google Search Console."
+        "longDescription": "Complete end-to-end digital solution for MUDA, a creative production studio in Buenos Aires. Multi-section SPA with editorial aesthetics covering productions, art direction, social content, talent agency, events and studio rental. Includes an interactive talent database where models, photographers and makeup artists apply to join the agency. The custom admin panel manages talents, productions and applications in real time. Full technical SEO: local business structured data, sitemap, Open Graph and Google Search Console."
       },
       emme: {
         "title": "EMME Digital",
@@ -293,7 +293,7 @@ process: {
         "title": "MUDA",
         "category": "Diseño & Desarrollo",
         "description": "Presencia digital completa para una productora creativa de moda en Buenos Aires — sitio público + panel admin.",
-        "longDescription": "Diseñé y desarrollé de cero la presencia digital completa de MUDA, productora creativa de Buenos Aires. SPA multisección con identidad editorial que cubre producciones, dirección artística, contenido para redes, agencia de talentos, eventos y alquiler de estudio. Incluye una base de talentos interactiva donde modelos, fotógrafxs y maquilladorxs postulan para entrar a la agencia. El panel admin permite a las fundadoras gestionar talentos, producciones y postulaciones en tiempo real. SEO técnico integral: datos estructurados, sitemap, Open Graph y verificación en Google Search Console."
+        "longDescription": "Diseñé y desarrollé de cero la presencia digital completa de MUDA, productora creativa de Buenos Aires. SPA multisección con identidad editorial que cubre producciones, dirección artística, contenido para redes, agencia de talentos, eventos y alquiler de estudio. Incluye una base de talentos interactiva donde modelos, fotógrafxs y maquilladorxs postulan para entrar a la agencia. El panel admin gestiona talentos, producciones y postulaciones en tiempo real. SEO técnico integral: datos estructurados, sitemap, Open Graph y verificación en Google Search Console."
       },
       emme: {
         "title": "EMME Digital",
