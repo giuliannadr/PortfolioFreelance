@@ -92,6 +92,12 @@ process: {
         "description": "From a static Canva presentation to a high-performance web platform.",
         "longDescription": "The team had a portfolio designed in Canva that didn't achieve the fluidity or technical professionalism their work deserved. Staying true to the essence of the original design, I created this high-performance landing page, bringing their identity into a robust, sophisticated, and fully functional web environment."
       },
+      muda: {
+        "title": "MUDA",
+        "category": "Design & Development",
+        "description": "Full digital presence for a creative fashion studio in Buenos Aires — public site + custom admin panel.",
+        "longDescription": "Complete end-to-end digital solution for MUDA, a creative production studio in Buenos Aires. Multi-section SPA with editorial aesthetics covering productions, art direction, social content, talent agency, events and studio rental. Includes an interactive talent database where models, photographers and makeup artists apply to join the agency. The custom admin panel lets the founders manage talents, productions and applications in real time. Full technical SEO: local business structured data, sitemap, Open Graph and Google Search Console."
+      },
       emme: {
         "title": "EMME Digital",
         "category": "Design & Development",
@@ -282,6 +288,12 @@ process: {
         "category": "Diseño & Desarrollo",
         "description": "De una presentación estática en Canva a una plataforma web de alto rendimiento.",
         "longDescription": "Las chicas tenían un portfolio diseñado en Canva que no lograba la fluidez ni el profesionalismo técnico que su trabajo merecía. Siendo fiel a la esencia del diseño original, creé esta landing page de alto rendimiento, llevando su identidad a un entorno web robusto, sofisticado y totalmente funcional."
+      },
+      muda: {
+        "title": "MUDA",
+        "category": "Diseño & Desarrollo",
+        "description": "Presencia digital completa para una productora creativa de moda en Buenos Aires — sitio público + panel admin.",
+        "longDescription": "Diseñé y desarrollé de cero la presencia digital completa de MUDA, productora creativa de Buenos Aires. SPA multisección con identidad editorial que cubre producciones, dirección artística, contenido para redes, agencia de talentos, eventos y alquiler de estudio. Incluye una base de talentos interactiva donde modelos, fotógrafxs y maquilladorxs postulan para entrar a la agencia. El panel admin permite a las fundadoras gestionar talentos, producciones y postulaciones en tiempo real. SEO técnico integral: datos estructurados, sitemap, Open Graph y verificación en Google Search Console."
       },
       emme: {
         "title": "EMME Digital",

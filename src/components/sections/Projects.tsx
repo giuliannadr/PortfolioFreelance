@@ -244,6 +244,7 @@ export const Projects = () => {
 
   const rawData = [
     { id: "unik",           image: "./unik-mockup.webp", liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
+    { id: "muda",           image: "./muda-mockup.jpg",  liveUrl: "https://mudaagcy.com/",                       stack: ["React", "TypeScript", "Vite", "Supabase", "Cloudinary", "Vercel"] },
     { id: "emme",           image: "./emme-mockup.webp", liveUrl: "https://www.emmedigital.com.ar/",              stack: ["React.js", "TypeScript", "Framer Motion"] },
     { id: "la-quinta-miri", image: "./miri-mockup.webp", liveUrl: "https://laquintamiri.vercel.app/",            stack: ["React.js", "TypeScript", "EmailJS"] },
     { id: "inv-boda", image: "./boda.webp", liveUrl: "https://invitacion-muestra.vercel.app/",      stack: ["React.js", "Framer Motion", "Vite"] },
