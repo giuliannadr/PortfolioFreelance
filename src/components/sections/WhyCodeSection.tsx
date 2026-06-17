@@ -5,17 +5,17 @@ import { XCircle, Paintbrush, Code2, Zap, BadgeCheck, ShieldCheck, Globe } from 
 const TEMPLATE_POINTS = {
   es: [
     "Diseño genérico, igual al de miles de sitios",
-    "Funciones limitadas a la plataforma",
-    "Carga lenta por código innecesario",
-    "Pago mensual eterno — nunca es realmente tuya",
-    "Si la plataforma cierra, tu web desaparece",
+    "Funciones limitadas por la plataforma",
+    "Carga lenta (tus clientes se cansan de esperar y se van)",
+    "Costos mensuales obligatorios para siempre",
+    "Si la plataforma cierra o sube precios, estás atrapado",
   ],
   en: [
     "Generic design, same as thousands of others",
-    "Features limited to what the platform allows",
-    "Slow loading from bloated, unnecessary code",
-    "Monthly fee forever — never truly yours",
-    "Platform closes? Your site disappears too",
+    "Features limited by the platform",
+    "Slow loading (customers get tired of waiting and leave)",
+    "Mandatory monthly fees forever",
+    "If the platform closes or raises prices, you are trapped",
   ],
 };
 

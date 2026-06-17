@@ -14,8 +14,15 @@ export const ProfileCard = ({
   role,
   image = "/giuliprofile.jpeg",
 }: ProfileCardProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language === "en" ? "en" : "es";
   const displayRole = role || t('profileCard.role');
+
+  const whatsappUrl = `https://wa.me/5491150403408?text=${encodeURIComponent(
+    lang === "en"
+      ? "Hi Giuli! I saw your portfolio and I'd like to talk about a project I have in mind."
+      : "¡Hola Giuli! Vi tu portfolio y me gustaría que hablemos de mi proyecto."
+  )}`;
 
   const handleEmailClick = () => {
     const email = "giulianadiroccodev@gmail.com";
@@ -72,7 +79,7 @@ export const ProfileCard = ({
           </p>
 
           <div className="flex justify-center gap-5 mt-6 mb-1">
-            <a href="https://wa.me/5491150403408" target="_blank" rel="noopener noreferrer">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
               <FaWhatsapp className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <a href="https://linkedin.com/in/giulianadirocco" target="_blank" rel="noopener noreferrer">

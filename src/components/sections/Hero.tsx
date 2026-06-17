@@ -191,7 +191,11 @@ export const Hero = () => {
     linear-gradient(rgba(204,21,0,1), rgba(204,21,0,1))
   `;
 
-  const whatsappUrl = `https://wa.me/5491150403408?text=${encodeURIComponent("¡Hola! Vi tu portfolio y me gustaría hablar sobre una idea que tengo.")}`;
+  const whatsappUrl = `https://wa.me/5491150403408?text=${encodeURIComponent(
+    lang === "en"
+      ? "Hi! I saw your portfolio and I'd love to talk about a project I have in mind."
+      : "¡Hola! Vi tu portfolio y me gustaría hablar sobre un proyecto que tengo en mente."
+  )}`;
 
   return (
     <>

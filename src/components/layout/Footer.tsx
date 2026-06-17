@@ -6,9 +6,16 @@ import { Linkedin, Github, Instagram, Copy, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language === "en" ? "en" : "es";
   const [copied, setCopied] = useState(false);
   const email = "giulianadiroccodev@gmail.com";
+
+  const whatsappUrl = `https://wa.me/5491150403408?text=${encodeURIComponent(
+    lang === "en"
+      ? "Hi Giuli! I saw your portfolio and I'd like to talk about a project I have in mind."
+      : "¡Hola Giuli! Vi tu portfolio y me gustaría que hablemos de mi proyecto."
+  )}`;
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -80,7 +87,7 @@ export const Footer = () => {
 
           {/* WhatsApp */}
           <a
-            href="https://wa.me/5491150403408"
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-7 py-3.5 bg-white text-[#CC1500] font-black text-[10px] uppercase tracking-[0.25em] hover:bg-[#0A0A0A] hover:text-white transition-all duration-300"

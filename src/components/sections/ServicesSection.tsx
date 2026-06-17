@@ -45,11 +45,11 @@ const PLANS: Plan[] = [
     maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
       name: "Landing Page", tag: "Sitio Web", price: "180.000",
-      includes: ["Diseño UI/UX exclusivo", "Desarrollo con código propio", "Deploy incluido en Vercel", "100% adaptada a mobile", "Formulario de contacto"],
+      includes: ["Diseño UI/UX exclusivo", "Código propio (sin plantillas lentas)", "Hosting gratuito permanente (cero mensualidad)", "100% adaptada a celulares", "Formulario de contacto"],
     },
     en: {
       name: "Landing Page", tag: "Website", price: "180.000",
-      includes: ["Custom UI/UX design", "Custom code development", "Deploy included on Vercel", "100% mobile responsive", "Contact form"],
+      includes: ["Custom UI/UX design", "Custom code (no slow templates)", "Free permanent hosting (zero monthly cost)", "100% mobile responsive", "Contact form"],
     },
   },
   {
@@ -59,11 +59,11 @@ const PLANS: Plan[] = [
     maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
       name: "Multi-sección", tag: "Sitio Web", price: "220.000",
-      includes: ["Todo lo de Landing", "Múltiples secciones", "Galería o portfolio", "Animaciones premium", "SEO optimizado"],
+      includes: ["Todo lo de Landing", "Múltiples secciones", "Galería o portfolio interactivo", "Animaciones premium", "SEO (Google) optimizado"],
     },
     en: {
       name: "Multi-section", tag: "Website", price: "220.000",
-      includes: ["Everything in Landing", "Multiple sections", "Gallery or portfolio", "Premium animations", "SEO optimized"],
+      includes: ["Everything in Landing", "Multiple sections", "Interactive gallery/portfolio", "Premium animations", "SEO (Google) optimized"],
     },
   },
   {
@@ -72,11 +72,11 @@ const PLANS: Plan[] = [
     maintenance: { price: "30.000", includesEs: MAINT_INCLUDES.full.es, includesEn: MAINT_INCLUDES.full.en },
     es: {
       name: "Tienda Online", tag: "E-commerce", price: "400.000", originalPrice: "450.000",
-      includes: ["Diseño UI/UX exclusivo", "Carrito de compras", "Pasarelas de pago", "Panel de administración", "Gestión de stock"],
+      includes: ["Diseño UI/UX exclusivo", "Carrito y pagos (Mercado Pago/Stripe)", "Panel de administración fácil", "Gestión de stock sin comisiones", "Hosting gratuito permanente (ahorrá Shopify)"],
     },
     en: {
       name: "Online Store", tag: "E-commerce", price: "400.000", originalPrice: "450.000",
-      includes: ["Custom UI/UX design", "Shopping cart", "Payment gateways", "Admin panel", "Stock management"],
+      includes: ["Custom UI/UX design", "Cart & payments (Mercado Pago/Stripe)", "Easy admin panel", "Stock management (no commissions)", "Free permanent hosting (save on Shopify)"],
     },
   },
   {

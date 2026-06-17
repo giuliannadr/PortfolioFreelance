@@ -71,6 +71,16 @@ const FAQ_ITEMS: FAQItem[] = [
       a: "Yes! I work with clients worldwide. Communication is via WhatsApp, email, or video call. Prices can be quoted in USD based on the current Blue Dollar exchange rate.",
     },
   },
+  {
+    es: {
+      q: "Si ya tengo Instagram para mi negocio, ¿para qué necesito una web?",
+      a: "Instagram es genial para interactuar, pero el algoritmo cambia constantemente y no sos dueño de tu cuenta. Una web propia te da profesionalismo, te permite aparecer en Google cuando la gente busca tu servicio, y organiza tu información de forma clara para que no tengas que responder las mismas preguntas 20 veces por mensaje privado.",
+    },
+    en: {
+      q: "If I already have Instagram for my business, why do I need a website?",
+      a: "Instagram is great for interaction, but the algorithm changes constantly and you don't own your account. A website gives you professional credibility, lets you appear on Google when people search for your services, and organizes your information clearly so you don't have to answer the same questions 20 times over DM.",
+    },
+  },
 ];
 
 const BG_BLOBS = [

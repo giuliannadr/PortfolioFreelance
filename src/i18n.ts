@@ -89,8 +89,8 @@ process: {
         unik: {
         "title": "Unik",
         "category": "Design & Development",
-        "description": "From a static Canva presentation to a high-performance web platform.",
-        "longDescription": "The team had a portfolio designed in Canva that didn't achieve the fluidity or technical professionalism their work deserved. Staying true to the essence of the original design, I created this high-performance landing page, bringing their identity into a robust, sophisticated, and fully functional web environment."
+        "description": "From a Canva PDF portfolio to a professional website that converts clients.",
+        "longDescription": "The team sent their work via a Canva link that looked unprofessional and felt slow. I designed a fast and interactive website that elevates their agency's perceived value and helps them close higher-paying client projects."
       },
       muda: {
         "title": "MUDA",
@@ -107,8 +107,8 @@ process: {
       miri: {
         "title": "La Quinta Miri",
         "category": "Design & Development",
-        "description": "Warm digital presence for a vacation spot, without the social media pressure.",
-        "longDescription": "Miriam had no social media presence and wanted to highlight her space without the extreme exposure of constantly managing notifications. Besides positioning her place on Google Maps, I created this landing page to be as warm and eye-catching as possible, capturing the essence of the spot and facilitating direct contact."
+        "description": "A website that handles booking inquiries automatically without social media fatigue.",
+        "longDescription": "Miriam had no digital footprint and wanted to attract clients without the pressure of managing social media accounts. Along with positioning her spot on Google Maps, I built this warm landing page to highlight the venue and handle booking inquiries directly."
       },
       invXv: {
         "title": "Mis XV · Valentina",
@@ -286,8 +286,8 @@ process: {
        unik: {
         "title": "Unik",
         "category": "Diseño & Desarrollo",
-        "description": "De una presentación estática en Canva a una plataforma web de alto rendimiento.",
-        "longDescription": "Las chicas tenían un portfolio diseñado en Canva que no lograba la fluidez ni el profesionalismo técnico que su trabajo merecía. Siendo fiel a la esencia del diseño original, creé esta landing page de alto rendimiento, llevando su identidad a un entorno web robusto, sofisticado y totalmente funcional."
+        "description": "De un PDF de Canva incómodo, a una web interactiva que genera confianza al instante.",
+        "longDescription": "Las chicas presentaban su trabajo mediante un enlace de Canva que se veía poco profesional y lento. Diseñé una web rápida e interactiva que eleva el valor percibido de sus servicios y las ayuda a cerrar proyectos con clientes de mayor presupuesto."
       },
       muda: {
         "title": "MUDA",
@@ -304,8 +304,8 @@ process: {
       miri: {
         "title": "La Quinta Miri",
         "category": "Diseño & Desarrollo",
-        "description": "Presencia digital cálida para un espacio de descanso, sin la presión de las redes sociales.",
-        "longDescription": "Miriam no tenía presencia en las redes y buscaba destacar su espacio sin la exposición extrema de estar siempre pendiente de las notificaciones. Aparte de posicionar su quinta en Google Maps, creé esta landing para que sea lo más cálida y llamativa posible, capturando la esencia del lugar y facilitando el contacto directo."
+        "description": "Una web que responde consultas y recibe reservas en piloto automático, sin depender de Instagram.",
+        "longDescription": "Miriam no tenía presencia digital y buscaba atraer clientes sin la presión constante de crear contenido para redes sociales. Además de posicionar su quinta en Google Maps, creé esta landing page cálida y llamativa para capturar la esencia del lugar y canalizar consultas directo a su WhatsApp."
       },
       invXv: {
         "title": "Mis XV · Valentina",
