@@ -1,17 +1,113 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Giuliana Di Rocco | Full-Stack Dev</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-BuBwiXAC.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DGbhYN0J.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Google Search Console ── -->
+  <meta name="google-site-verification" content="yW5auCyzjiIUhXlk0V21BrVjarmZ3HNdhYy4-fl-8SI" />
+
+  <!-- ── Favicon ── -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/Giuli.png" />
+  <link rel="apple-touch-icon" href="/Giuli.png" />
+  <meta name="theme-color" content="#0A0A0A" />
+
+  <!-- ── Primary SEO ── -->
+  <title>Giuliana Di Rocco | Desarrolladora Web Freelance · Argentina</title>
+  <meta name="description" content="Desarrolladora web freelance en Argentina. Creo sitios web modernos, rápidos y a medida con React, Next.js y TypeScript. Atención directa, entrega puntual y diseño que convierte." />
+  <meta name="keywords" content="desarrolladora web freelance argentina, diseño web argentina, web developer freelance, sitios web profesionales, React developer argentina, portfolio giuliana di rocco, desarrollo web buenos aires, frontend developer argentina, diseño y desarrollo web" />
+  <meta name="author" content="Giuliana Di Rocco" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://www.giulianadirocco.com/" />
+
+  <!-- ── Hreflang (ES / EN) ── -->
+  <link rel="alternate" hreflang="es" href="https://www.giulianadirocco.com/" />
+  <link rel="alternate" hreflang="en" href="https://www.giulianadirocco.com/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.giulianadirocco.com/" />
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Giuliana Di Rocco" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:url" content="https://www.giulianadirocco.com/" />
+  <meta property="og:title" content="Giuliana Di Rocco | Desarrolladora Web Freelance · Argentina" />
+  <meta property="og:description" content="Creo sitios web modernos, rápidos y a medida. Atención directa, diseño que convierte y entrega puntual. Especialista en React · Next.js · TypeScript." />
+  <meta property="og:image" content="https://www.giulianadirocco.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Giuliana Di Rocco — Desarrolladora Web Freelance Argentina" />
+
+  <!-- ── Twitter / X Card ── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://www.giulianadirocco.com/" />
+  <meta name="twitter:title" content="Giuliana Di Rocco | Desarrolladora Web Freelance · Argentina" />
+  <meta name="twitter:description" content="Creo sitios web modernos, rápidos y a medida. React · Next.js · TypeScript. Atención directa y entrega puntual." />
+  <meta name="twitter:image" content="https://www.giulianadirocco.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Giuliana Di Rocco — Desarrolladora Web Freelance Argentina" />
+
+  <!-- ── Structured Data: Person ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Giuliana Di Rocco",
+    "url": "https://www.giulianadirocco.com",
+    "image": "https://www.giulianadirocco.com/giuli-profile.jpeg",
+    "jobTitle": "Desarrolladora Web Freelance",
+    "description": "Desarrolladora web freelance en Argentina especializada en React, Next.js y TypeScript. Creo sitios modernos, rápidos y a medida con atención directa y entrega puntual.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "AR"
+    },
+    "knowsAbout": ["React", "Next.js", "TypeScript", "Tailwind CSS", "Diseño Web", "Frontend Development"],
+    "sameAs": [
+      "https://www.instagram.com/giulianadiroccodev",
+      "https://www.linkedin.com/in/giulianadirocco"
+    ]
+  }
+  </script>
+
+  <!-- ── Structured Data: Service ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Giuliana Di Rocco — Desarrollo Web Freelance",
+    "url": "https://www.giulianadirocco.com",
+    "image": "https://www.giulianadirocco.com/og-image.png",
+    "description": "Servicios de diseño y desarrollo web freelance en Argentina. Sitios web modernos con React, Next.js y TypeScript. Atención directa, entrega puntual, diseño que convierte.",
+    "areaServed": {
+      "@type": "Country",
+      "name": "Argentina"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de Desarrollo Web",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sitio Web desde Cero" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Landing Page de Alta Conversión" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tienda Online" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Rediseño Web" } }
+      ]
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "giulianadiroccodev@gmail.com",
+      "availableLanguage": ["Spanish", "English"]
+    }
+  }
+  </script>
+
+  <!-- ── Preconnect ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <script type="module" crossorigin src="/assets/index-CZpe5Fs8.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BBEyR91J.css">
+</head>
+<body>
+  <div id="root"></div>
+</body>
 </html>

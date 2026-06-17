@@ -10,6 +10,7 @@ const menuItems = [
   { id: "about",    es: "Sobre mí",  en: "About" },
   { id: "projects", es: "Proyectos", en: "Projects" },
   { id: "services", es: "Servicios", en: "Services" },
+  { id: "faq",      es: "FAQ",       en: "FAQ" },
   { id: "contact",  es: "Contacto",  en: "Contact" },
 ];
 

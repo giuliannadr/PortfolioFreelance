@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Check, Info } from "lucide-react";
+import { ArrowUpRight, Check, Info, RefreshCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SPOTS_DARK } from "@/lib/textGradients";
+import { useDollarRate } from "@/lib/useDollarRate";
 
 interface Maintenance {
   price: string;
@@ -43,11 +44,11 @@ const PLANS: Plan[] = [
     accent: "#CC1500",
     maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
-      name: "Landing Page", tag: "Sitio Web", price: "150.000",
+      name: "Landing Page", tag: "Sitio Web", price: "180.000",
       includes: ["Diseño UI/UX exclusivo", "Desarrollo con código propio", "Deploy incluido en Vercel", "100% adaptada a mobile", "Formulario de contacto"],
     },
     en: {
-      name: "Landing Page", tag: "Website", price: "150.000",
+      name: "Landing Page", tag: "Website", price: "180.000",
       includes: ["Custom UI/UX design", "Custom code development", "Deploy included on Vercel", "100% mobile responsive", "Contact form"],
     },
   },
@@ -57,11 +58,11 @@ const PLANS: Plan[] = [
     featured: true,
     maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
-      name: "Multi-sección", tag: "Sitio Web", price: "180.000",
+      name: "Multi-sección", tag: "Sitio Web", price: "220.000",
       includes: ["Todo lo de Landing", "Múltiples secciones", "Galería o portfolio", "Animaciones premium", "SEO optimizado"],
     },
     en: {
-      name: "Multi-section", tag: "Website", price: "180.000",
+      name: "Multi-section", tag: "Website", price: "220.000",
       includes: ["Everything in Landing", "Multiple sections", "Gallery or portfolio", "Premium animations", "SEO optimized"],
     },
   },
@@ -70,11 +71,11 @@ const PLANS: Plan[] = [
     accent: "#06B6D4",
     maintenance: { price: "30.000", includesEs: MAINT_INCLUDES.full.es, includesEn: MAINT_INCLUDES.full.en },
     es: {
-      name: "Tienda Online", tag: "E-commerce", price: "360.000", originalPrice: "400.000",
+      name: "Tienda Online", tag: "E-commerce", price: "400.000", originalPrice: "450.000",
       includes: ["Diseño UI/UX exclusivo", "Carrito de compras", "Pasarelas de pago", "Panel de administración", "Gestión de stock"],
     },
     en: {
-      name: "Online Store", tag: "E-commerce", price: "360.000", originalPrice: "400.000",
+      name: "Online Store", tag: "E-commerce", price: "400.000", originalPrice: "450.000",
       includes: ["Custom UI/UX design", "Shopping cart", "Payment gateways", "Admin panel", "Stock management"],
     },
   },
@@ -93,6 +94,16 @@ const PLANS: Plan[] = [
   },
 ];
 
+/** Parse "150.000" → 150000, convert to USD, format nicely */
+function convertToUSD(arsStr: string, rate: number): string {
+  const num = parseFloat(arsStr.replace(/\./g, "").replace(",", "."));
+  const usd = num / rate;
+  // Format with no decimals if whole, else 2 decimals
+  return usd % 1 === 0 ? usd.toFixed(0) : usd.toFixed(0);
+}
+
+type Currency = "ARS" | "USD";
+
 const BG_BLOBS = [
   { color: "#CC1500", w: 500, x: "90%", y: "20%", op: 0.08, cls: "blob-1" },
   { color: "#7C3AED", w: 400, x: "5%",  y: "55%", op: 0.07, cls: "blob-2" },
@@ -104,8 +115,33 @@ export const ServicesSection = () => {
   const lang = i18n.language === "en" ? "en" : "es";
   const ref  = useRef<HTMLElement>(null);
   const [tooltip, setTooltip] = useState<string | null>(null);
+  const [currency, setCurrency] = useState<Currency>("ARS");
+  const { rate, loading: rateLoading, error: rateError, lastUpdate } = useDollarRate();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+
+  /** Format a price string based on selected currency */
+  const formatPrice = (arsPrice: string): string => {
+    if (currency === "ARS" || !rate) return arsPrice;
+    return convertToUSD(arsPrice, rate);
+  };
+
+  const currencyLabel = currency === "ARS" ? "ARS" : "USD";
+  const currencySymbol = currency === "ARS" ? "$" : "US$";
+
+  /** Format the last update time */
+  const formatLastUpdate = (): string => {
+    if (!lastUpdate) return "";
+    try {
+      const d = new Date(lastUpdate);
+      return d.toLocaleTimeString(lang === "en" ? "en-US" : "es-AR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch {
+      return "";
+    }
+  };
 
   const handleWA = (planName: string) => {
     const msg = lang === "en"
@@ -174,6 +210,120 @@ export const ServicesSection = () => {
         </motion.h2>
       </div>
 
+      {/* Currency toggle */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-20 flex flex-wrap items-center gap-4 mb-10"
+      >
+        {/* Toggle pill */}
+        <div
+          className="relative flex"
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          {(["ARS", "USD"] as Currency[]).map((cur) => (
+            <button
+              key={cur}
+              onClick={() => {
+                if (cur === "USD" && !rate) return;
+                setCurrency(cur);
+              }}
+              className="relative px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300"
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                color: currency === cur ? "#fff" : "rgba(255,255,255,0.25)",
+                background: currency === cur ? "rgba(255,255,255,0.08)" : "transparent",
+                cursor: cur === "USD" && !rate ? "not-allowed" : "pointer",
+                opacity: cur === "USD" && !rate ? 0.3 : 1,
+              }}
+            >
+              {cur}
+              {currency === cur && (
+                <motion.div
+                  layoutId="currency-indicator"
+                  className="absolute bottom-0 left-0 right-0 h-[2px]"
+                  style={{ background: "#fff" }}
+                  transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Rate info */}
+        <AnimatePresence mode="wait">
+          {rateLoading && (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex items-center gap-2"
+            >
+              <RefreshCw size={10} className="animate-spin" style={{ color: "rgba(255,255,255,0.25)" }} />
+              <span
+                className="text-[9px] font-medium"
+                style={{ fontFamily: "Poppins, sans-serif", color: "rgba(255,255,255,0.25)" }}
+              >
+                {lang === "en" ? "Loading rate..." : "Cargando cotización..."}
+              </span>
+            </motion.div>
+          )}
+          {!rateLoading && !rateError && rate && (
+            <motion.div
+              key="rate"
+              initial={{ opacity: 0, x: -6 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-2"
+            >
+              <div
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#10B981", boxShadow: "0 0 6px #10B98166" }}
+              />
+              <span
+                className="text-[9px] font-medium"
+                style={{ fontFamily: "Poppins, sans-serif", color: "rgba(255,255,255,0.3)" }}
+              >
+                {lang === "en" ? "Blue dollar" : "Dólar blue"}: ${rate.toLocaleString("es-AR")}
+                {formatLastUpdate() && (
+                  <span style={{ color: "rgba(255,255,255,0.15)" }}>
+                    {" · "}
+                    {lang === "en" ? "Updated" : "Act."} {formatLastUpdate()}
+                  </span>
+                )}
+              </span>
+            </motion.div>
+          )}
+          {!rateLoading && rateError && (
+            <motion.div
+              key="error"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex items-center gap-2"
+            >
+              <div
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#EF4444" }}
+              />
+              <span
+                className="text-[9px] font-medium"
+                style={{ fontFamily: "Poppins, sans-serif", color: "rgba(255,255,255,0.25)" }}
+              >
+                {lang === "en" ? "Rate unavailable" : "Cotización no disponible"}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
       {/* Pricing grid — 1 col / 2 col sm / 4 col xl */}
       <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
         {PLANS.map((plan, i) => {
@@ -235,12 +385,18 @@ export const ServicesSection = () => {
                     </p>
                   ) : (
                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                      <span className="text-white/30 font-black text-base" style={{ fontFamily: "Poppins, sans-serif" }}>$</span>
-                      <span className="font-black text-white leading-none"
-                        style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", letterSpacing: "-0.03em" }}>
-                        {c.price}
-                      </span>
-                      <span className="text-white/30 font-black text-xs" style={{ fontFamily: "Poppins, sans-serif" }}>ARS</span>
+                      <span className="text-white/30 font-black text-base" style={{ fontFamily: "Poppins, sans-serif" }}>{currencySymbol}</span>
+                      <motion.span
+                        key={`${plan.id}-price-${currency}`}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="font-black text-white leading-none"
+                        style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", letterSpacing: "-0.03em" }}
+                      >
+                        {formatPrice(c.price!)}
+                      </motion.span>
+                      <span className="text-white/30 font-black text-xs" style={{ fontFamily: "Poppins, sans-serif" }}>{currencyLabel}</span>
                       {c.period && (
                         <span className="text-white/35 font-black text-sm" style={{ fontFamily: "Poppins, sans-serif" }}>{c.period}</span>
                       )}
@@ -248,7 +404,7 @@ export const ServicesSection = () => {
                   )}
                   {c.originalPrice && (
                     <p className="text-white/22 text-sm line-through mt-0.5" style={{ fontFamily: "Poppins, sans-serif" }}>
-                      $ {c.originalPrice} ARS
+                      {currencySymbol} {formatPrice(c.originalPrice)} {currencyLabel}
                     </p>
                   )}
                 </div>
@@ -284,8 +440,8 @@ export const ServicesSection = () => {
                       <span className="flex-1 text-[9px] font-black uppercase tracking-[0.18em]"
                         style={{ fontFamily: "Poppins, sans-serif", color: `${plan.accent}99` }}>
                         {lang === "en"
-                          ? `Maintenance · $${plan.maintenance.price}/mo`
-                          : `Mantenimiento · $${plan.maintenance.price}/mes`}
+                          ? `Maintenance · ${currencySymbol}${formatPrice(plan.maintenance.price)}/mo`
+                          : `Mantenimiento · ${currencySymbol}${formatPrice(plan.maintenance.price)}/mes`}
                       </span>
                       <button
                         onMouseEnter={() => setTooltip(plan.id)}
@@ -362,8 +518,8 @@ export const ServicesSection = () => {
         style={{ fontFamily: "Poppins, sans-serif" }}
       >
         {lang === "en"
-          ? "* Prices do not include the annual domain or external hosting if the project cannot be deployed on Vercel. Landing pages and multi-section sites include deployment. Prices in Argentine pesos."
-          : "* Los precios no incluyen el dominio anual ni hosting externo en caso de que el proyecto no pueda deployarse en Vercel. Las landing pages y sitios multi-sección incluyen el deploy. Precios en pesos argentinos."}
+          ? `* Prices do not include the annual domain or external hosting if the project cannot be deployed on Vercel. Landing pages and multi-section sites include deployment.${currency === "USD" ? " Prices converted from ARS using the Blue Dollar rate. Values are approximate." : " Prices in Argentine pesos."}`
+          : `* Los precios no incluyen el dominio anual ni hosting externo en caso de que el proyecto no pueda deployarse en Vercel. Las landing pages y sitios multi-sección incluyen el deploy.${currency === "USD" ? " Precios convertidos desde ARS usando la cotización del dólar blue. Los valores son aproximados." : " Precios en pesos argentinos."}`}
       </motion.p>
     </section>
   );

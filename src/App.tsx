@@ -6,6 +6,7 @@ import { TrustSection }     from "./components/sections/TrustSection";
 import { ProcessSection }   from "./components/sections/ProcessSection";
 import { Projects }         from "@/components/sections/Projects";
 import { ServicesSection }  from "@/components/sections/ServicesSection";
+import { FAQSection }       from "@/components/sections/FAQSection";
 import { CTASection }       from "@/components/sections/CTASection";
 import { Marquee }          from "@/components/ui/Marquee";
 import { Loader }           from "@/components/ui/Loader";
@@ -32,6 +33,7 @@ function App() {
         <TrustSection />
         <Projects />
         <ServicesSection />
+        <FAQSection />
         <CTASection />
       </Layout>
     </>
