@@ -1,4 +1,4 @@
-import { ArrowUpRight, X, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, X, Eye, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -241,11 +241,12 @@ export const Projects = () => {
   const [hoveredId,  setHoveredId]  = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [processId,  setProcessId]  = useState<string | null>(null);
+  const [expanded,   setExpanded]   = useState(false);
 
   const rawData = [
-    { id: "unik",           image: "./unik-mockup.webp", liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
     { id: "muda",           image: "./muda-mockup.jpg",  liveUrl: "https://mudaagcy.com/",                       stack: ["React", "TypeScript", "Vite", "Supabase", "Cloudinary", "Vercel"] },
     { id: "emme",           image: "./emme-mockup.webp", liveUrl: "https://www.emmedigital.com.ar/",              stack: ["React.js", "TypeScript", "Framer Motion"] },
+    { id: "unik",           image: "./unik-mockup.webp", liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
     { id: "la-quinta-miri", image: "./miri-mockup.webp", liveUrl: "https://laquintamiri.vercel.app/",            stack: ["React.js", "TypeScript", "EmailJS"] },
     { id: "inv-boda", image: "./boda.webp", liveUrl: "https://invitacion-muestra.vercel.app/",      stack: ["React.js", "Framer Motion", "Vite"] },
     { id: "inv-xv",   image: "./xv.webp",   liveUrl: "https://invitacion-xv-muestra.vercel.app/",   stack: ["React.js", "Framer Motion", "Vite"] },
@@ -265,6 +266,7 @@ export const Projects = () => {
     } as Project;
   });
 
+  const visibleProjects = expanded ? projects : projects.slice(0, 2);
   const selected      = projects.find(p => p.id === selectedId);
   const processProj   = projects.find(p => p.id === processId);
 
@@ -325,9 +327,9 @@ export const Projects = () => {
 
       {/* ── PROJECT GRID: 1 col mobile · 2 col desktop ── */}
       <div className="relative z-20 grid grid-cols-1 md:grid-cols-2 gap-3">
-        {projects.map((p, i) => {
-          const accent  = ACCENTS[i];
-          const isLast  = i === projects.length - 1 && projects.length % 2 !== 0;
+        {visibleProjects.map((p, i) => {
+          const accent  = ACCENTS[i % ACCENTS.length];
+          const isLast  = i === visibleProjects.length - 1 && visibleProjects.length % 2 !== 0;
           const isHov   = hoveredId === p.id;
 
           return (
@@ -455,6 +457,20 @@ export const Projects = () => {
             </motion.div>
           );
         })}
+      </div>
+
+      {/* Show More / Show Less Button */}
+      <div className="flex justify-center mt-12 relative z-20">
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="group flex items-center gap-2 px-8 py-4 bg-transparent border border-[#0A0A0A]/10 hover:border-[#CC1500] hover:text-[#CC1500] text-[#0A0A0A] font-black text-[10px] uppercase tracking-[0.25em] transition-all duration-300"
+          style={{ fontFamily: "Poppins, sans-serif" }}
+        >
+          {expanded 
+            ? (lang === "en" ? "Show less" : "Ver menos")
+            : (lang === "en" ? "Show more" : "Ver más")}
+          {expanded ? <ChevronUp size={12} className="transition-transform group-hover:-translate-y-0.5" /> : <ChevronDown size={12} className="transition-transform group-hover:translate-y-0.5" />}
+        </button>
       </div>
 
       {/* ── MODAL (project detail) ── */}
