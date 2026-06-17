@@ -81,6 +81,16 @@ const FAQ_ITEMS: FAQItem[] = [
       a: "Instagram is great for interaction, but the algorithm changes constantly and you don't own your account. A website gives you professional credibility, lets you appear on Google when people search for your services, and organizes your information clearly so you don't have to answer the same questions 20 times over DM.",
     },
   },
+  {
+    es: {
+      q: "¿Por qué me conviene una tienda online propia y no Tiendanube o Shopify?",
+      a: "Las plataformas como Tiendanube o Shopify te cobran un alquiler mensual obligatorio (que aumenta con la inflación) y se quedan con una comisión de cada venta que hacés. Con una tienda desarrollada a medida por mí, el hosting es gratuito, no pagás comisiones por venta (el 100% de la ganancia es tuya) y tenés un diseño exclusivo que te hace destacar de la competencia.",
+    },
+    en: {
+      q: "Why choose a custom online store over Tiendanube or Shopify?",
+      a: "Platforms like Shopify or Tiendanube charge a mandatory monthly subscription (which goes up with inflation) and keep a commission fee on every sale you make. With a custom store built by me, hosting is free, you pay 0% sales commission (100% of the profit is yours), and you get a unique design that makes you stand out from the competition.",
+    },
+  },
 ];
 
 const BG_BLOBS = [
