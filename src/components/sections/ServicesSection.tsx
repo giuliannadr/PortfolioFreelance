@@ -66,7 +66,7 @@ const PLANS: Plan[] = [
     accent: "#CC1500",
     maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
-      name: "Landing Page", tag: "Sitio Web", price: "280.000",
+      name: "Landing Page", tag: "Sitio Web", price: "220.000",
       includes: [
         "Diseño UI/UX exclusivo (sin plantillas)",
         "Hasta 6 secciones en una sola página",
@@ -77,7 +77,7 @@ const PLANS: Plan[] = [
       ],
     },
     en: {
-      name: "Landing Page", tag: "Website", price: "280.000",
+      name: "Landing Page", tag: "Website", price: "220.000",
       includes: [
         "Custom UI/UX design (no templates)",
         "Up to 6 sections on a single page",
@@ -94,7 +94,7 @@ const PLANS: Plan[] = [
     featured: true,
     maintenance: { price: "20.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
-      name: "Multi-sección", tag: "Sitio Web", price: "450.000",
+      name: "Multi-sección", tag: "Sitio Web", price: "350.000", originalPrice: "400.000",
       includes: [
         "Todo lo de Landing Page",
         "Múltiples páginas con navegación propia",
@@ -105,7 +105,7 @@ const PLANS: Plan[] = [
       ],
     },
     en: {
-      name: "Multi-section", tag: "Website", price: "450.000",
+      name: "Multi-section", tag: "Website", price: "350.000", originalPrice: "400.000",
       includes: [
         "Everything in Landing Page",
         "Multiple pages with own navigation",
@@ -119,9 +119,9 @@ const PLANS: Plan[] = [
   {
     id: "tienda",
     accent: "#06B6D4",
-    maintenance: { price: "45.000", includesEs: MAINT_INCLUDES.full.es, includesEn: MAINT_INCLUDES.full.en },
+    maintenance: { price: "40.000", includesEs: MAINT_INCLUDES.full.es, includesEn: MAINT_INCLUDES.full.en },
     es: {
-      name: "Tienda Online", tag: "E-commerce", price: "700.000",
+      name: "Tienda Online", tag: "E-commerce", price: "550.000",
       includes: [
         "Diseño UI/UX exclusivo",
         "Catálogo con filtros y búsqueda",
@@ -133,7 +133,7 @@ const PLANS: Plan[] = [
       ],
     },
     en: {
-      name: "Online Store", tag: "E-commerce", price: "700.000",
+      name: "Online Store", tag: "E-commerce", price: "550.000",
       includes: [
         "Custom UI/UX design",
         "Catalog with filters and search",
