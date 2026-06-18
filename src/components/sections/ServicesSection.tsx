@@ -29,12 +29,34 @@ interface Plan {
 
 const MAINT_INCLUDES = {
   basic: {
-    es: ["Cambios de textos e imágenes", "Agregar o quitar secciones", "Ajustes de diseño o funcionalidad", "Soporte ante dudas o problemas"],
-    en: ["Text & image updates", "Add or remove sections", "Design or functionality tweaks", "Support for questions or issues"],
+    es: [
+      "Cambios de textos e imágenes",
+      "Agregar o quitar secciones",
+      "Actualización de meta tags y SEO on-page",
+      "Respuesta en menos de 24 hs",
+    ],
+    en: [
+      "Text & image updates",
+      "Add or remove sections",
+      "Meta tags & on-page SEO updates",
+      "Response within 24 hours",
+    ],
   },
   full: {
-    es: ["Todo lo del plan básico", "Cambios más complejos o frecuentes", "Nuevas funcionalidades", "Respuesta prioritaria"],
-    en: ["Everything in basic", "More complex or frequent changes", "New features", "Priority response time"],
+    es: [
+      "Todo lo del plan básico",
+      "Cambios más complejos o nuevas funcionalidades",
+      "Informe mensual de Google Search Console",
+      "Monitoreo de velocidad y Core Web Vitals",
+      "Respuesta prioritaria",
+    ],
+    en: [
+      "Everything in basic",
+      "Complex changes or new features",
+      "Monthly Google Search Console report",
+      "Speed & Core Web Vitals monitoring",
+      "Priority response time",
+    ],
   },
 };
 
