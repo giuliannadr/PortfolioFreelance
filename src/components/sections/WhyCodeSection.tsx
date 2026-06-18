@@ -28,7 +28,7 @@ const CODE_POINTS: {
 }[] = [
   { icon: Paintbrush,  color: "#CC1500", bg: "rgba(204,21,0,0.12)",   es: "Diseño 100% único, creado solo para tu marca",    en: "100% unique design, built only for your brand" },
   { icon: Code2,       color: "#7C3AED", bg: "rgba(124,58,237,0.12)", es: "Cualquier función que puedas imaginar",            en: "Any feature you can imagine, no limits" },
-  { icon: Zap,         color: "#06B6D4", bg: "rgba(6,182,212,0.12)",  es: "Rendimiento optimizado al máximo",                en: "Maximum performance, fully optimized" },
+  { icon: Zap,         color: "#06B6D4", bg: "rgba(6,182,212,0.12)",  es: "Google PageSpeed 90+ en cada proyecto",           en: "Google PageSpeed 90+ on every project" },
   { icon: BadgeCheck,  color: "#10B981", bg: "rgba(16,185,129,0.12)", es: "Pagás una vez — es tuya para siempre",            en: "Pay once — it's yours forever" },
   { icon: ShieldCheck, color: "#D97706", bg: "rgba(217,119,6,0.12)",  es: "Vos controlás todo — sin depender de nadie",      en: "You control everything — no dependencies" },
 ];

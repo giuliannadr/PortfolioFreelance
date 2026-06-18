@@ -62,7 +62,7 @@ process: {
     },
     "step3": {
       "title": "Launch & Support",
-      "description": "We go live and I stay available. I hand off the keys so you can manage your content independently, with support whenever you need it.",
+      "description": "We go live and I stay available. I hand off the keys so you can manage your content independently — and I respond within 24 hours whenever you need me.",
       "tags": ["Always available"]
     }
   }
@@ -261,7 +261,7 @@ process: {
     },
     "step3": {
       "title": "Lanzamiento & Soporte",
-      "description": "Salimos al aire y quedo disponible. Te entrego las riendas para que puedas manejar tu contenido con autonomía, con soporte cuando lo necesitás.",
+      "description": "Salimos al aire y quedo disponible. Te entrego las riendas para que puedas manejar tu contenido con autonomía — y respondo en menos de 24 hs cuando me necesitás.",
       "tags": ["Siempre disponible"]
     }
   }
