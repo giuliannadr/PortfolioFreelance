@@ -66,7 +66,7 @@ const PLANS: Plan[] = [
     accent: "#CC1500",
     maintenance: { price: "15.000", includesEs: MAINT_INCLUDES.basic.es, includesEn: MAINT_INCLUDES.basic.en },
     es: {
-      name: "Landing Page", tag: "Sitio Web", price: "220.000",
+      name: "Landing Page", tag: "Sitio Web", price: "220.000", originalPrice: "260.000",
       includes: [
         "Diseño UI/UX exclusivo (sin plantillas)",
         "Hasta 6 secciones en una sola página",
@@ -77,7 +77,7 @@ const PLANS: Plan[] = [
       ],
     },
     en: {
-      name: "Landing Page", tag: "Website", price: "220.000",
+      name: "Landing Page", tag: "Website", price: "220.000", originalPrice: "260.000",
       includes: [
         "Custom UI/UX design (no templates)",
         "Up to 6 sections on a single page",
@@ -121,7 +121,7 @@ const PLANS: Plan[] = [
     accent: "#06B6D4",
     maintenance: { price: "40.000", includesEs: MAINT_INCLUDES.full.es, includesEn: MAINT_INCLUDES.full.en },
     es: {
-      name: "Tienda Online", tag: "E-commerce", price: "550.000",
+      name: "Tienda Online", tag: "E-commerce", price: "550.000", originalPrice: "650.000",
       includes: [
         "Diseño UI/UX exclusivo",
         "Catálogo con filtros y búsqueda",
@@ -133,7 +133,7 @@ const PLANS: Plan[] = [
       ],
     },
     en: {
-      name: "Online Store", tag: "E-commerce", price: "550.000",
+      name: "Online Store", tag: "E-commerce", price: "550.000", originalPrice: "650.000",
       includes: [
         "Custom UI/UX design",
         "Catalog with filters and search",
