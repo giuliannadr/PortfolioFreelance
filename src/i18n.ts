@@ -101,8 +101,8 @@ process: {
       pulseguard: {
         "title": "PulseGuard",
         "category": "Technical Challenge",
-        "description": "A take-home technical challenge for a job application: an uptime and API monitoring dashboard.",
-        "longDescription": "PulseGuard was a technical challenge built for a job application, not a client project. The brief asked for a dashboard that catches downtime, SSL expirations and performance degradation before users do. I built the frontend with Next.js — a live monitor list, uptime metrics and incident alerts — with a public status page teams can share."
+        "description": "A full-stack uptime monitoring platform with AI-powered security audits for GitHub repos, built for a technical challenge.",
+        "longDescription": "PulseGuard is a SaaS platform for real-time uptime and performance monitoring, paired with an AI-powered static security scanner for GitHub repositories using Google Gemini. It includes an interactive dashboard with a 12-week status history, AI-driven commit audits that flag risks like SQL injection and exposed credentials, and configurable email and Discord/Slack webhook alerts. Built as a technical challenge for a job application, not a client project."
       },
         unik: {
         "title": "Unik",
@@ -316,8 +316,8 @@ process: {
       pulseguard: {
         "title": "PulseGuard",
         "category": "Challenge Técnico",
-        "description": "Un challenge técnico para un proceso de selección laboral: un dashboard de monitoreo de uptime y APIs.",
-        "longDescription": "PulseGuard fue un challenge técnico para un proceso de selección laboral, no un proyecto para un cliente. La consigna pedía un dashboard que detecte caídas, vencimientos de SSL y degradación de rendimiento antes que los propios usuarios. Construí el frontend con Next.js — listado de monitores en vivo, métricas de uptime y alertas de incidentes — con una página de estado pública."
+        "description": "Plataforma full-stack de monitoreo de uptime con auditoría de seguridad por IA sobre repos de GitHub, desarrollada para un desafío técnico.",
+        "longDescription": "PulseGuard es una plataforma SaaS para monitorear uptime y rendimiento en tiempo real, junto con un motor de auditoría de seguridad estático para repositorios de GitHub potenciado por Google Gemini. Incluye un dashboard interactivo con historial de 12 semanas, auditoría de commits por IA que detecta riesgos como inyecciones SQL y credenciales expuestas, y alertas configurables por email y webhooks a Discord/Slack. Desarrollado como challenge técnico para un proceso de selección laboral, no para un cliente."
       },
        unik: {
         "title": "Unik",
