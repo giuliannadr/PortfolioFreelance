@@ -86,6 +86,24 @@ process: {
        
       },
       items: {
+        hidrorescate: {
+        "title": "Hidrorescate",
+        "category": "Design & Development",
+        "description": "A technical service site for water pump installation and repair that turns visitors into WhatsApp leads.",
+        "longDescription": "Hidrorescate needed a professional presence to match the multi-brand technical service they offer across Buenos Aires and AMBA. I designed a dark, trust-focused site built around clear proof points — written warranty, real photos, licensed technicians — with a WhatsApp-first flow and a Pre-Diagnóstico form that qualifies leads before the first call."
+      },
+      magicalduo: {
+        "title": "The Magical Duo",
+        "category": "Design & Development",
+        "description": "A travel agency site for Disney, Universal and Caribbean vacations built around pre-designed, bookable packages.",
+        "longDescription": "The Magical Duo needed a site that felt as magical as the trips they sell, while making it easy for clients to browse and request pre-designed Disney, Universal, cruise and Caribbean packages. I designed a warm, editorial site organized by destination and package type, built to turn browsing into a direct quote request."
+      },
+      pulseguard: {
+        "title": "PulseGuard",
+        "category": "Technical Challenge",
+        "description": "A take-home technical challenge for a job application: an uptime and API monitoring dashboard.",
+        "longDescription": "PulseGuard was a technical challenge built for a job application, not a client project. The brief asked for a dashboard that catches downtime, SSL expirations and performance degradation before users do. I built the frontend with Next.js — a live monitor list, uptime metrics and incident alerts — with a public status page teams can share."
+      },
         unik: {
         "title": "Unik",
         "category": "Design & Development",
@@ -283,6 +301,24 @@ process: {
         viewWork: "Ver Web Final"
       },
       items: {
+       hidrorescate: {
+        "title": "Hidrorescate",
+        "category": "Diseño & Desarrollo",
+        "description": "Un sitio de servicio técnico de bombas de agua que convierte visitas en consultas por WhatsApp.",
+        "longDescription": "Hidrorescate necesitaba una presencia profesional acorde al servicio técnico multimarca que ofrecen en Buenos Aires y AMBA. Diseñé un sitio oscuro enfocado en generar confianza — garantía por escrito, fotos reales, técnicos matriculados — con un flujo WhatsApp-first y un formulario de Pre-Diagnóstico que califica los leads antes de la primera llamada."
+      },
+      magicalduo: {
+        "title": "The Magical Duo",
+        "category": "Diseño & Desarrollo",
+        "description": "Sitio para una agencia de viajes especializada en Disney, Universal y Caribe, organizado en paquetes prediseñados y listos para reservar.",
+        "longDescription": "The Magical Duo necesitaba un sitio tan mágico como los viajes que venden, que además facilitara a sus clientes explorar y cotizar paquetes prediseñados de Disney, Universal, cruceros y Caribe. Diseñé un sitio cálido y editorial organizado por destino y tipo de paquete, pensado para convertir la navegación en una cotización directa."
+      },
+      pulseguard: {
+        "title": "PulseGuard",
+        "category": "Challenge Técnico",
+        "description": "Un challenge técnico para un proceso de selección laboral: un dashboard de monitoreo de uptime y APIs.",
+        "longDescription": "PulseGuard fue un challenge técnico para un proceso de selección laboral, no un proyecto para un cliente. La consigna pedía un dashboard que detecte caídas, vencimientos de SSL y degradación de rendimiento antes que los propios usuarios. Construí el frontend con Next.js — listado de monitores en vivo, métricas de uptime y alertas de incidentes — con una página de estado pública."
+      },
        unik: {
         "title": "Unik",
         "category": "Diseño & Desarrollo",

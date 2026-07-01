@@ -244,6 +244,9 @@ export const Projects = () => {
   const [expanded,   setExpanded]   = useState(false);
 
   const rawData = [
+    { id: "hidrorescate",   image: "./hidrorescate-laptop.jpeg", liveUrl: "https://hidrorescate.com.ar/",         stack: ["React", "TypeScript", "Vite", "Tailwind CSS"] },
+    { id: "magicalduo",     image: "./magicalduo-mockup.png",    liveUrl: "https://themagicalduo.com/",           stack: ["React", "TypeScript", "Vite", "Tailwind CSS"] },
+    { id: "pulseguard",     image: "./pulseguard.png",   liveUrl: "https://pulseguard-frontend.vercel.app/",     stack: ["Next.js", "TypeScript", "Tailwind CSS"] },
     { id: "muda",           image: "./muda-mockup.jpg",  liveUrl: "https://mudaagcy.com/",                       stack: ["React", "TypeScript", "Vite", "Supabase", "Cloudinary", "Vercel"] },
     { id: "emme",           image: "./emme-mockup.webp", liveUrl: "https://www.emmedigital.com.ar/",              stack: ["React.js", "TypeScript", "Framer Motion"] },
     { id: "unik",           image: "./unik-mockup.webp", liveUrl: "https://unik-kappa.vercel.app/",               stack: ["Next.js 15", "TypeScript", "Framer Motion"], process: ["./antes1.png","./antes2.png","./antes3.png","./despues1.png","./despues2.png","./despues3.png"] },
