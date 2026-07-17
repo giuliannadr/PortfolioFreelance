@@ -142,47 +142,48 @@ export const FAQSection = () => {
         ))}
       </motion.div>
 
-      {/* Label */}
-      <div className="flex items-center gap-5 mb-14 relative z-20">
-        <div className="flex items-center gap-2 font-mono text-[9px] text-[#CC1500] uppercase tracking-[0.25em]">
-          <span>07</span>
-          <span>//</span>
-          <span>FAQ</span>
+      <div className="max-w-7xl mx-auto w-full relative z-20">
+        {/* Label */}
+        <div className="flex items-center gap-5 mb-14">
+          <div className="flex items-center gap-2 font-mono text-[9px] text-[#CC1500] uppercase tracking-[0.25em]">
+            <span>07</span>
+            <span>//</span>
+            <span>FAQ</span>
+          </div>
+          <div className="h-px flex-1 bg-[#0A0A0A]/[0.08]" />
+          <span
+            className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
+            FAQ
+          </span>
         </div>
-        <div className="h-px flex-1 bg-[#0A0A0A]/[0.08]" />
-        <span
-          className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25"
-          style={{ fontFamily: "Poppins, sans-serif" }}
-        >
-          FAQ
-        </span>
-      </div>
 
-      {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
-      <div className="mb-16 relative z-20 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.85]"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontSize: "clamp(2.3rem, 6vw, 5.5rem)",
-            letterSpacing: "-0.03em",
-          }}
-        >
-          <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
-            {lang === "en" ? "FAQ" : "PREGUNTAS"}
-          </span>
-          <span className="text-[#0A0A0A]">
-            {lang === "en" ? "ANSWERED." : "FRECUENTES."}
-          </span>
-        </motion.h2>
-      </div>
+        {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
+        <div className="mb-16 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="block font-black uppercase leading-[0.85]"
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              fontSize: "clamp(2.3rem, 6vw, 5.5rem)",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+              {lang === "en" ? "FAQ" : "PREGUNTAS"}
+            </span>
+            <span className="text-[#0A0A0A]">
+              {lang === "en" ? "ANSWERED." : "FRECUENTES."}
+            </span>
+          </motion.h2>
+        </div>
 
-      {/* FAQ items */}
-      <div className="relative z-20 max-w-3xl mx-auto">
+        {/* FAQ items */}
+        <div className="max-w-3xl mx-auto">
         {FAQ_ITEMS.map((item, i) => {
           const faq = lang === "en" ? item.en : item.es;
           const isOpen = openIndex === i;
@@ -264,6 +265,7 @@ export const FAQSection = () => {
             </motion.div>
           );
         })}
+        </div>
       </div>
     </section>
   );

@@ -409,6 +409,7 @@ export const UseCasesSection = () => {
         ))}
       </motion.div>
 
+      <div className="max-w-7xl mx-auto w-full">
       {/* Label */}
       <div className="flex items-center gap-5 mb-14 relative z-20">
         <div className="flex items-center gap-2 font-mono text-[9px] text-[#CC1500] uppercase tracking-[0.25em]">
@@ -561,6 +562,7 @@ export const UseCasesSection = () => {
           {lang === "en" ? "Let's talk" : "Hablemos"} →
         </a>
       </motion.div>
+      </div>
     </section>
   );
 };

@@ -36,12 +36,11 @@ const CODE_POINTS: {
 // ── Component ─────────────────────────────────────────────────────────────────
 export const WhyCodePanel = ({ lang }: { lang: string }) => {
   const tPoints = lang === "en" ? TEMPLATE_POINTS.en : TEMPLATE_POINTS.es;
-  const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 50%, #ff5533 100%)";
 
   return (
     <div className="relative">
 
-      {/* ── Title ── */}
+      {/* ── Title — one line, stroke word + solid word, matching the Profesional pattern ── */}
       <div className="mb-8">
         <motion.h3
           initial={{ opacity: 0, y: 18 }}
@@ -53,27 +52,15 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
             fontFamily: "Poppins, sans-serif",
             fontSize: "clamp(1.8rem, 4.5vw, 3.8rem)",
             letterSpacing: "-0.03em",
-            color: "#0A0A0A",
           }}
         >
-          {lang === "en" ? "Why code" : "¿Por qué código"}
+          <span className="mr-2" style={{ WebkitTextStroke: "1.1px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+            {lang === "en" ? "REAL" : "CÓDIGO"}
+          </span>
+          <span className="text-[#0A0A0A]">
+            {lang === "en" ? "CODE." : "REAL."}
+          </span>
         </motion.h3>
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-serif italic font-light leading-[1.1]"
-          style={{
-            fontSize: "clamp(1.2rem, 3vw, 2.5rem)",
-            backgroundImage: italicGrad,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          {lang === "en" ? "and not a template?" : "y no una plantilla?"}
-        </motion.span>
       </div>
 
       {/* ── Two cards — stacked on mobile, side-by-side from sm ── */}

@@ -103,8 +103,9 @@ export const TrustSection = () => {
           style={{ background: "#CC1500", width: 320, height: 320, left: "8%", top: "65%", opacity: 0.06, transform: "translate(-50%,-50%)" }} />
       </motion.div>
 
+      <div className="max-w-7xl mx-auto w-full relative z-10">
       {/* Label */}
-      <div className="flex items-center gap-5 mb-14 relative z-10">
+      <div className="flex items-center gap-5 mb-14">
         <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25"
           style={{ fontFamily: "Poppins, sans-serif" }}>04</span>
         <div className="h-px flex-1 bg-white/[0.06]" />
@@ -113,7 +114,7 @@ export const TrustSection = () => {
       </div>
 
       {/* Headline + leave a review button */}
-      <div className="mb-12 relative z-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+      <div className="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
         <div>
           <motion.h2
             initial={{ opacity: 0, y: 22 }}
@@ -167,7 +168,7 @@ export const TrustSection = () => {
 
       {/* ── CAROUSEL ── */}
       <div
-        className="relative z-10 max-w-3xl mx-auto"
+        className="max-w-3xl mx-auto"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -284,6 +285,7 @@ export const TrustSection = () => {
             </button>
           </div>
         )}
+      </div>
       </div>
 
       {/* Review form overlay */}

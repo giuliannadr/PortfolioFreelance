@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Download } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const menuItems = [
@@ -97,16 +97,7 @@ export const Navbar = () => {
             </a>
           ))}
 
-          <div className="flex items-center gap-5 border-l border-white/10 pl-6">
-            <a
-              href={lang === "en" ? "/CV_Giuliana_DiRocco_EN.pdf" : "/CV_Giuliana_DiRocco_ES.pdf"}
-              download
-              className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] bg-white text-[#0A0A0A] hover:bg-[#CC1500] hover:text-white px-3.5 py-1.5 transition-all duration-300 rounded-full"
-              style={{ fontFamily: "Poppins, sans-serif" }}
-            >
-              <Download size={9} />
-              CV
-            </a>
+          <div className="flex items-center border-l border-white/10 pl-6">
             <button
               onClick={toggleLanguage}
               className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-[#CC1500] transition-colors"
@@ -199,15 +190,6 @@ export const Navbar = () => {
             </nav>
 
             <div className="flex flex-col gap-4 mt-8">
-              <a
-                href={lang === "en" ? "/CV_Giuliana_DiRocco_EN.pdf" : "/CV_Giuliana_DiRocco_ES.pdf"}
-                download
-                className="inline-flex items-center justify-center gap-2 py-3.5 bg-white text-black hover:bg-[#CC1500] hover:text-white rounded-lg text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                <Download size={11} />
-                {lang === "en" ? "Download CV" : "Descargar CV"}
-              </a>
               <p className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/20 text-center">
                 © 2026 Giuliana Di Rocco
               </p>

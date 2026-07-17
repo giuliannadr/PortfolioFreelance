@@ -93,51 +93,53 @@ export const ProcessSection = () => {
         ))}
       </motion.div>
 
-      {/* Label */}
-      <div className="flex items-center gap-5 mb-14 relative z-20 border-b border-[#0A0A0A]/8 pb-8">
-        <div className="flex items-center gap-2 font-mono text-[9px] text-[#CC1500] uppercase tracking-[0.25em]">
-          <span>03</span>
-          <span>//</span>
-          <span>{t("process.badge")}</span>
+      <div className="max-w-7xl mx-auto w-full relative z-20">
+        {/* Label */}
+        <div className="flex items-center gap-5 mb-14 border-b border-[#0A0A0A]/8 pb-8">
+          <div className="flex items-center gap-2 font-mono text-[9px] text-[#CC1500] uppercase tracking-[0.25em]">
+            <span>03</span>
+            <span>//</span>
+            <span>{t("process.badge")}</span>
+          </div>
+          <div className="h-px flex-1 bg-[#0A0A0A]/8" />
+          <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25" style={{ fontFamily: "Poppins, sans-serif" }}>{t("process.badge")}</span>
         </div>
-        <div className="h-px flex-1 bg-[#0A0A0A]/8" />
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25" style={{ fontFamily: "Poppins, sans-serif" }}>{t("process.badge")}</span>
-      </div>
 
-      {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
-      <div className="mb-16 relative z-20">
-        <motion.h2
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
+        <div className="mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="block font-black uppercase leading-[0.85]"
+            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 7vw, 6rem)", letterSpacing: "-0.03em" }}
+          >
+            <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+              {t("process.title")}
+            </span>
+            <span className="text-[#0A0A0A]">
+              {t("process.titleItalic")}
+            </span>
+          </motion.h2>
+        </div>
+
+        <div>
+          {STEPS.map(({ number, key, accent }, i) => (
+            <StepRow key={key} number={number} stepKey={key} index={i} accent={accent} />
+          ))}
+        </div>
+
+        <motion.p
+          initial={{ opacity: 0, x: -16 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.85]"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 7vw, 6rem)", letterSpacing: "-0.03em" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-14 text-[#0A0A0A]/35 text-sm italic leading-relaxed border-l-2 border-[#CC1500]/40 pl-5 max-w-sm"
         >
-          <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
-            {t("process.title")}
-          </span>
-          <span className="text-[#0A0A0A]">
-            {t("process.titleItalic")}
-          </span>
-        </motion.h2>
+          {t("process.quote")}
+        </motion.p>
       </div>
-
-      <div className="relative z-20">
-        {STEPS.map(({ number, key, accent }, i) => (
-          <StepRow key={key} number={number} stepKey={key} index={i} accent={accent} />
-        ))}
-      </div>
-
-      <motion.p
-        initial={{ opacity: 0, x: -16 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-20 mt-14 text-[#0A0A0A]/35 text-sm italic leading-relaxed border-l-2 border-[#CC1500]/40 pl-5 max-w-sm"
-      >
-        {t("process.quote")}
-      </motion.p>
     </section>
   );
 };

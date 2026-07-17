@@ -232,6 +232,7 @@ export const ServicesSection = () => {
         ))}
       </motion.div>
 
+      <div className="max-w-7xl mx-auto w-full">
       {/* Label */}
       <div className="flex items-center gap-5 mb-14 relative z-20 border-b border-white/[0.05] pb-8">
         <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25"
@@ -258,10 +259,10 @@ export const ServicesSection = () => {
           }}
         >
           <span className="mr-3" style={{ WebkitTextStroke: "1.2px rgba(255,255,255,0.9)", WebkitTextFillColor: "transparent", color: "transparent" }}>
-            {lang === "en" ? "CLEAR" : "PRECIOS"}
+            {lang === "en" ? "YOUR" : "TU"}
           </span>
           <span className="text-white">
-            {lang === "en" ? "PRICING." : "CLAROS."}
+            {lang === "en" ? "INVESTMENT." : "INVERSIÓN."}
           </span>
         </motion.h2>
       </div>
@@ -276,7 +277,7 @@ export const ServicesSection = () => {
       >
         {/* Toggle pill */}
         <div
-          className="relative flex"
+          className="relative flex rounded-full p-1"
           style={{
             background: "rgba(255,255,255,0.04)",
             border: "1px solid rgba(255,255,255,0.08)",
@@ -289,24 +290,23 @@ export const ServicesSection = () => {
                 if (cur === "USD" && !rate) return;
                 setCurrency(cur);
               }}
-              className="relative px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300"
+              className="relative px-5 py-2 text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300 rounded-full"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                color: currency === cur ? "#fff" : "rgba(255,255,255,0.25)",
-                background: currency === cur ? "rgba(255,255,255,0.08)" : "transparent",
+                color: currency === cur ? "#0A0A0A" : "rgba(255,255,255,0.35)",
                 cursor: cur === "USD" && !rate ? "not-allowed" : "pointer",
                 opacity: cur === "USD" && !rate ? 0.3 : 1,
               }}
             >
-              {cur}
               {currency === cur && (
                 <motion.div
                   layoutId="currency-indicator"
-                  className="absolute bottom-0 left-0 right-0 h-[2px]"
-                  style={{ background: "#fff" }}
+                  className="absolute inset-0 bg-white rounded-full"
+                  style={{ zIndex: -1 }}
                   transition={{ type: "spring", stiffness: 500, damping: 35 }}
                 />
               )}
+              {cur}
             </button>
           ))}
         </div>
@@ -577,6 +577,7 @@ export const ServicesSection = () => {
           ? `* Prices do not include the annual domain or external hosting if the project cannot be deployed on Vercel. Landing pages and multi-section sites include deployment.${currency === "USD" ? " Prices converted from ARS using the Blue Dollar rate. Values are approximate." : " Prices in Argentine pesos."}`
           : `* Los precios no incluyen el dominio anual ni hosting externo en caso de que el proyecto no pueda deployarse en Vercel. Las landing pages y sitios multi-sección incluyen el deploy.${currency === "USD" ? " Precios convertidos desde ARS usando la cotización del dólar blue. Los valores son aproximados." : " Precios en pesos argentinos."}`}
       </motion.p>
+      </div>
     </section>
   );
 };
