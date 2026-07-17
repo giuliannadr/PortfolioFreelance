@@ -392,8 +392,6 @@ export const UseCasesSection = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
-  const italicGrad = "linear-gradient(110deg, #CC1500 0%, #b01000 55%, #ff5533 100%)";
-
   return (
     <section ref={ref} id="what-i-build" className="py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative overflow-hidden" style={{ background: BG }}>
 
@@ -413,10 +411,13 @@ export const UseCasesSection = () => {
 
       {/* Label */}
       <div className="flex items-center gap-5 mb-14 relative z-20">
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30"
-          style={{ fontFamily: "Poppins, sans-serif" }}>01</span>
-        <div className="h-px flex-1 bg-[#0A0A0A]/12" />
-        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/30"
+        <div className="flex items-center gap-2 font-mono text-[9px] text-[#CC1500] uppercase tracking-[0.25em]">
+          <span>01</span>
+          <span>//</span>
+          <span>{lang === "en" ? "WHAT I BUILD" : "LO QUE CONSTRUYO"}</span>
+        </div>
+        <div className="h-px flex-1 bg-[#0A0A0A]/[0.08]" />
+        <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25"
           style={{ fontFamily: "Poppins, sans-serif" }}>
           {lang === "en" ? "What I build" : "Lo que construyo"}
         </span>
@@ -430,19 +431,24 @@ export const UseCasesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="block font-black uppercase leading-[0.88]"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 6.5vw, 6.5rem)", letterSpacing: "-0.03em", color: "#0A0A0A" }}
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 6.5vw, 6.5rem)", letterSpacing: "-0.03em" }}
         >
-          {lang === "en" ? "A site built" : "Una web hecha"}
+          <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+            {lang === "en" ? "A SITE" : "UNA WEB"}
+          </span>
+          <span className="text-[#0A0A0A]">
+            {lang === "en" ? "BUILT" : "HECHA"}
+          </span>
         </motion.h2>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-serif italic font-light leading-[1.1]"
-          style={{ fontSize: "clamp(1.8rem, 5vw, 5rem)", backgroundImage: italicGrad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+          className="block font-black uppercase leading-[0.88] text-[#0A0A0A]/30"
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 6.5vw, 6.5rem)", letterSpacing: "-0.03em" }}
         >
-          {lang === "en" ? "for your business." : "para tu negocio."}
+          {lang === "en" ? "FOR YOUR BUSINESS." : "PARA TU NEGOCIO."}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 12 }}
