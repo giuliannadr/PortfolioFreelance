@@ -253,6 +253,7 @@ export const Projects = () => {
     { id: "la-quinta-miri", image: "./miri-mockup.webp", liveUrl: "https://laquintamiri.vercel.app/",            stack: ["React.js", "TypeScript", "EmailJS"] },
     { id: "inv-boda", image: "./boda.webp", liveUrl: "https://invitacion-muestra.vercel.app/",      stack: ["React.js", "Framer Motion", "Vite"] },
     { id: "inv-xv",   image: "./xv.webp",   liveUrl: "https://invitacion-xv-muestra.vercel.app/",   stack: ["React.js", "Framer Motion", "Vite"] },
+    { id: "nido", image: "./nido-mockup.png", liveUrl: "https://nidoapp.online", stack: ["Angular", ".NET 9", "C#", "PostgreSQL", "Clean Architecture", "OCR", "IA"] },
   ];
 
   const projects: Project[] = rawData.map(p => {

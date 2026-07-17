@@ -86,7 +86,13 @@ process: {
        
       },
       items: {
-        hidrorescate: {
+        nido: {
+        "title": "Nido",
+        "category": "Final Degree Project",
+        "description": "A home management platform with AI-powered recipes, shared finances and OCR receipt scanning — built as a final degree project.",
+        "longDescription": "Nido centralizes a shared household's pantry, recipes, chores and finances in one place. I worked on the backend and the go-to-market communication strategy as part of an 8-person team, shipping the MVP in about 2 months. It features AI recipe recommendations, an in-recipe cooking assistant chat, automatic receipt scanning via OCR, price comparison across supermarkets, and a Telegram bot for notifications."
+      },
+      hidrorescate: {
         "title": "Hidrorescate",
         "category": "Design & Development",
         "description": "A technical service site for water pump installation and repair that turns visitors into WhatsApp leads.",
@@ -301,6 +307,12 @@ process: {
         viewWork: "Ver Web Final"
       },
       items: {
+       nido: {
+        "title": "Nido",
+        "category": "Proyecto Final de Carrera",
+        "description": "Plataforma de gestión del hogar con recetas asistidas por IA, finanzas compartidas y escaneo OCR de tickets — desarrollada como proyecto final de carrera.",
+        "longDescription": "Nido centraliza la alacena, las recetas, las tareas y las finanzas de un hogar compartido en un solo lugar. Trabajé en el backend y en la estrategia de comunicación del lanzamiento como parte de un equipo de 8 personas, entregando el MVP en aproximadamente 2 meses. Incluye recomendación de recetas con IA, un chat asistente de cocina dentro de cada receta, escaneo automático de tickets por OCR, comparación de precios entre supermercados y un bot de Telegram para notificaciones."
+      },
        hidrorescate: {
         "title": "Hidrorescate",
         "category": "Diseño & Desarrollo",
