@@ -128,10 +128,10 @@ export const TrustSection = () => {
             }}
           >
             <span className="mr-3" style={{ WebkitTextStroke: "1.2px rgba(255,255,255,0.9)", WebkitTextFillColor: "transparent", color: "transparent" }}>
-              {lang === "en" ? "WHAT THEY" : "LO QUE DICEN"}
+              {lang === "en" ? "THEIR" : "SUS"}
             </span>
             <span className="text-white">
-              {lang === "en" ? "SAY." : "MIS CLIENTES."}
+              {lang === "en" ? "WORDS." : "PALABRAS."}
             </span>
           </motion.h2>
         </div>

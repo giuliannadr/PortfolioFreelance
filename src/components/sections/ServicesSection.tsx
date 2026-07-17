@@ -258,10 +258,10 @@ export const ServicesSection = () => {
           }}
         >
           <span className="mr-3" style={{ WebkitTextStroke: "1.2px rgba(255,255,255,0.9)", WebkitTextFillColor: "transparent", color: "transparent" }}>
-            {lang === "en" ? "PRICING" : "PRECIOS"}
+            {lang === "en" ? "CLEAR" : "PRECIOS"}
           </span>
           <span className="text-white">
-            {lang === "en" ? "MADE SIMPLE." : "SIN VUELTAS."}
+            {lang === "en" ? "PRICING." : "CLAROS."}
           </span>
         </motion.h2>
       </div>

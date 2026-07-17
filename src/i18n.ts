@@ -46,8 +46,8 @@ trust: {
 },
 process: {
   "badge": "How I work",
-  "title": "Let's make it",
-  "titleItalic": "happen together.",
+  "title": "MY",
+  "titleItalic": "PROCESS.",
   "quote": "\"My process is designed so you enjoy the journey as much as the final result.\"",
   "steps": {
     "step1": {
@@ -269,8 +269,8 @@ trust: {
 },
 process: {
   "badge": "Cómo trabajo",
-  "title": "Hagámoslo",
-  "titleItalic": "realidad juntos.",
+  "title": "MI",
+  "titleItalic": "PROCESO.",
   "quote": "\"Mi proceso está diseñado para que disfrutes el camino tanto como el resultado final.\"",
   "steps": {
     "step1": {

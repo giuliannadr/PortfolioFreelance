@@ -104,7 +104,7 @@ export const ProcessSection = () => {
         <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#0A0A0A]/25" style={{ fontFamily: "Poppins, sans-serif" }}>{t("process.badge")}</span>
       </div>
 
-      {/* Headline — stroke + solid, matching the Profesional pattern */}
+      {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
       <div className="mb-16 relative z-20">
         <motion.h2
           initial={{ opacity: 0, y: 22 }}
@@ -112,21 +112,14 @@ export const ProcessSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="block font-black uppercase leading-[0.85]"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 8rem)", letterSpacing: "-0.03em" }}
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 7vw, 6rem)", letterSpacing: "-0.03em" }}
         >
-          <span style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+          <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
             {t("process.title")}
           </span>
-        </motion.h2>
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.85] text-[#0A0A0A]"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 8rem)", letterSpacing: "-0.03em" }}
-        >
-          {t("process.titleItalic")}
+          <span className="text-[#0A0A0A]">
+            {t("process.titleItalic")}
+          </span>
         </motion.h2>
       </div>
 
