@@ -22,7 +22,7 @@
     @apply antialiased;
     background-color: #ffffff;
     color: #0A0A0A;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   ::selection {
