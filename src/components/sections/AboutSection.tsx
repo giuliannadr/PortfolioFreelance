@@ -12,7 +12,7 @@ const BLOBS = [
 const STATS = [
   { es: "5 proyectos entregados",    en: "5 projects delivered",    color: "#CC1500" },
   { es: "6 proyectos en curso",      en: "6 projects in progress",  color: "#7C3AED" },
-  { es: "UNLAM · Egreso jul. 2026",  en: "UNLAM · Graduating Jul. 2026", color: "#06B6D4" },
+  { es: "Técnica en Desarrollo Web · UNLaM",  en: "Web Dev Technician · UNLaM", color: "#06B6D4" },
 ];
 
 const PILLARS = [
@@ -127,7 +127,7 @@ export const AboutSection = () => {
               </span>
               <span className="text-white/15">·</span>
               <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/30" style={{ fontFamily: "Poppins, sans-serif" }}>
-                {lang === "en" ? "Web Developer · UNLAM · Jul. 2026" : "Desarrolladora Web · UNLAM · Jul. 2026"}
+                {lang === "en" ? "Web Dev Technician · UNLaM" : "Técnica en Desarrollo Web · UNLaM"}
               </span>
               <span className="text-white/15">·</span>
               <div className="flex items-center gap-1.5">
