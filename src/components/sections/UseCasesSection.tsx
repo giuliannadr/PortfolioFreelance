@@ -425,7 +425,7 @@ export const UseCasesSection = () => {
       </div>
 
       {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
-      <div className="mb-14 relative z-20 max-w-4xl">
+      <div className="mb-14 relative z-20 max-w-4xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -446,7 +446,7 @@ export const UseCasesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-5 text-[#0A0A0A]/45 max-w-xl"
+          className="mt-5 text-[#0A0A0A]/45 max-w-xl mx-auto"
           style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.85rem, 1.4vw, 1rem)", lineHeight: 1.7 }}
         >
           {lang === "en"

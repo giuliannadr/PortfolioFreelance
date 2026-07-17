@@ -245,7 +245,7 @@ export const ServicesSection = () => {
       </div>
 
       {/* Headline */}
-      <div className="mb-16 relative z-20">
+      <div className="mb-16 relative z-20 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}

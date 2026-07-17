@@ -106,7 +106,7 @@ export const ProcessSection = () => {
         </div>
 
         {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}

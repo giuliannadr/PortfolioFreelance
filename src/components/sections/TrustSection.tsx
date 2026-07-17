@@ -114,7 +114,7 @@ export const TrustSection = () => {
       </div>
 
       {/* Headline + leave a review button */}
-      <div className="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+      <div className="mb-12 flex flex-col items-center text-center gap-6">
         <div>
           <motion.h2
             initial={{ opacity: 0, y: 22 }}
@@ -146,7 +146,7 @@ export const TrustSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.25 }}
           whileTap={{ scale: 0.97 }}
-          className="group relative inline-flex items-center gap-2.5 px-5 py-3 self-start sm:self-auto overflow-hidden shrink-0 rounded-full"
+          className="group relative inline-flex items-center gap-2.5 px-5 py-3 overflow-hidden shrink-0 rounded-full"
           style={{
             fontFamily: "Poppins, sans-serif",
             background: "rgba(255,255,255,0.06)",
