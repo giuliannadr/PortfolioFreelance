@@ -537,7 +537,7 @@ export const UseCasesSection = () => {
       </div>
 
       {/* Why code panel — floating dark card within the light section */}
-      <div className="relative z-20 mt-12">
+      <div className="relative z-20 mt-28 md:mt-36 pt-14 border-t border-[#0A0A0A]/8">
         <WhyCodePanel lang={lang} />
       </div>
 

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { Check } from "lucide-react";
 
 const BG = "#F5F4F0";
 
@@ -14,60 +15,44 @@ const BLOBS = [
   { color: "#7C3AED", w: 460, x: "4%",  y: "28%", op: 0.08, cls: "blob-2" },
   { color: "#CC1500", w: 400, x: "94%", y: "55%", op: 0.08, cls: "blob-1" },
   { color: "#D97706", w: 320, x: "50%", y: "92%", op: 0.06, cls: "blob-2" },
-  { color: "#06B6D4", w: 260, x: "70%", y: "8%",  op: 0.06, cls: "blob-1" },
-  { color: "#EC4899", w: 220, x: "25%", y: "70%", op: 0.05, cls: "blob-2" },
 ];
 
-const StepRow = ({ number, stepKey, index, accent }: { number: string; stepKey: string; index: number; accent: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
+const StepCard = ({ number, stepKey, index, accent }: { number: string; stepKey: string; index: number; accent: string }) => {
   const { t } = useTranslation();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.88", "start 0.28"] });
-  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.65, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className="relative grid grid-cols-[44px_1fr] lg:grid-cols-[60px_1fr_auto] gap-6 lg:gap-16 py-10 border-b border-[#0A0A0A]/8"
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      className="relative flex flex-col"
     >
-      {/* Step num + animated connector */}
-      <div className="flex flex-col items-center pt-1">
-        <span className="font-black leading-none" style={{ fontFamily: "Poppins, sans-serif", fontSize: "0.65rem", letterSpacing: "0.12em", color: accent }}>{number}</span>
-        {index < 2 && (
-          <div className="mt-3 w-px bg-[#0A0A0A]/10" style={{ height: 44 }}>
-            <motion.div className="w-full origin-top h-full" style={{ scaleY: lineScaleY, background: accent }} />
-          </div>
-        )}
-      </div>
-
-      <div className="pb-2">
-        <motion.h3
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="font-black uppercase leading-none text-[#0A0A0A] mb-3"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.3rem, 3.2vw, 2.4rem)", letterSpacing: "-0.03em" }}
+      {/* Node */}
+      <div className="w-12 h-12 mb-5 flex items-center justify-center shrink-0 relative bg-[#F5F4F0] rounded-full z-10">
+        <div
+          className="w-full h-full rounded-full flex items-center justify-center border"
+          style={{ borderColor: accent, backgroundColor: `${accent}15`, color: accent }}
         >
-          {t(`process.steps.${stepKey}.title`)}
-        </motion.h3>
-        <p className="text-[#0A0A0A]/45 text-base leading-relaxed max-w-xl">{t(`process.steps.${stepKey}.description`)}</p>
+          <span className="font-mono text-xs font-black">{number}</span>
+        </div>
       </div>
 
-      <div className="hidden lg:flex items-center">
-        <motion.span
-          initial={{ opacity: 0, x: 8 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 + index * 0.08 }}
-          className="text-[8px] font-black uppercase tracking-[0.35em] px-4 py-2 border"
-          style={{ fontFamily: "Poppins, sans-serif", color: accent, borderColor: `${accent}40` }}
+      {/* Card */}
+      <div className="flex-1 bg-white/70 backdrop-blur-md border border-[#0A0A0A]/[0.06] rounded-2xl p-6 flex flex-col gap-2.5 shadow-[0_4px_20px_-4px_rgba(10,10,10,0.03)] transition-all duration-300 hover:shadow-[0_12px_30px_-6px_rgba(10,10,10,0.08)] hover:-translate-y-1">
+        <span
+          className="text-[8px] font-black uppercase tracking-[0.3em] px-2.5 py-1 self-start rounded-full"
+          style={{ color: accent, background: `${accent}12`, border: `1px solid ${accent}30` }}
         >
           {t(`process.steps.${stepKey}.tags.0`)}
-        </motion.span>
+        </span>
+        <h3
+          className="font-black uppercase leading-tight text-[#0A0A0A]"
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "1.05rem", letterSpacing: "-0.02em" }}
+        >
+          {t(`process.steps.${stepKey}.title`)}
+        </h3>
+        <p className="text-[#0A0A0A]/50 text-[13px] leading-relaxed">{t(`process.steps.${stepKey}.description`)}</p>
       </div>
     </motion.div>
   );
@@ -80,7 +65,7 @@ export const ProcessSection = () => {
   const blobY = useTransform(scrollYProgress, [0, 1], ["-18%", "18%"]);
 
   return (
-    <section ref={ref} className="py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative" style={{ background: BG }}>
+    <section ref={ref} className="py-20 md:py-28 px-5 sm:px-8 lg:px-10 relative overflow-hidden" style={{ background: BG }}>
 
       {/* Edge fades */}
       <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10" style={{ background: `linear-gradient(to bottom, ${BG}, transparent)` }} />
@@ -106,7 +91,7 @@ export const ProcessSection = () => {
         </div>
 
         {/* Headline — one line, stroke word + solid word, matching the Profesional pattern */}
-        <div className="mb-16 text-center">
+        <div className="mb-14 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -124,21 +109,32 @@ export const ProcessSection = () => {
           </motion.h2>
         </div>
 
-        <div>
-          {STEPS.map(({ number, key, accent }, i) => (
-            <StepRow key={key} number={number} stepKey={key} index={i} accent={accent} />
-          ))}
+        {/* Steps — compact 3-column grid, matching the Whatsnext pattern */}
+        <div className="relative">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+            className="absolute top-6 left-[16.66%] right-[16.66%] h-px bg-gradient-to-r from-[#CC1500] via-[#7C3AED] to-[#06B6D4] hidden md:block opacity-[0.25] origin-left"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {STEPS.map(({ number, key, accent }, i) => (
+              <StepCard key={key} number={number} stepKey={key} index={i} accent={accent} />
+            ))}
+          </div>
         </div>
 
-        <motion.p
-          initial={{ opacity: 0, x: -16 }}
-          whileInView={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-14 text-[#0A0A0A]/35 text-sm italic leading-relaxed border-l-2 border-[#CC1500]/40 pl-5 max-w-sm"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-10 flex items-center justify-center gap-2 text-[#0A0A0A]/40 text-[12px] italic"
         >
+          <Check size={13} className="text-emerald-600 shrink-0" />
           {t("process.quote")}
-        </motion.p>
+        </motion.div>
       </div>
     </section>
   );

@@ -40,6 +40,17 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
   return (
     <div className="relative">
 
+      {/* ── Eyebrow label ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center gap-2 font-mono text-[9px] text-[#CC1500] uppercase tracking-[0.25em] mb-5"
+      >
+        <span>{lang === "en" ? "WHY CODE?" : "¿POR QUÉ CÓDIGO?"}</span>
+      </motion.div>
+
       {/* ── Title — one line, stroke word + solid word, matching the Profesional pattern ── */}
       <div className="mb-8">
         <motion.h3
