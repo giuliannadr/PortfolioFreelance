@@ -100,7 +100,7 @@ export const AboutSection = () => {
               style={{ boxShadow: "0 0 0 2px rgba(255,255,255,0.08), 0 0 0 4px rgba(204,21,0,0.25)" }}
             >
               <img
-                src="/giuli-profile.jpeg?v=2"
+                src="/giuli-profile.jpeg?v=3"
                 alt="Giuliana Di Rocco"
                 className="w-full h-full object-cover object-center"
                 style={{ filter: "contrast(1.08) saturate(1.1) brightness(1.02)" }}

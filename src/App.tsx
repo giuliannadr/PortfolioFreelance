@@ -9,7 +9,6 @@ import { ServicesSection }  from "@/components/sections/ServicesSection";
 import { FAQSection }       from "@/components/sections/FAQSection";
 import { CTASection }       from "@/components/sections/CTASection";
 import { Footer }           from "@/components/layout/Footer";
-import { Marquee }          from "@/components/ui/Marquee";
 import { Loader }           from "@/components/ui/Loader";
 import { DeleteReview }     from "@/components/ui/DeleteReview";
 
@@ -27,7 +26,6 @@ function App() {
       <Loader onDone={() => {}} />
       <Layout>
         <Hero />
-        <Marquee />
         <UseCasesSection />
         <AboutSection />
         <ProcessSection />

@@ -20,12 +20,6 @@ const STATIC_REVIEWS = {
   ],
 };
 
-const METRICS = [
-  { num: "100%", color: "#CC1500", es: "Velocidad · Excelente",     en: "Speed · Excellent"       },
-  { num: "1:1",  color: "#7C3AED", es: "Atención directa",          en: "Direct attention"         },
-  { num: "∞",    color: "#06B6D4", es: "Web moderna · Garantizada", en: "Modern web · Guaranteed"  },
-];
-
 const PALETTE = ["#CC1500", "#7C3AED", "#06B6D4", "#EC4899", "#F59E0B", "#10B981"];
 const colorFor = (name: string) =>
   PALETTE[[...name].reduce((a, c) => a + c.charCodeAt(0), 0) % PALETTE.length];
@@ -300,29 +294,6 @@ export const TrustSection = () => {
             </button>
           </div>
         )}
-      </div>
-
-      {/* Metrics */}
-      <div className="relative z-10 border-t border-white/[0.06] mt-12 pt-8 grid grid-cols-3 divide-x divide-white/[0.06]">
-        {METRICS.map(({ num, color, es, en }, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="py-6 px-3 sm:px-8 first:pl-0 last:pr-0 flex flex-col gap-1"
-          >
-            <p className="font-black leading-none text-white"
-              style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.4rem, 5vw, 3rem)" }}>
-              {num}
-            </p>
-            <p className="text-white/25 leading-tight"
-              style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(0.55rem, 1.2vw, 0.65rem)", textTransform: "uppercase", letterSpacing: "0.3em" }}>
-              {lang === "en" ? en : es}
-            </p>
-          </motion.div>
-        ))}
       </div>
 
       {/* Review form overlay */}
