@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Check, Info, RefreshCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { SPOTS_DARK } from "@/lib/textGradients";
 import { useDollarRate } from "@/lib/useDollarRate";
 
 interface Maintenance {
@@ -251,15 +250,11 @@ export const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.85]"
+          className="block font-black uppercase leading-[0.85] text-white"
           style={{
             fontFamily: "Poppins, sans-serif",
             fontSize: "clamp(3rem, 9vw, 8rem)",
             letterSpacing: "-0.03em",
-            backgroundImage: SPOTS_DARK,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
           }}
         >
           {lang === "en" ? "Prices" : "Precios"}
@@ -269,10 +264,10 @@ export const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-serif italic font-light leading-[1.05] text-white/20"
-          style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
+          className="block font-black uppercase leading-[0.85] text-white/30"
+          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 8rem)", letterSpacing: "-0.03em" }}
         >
-          {lang === "en" ? "clear & direct." : "claros y directos."}
+          {lang === "en" ? "CLEAR & DIRECT." : "CLAROS Y DIRECTOS."}
         </motion.h2>
       </div>
 

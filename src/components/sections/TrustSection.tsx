@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { MessageSquarePlus, ChevronLeft, ChevronRight } from "lucide-react";
 import { ReviewForm } from "@/components/ui/ReviewForm";
 import { fetchPublishedReviews, type Review as DynReview } from "@/lib/firebase";
-import { SPOTS_DARK } from "@/lib/textGradients";
 
 // ─── Static fallback reviews ──────────────────────────────────────────────────
 const STATIC_REVIEWS = {
@@ -121,15 +120,11 @@ export const TrustSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-black uppercase leading-[0.85]"
+            className="block font-black uppercase leading-[0.85] text-white"
             style={{
               fontFamily: "Poppins, sans-serif",
               fontSize: "clamp(1.85rem, 9vw, 8rem)",
               letterSpacing: "-0.03em",
-              backgroundImage: SPOTS_DARK,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
             }}
           >
             {lang === "en" ? "What they" : "Lo que dicen"}
@@ -139,10 +134,10 @@ export const TrustSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-serif italic font-light leading-[1.05] text-white/20"
-            style={{ fontSize: "clamp(1.2rem, 6vw, 5.5rem)" }}
+            className="block font-black uppercase leading-[0.85] text-white/30"
+            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.85rem, 9vw, 8rem)", letterSpacing: "-0.03em" }}
           >
-            {lang === "en" ? "say." : "mis clientes."}
+            {lang === "en" ? "SAY." : "MIS CLIENTES."}
           </motion.h2>
         </div>
 
