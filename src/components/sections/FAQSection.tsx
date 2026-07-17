@@ -236,7 +236,7 @@ export const FAQSection = () => {
                 <motion.div
                   animate={{ rotate: isOpen ? 45 : 0 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="shrink-0 w-7 h-7 flex items-center justify-center"
+                  className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full"
                   style={{
                     background: isOpen ? "rgba(10,10,10,0.07)" : "rgba(10,10,10,0.03)",
                     border: `1px solid ${isOpen ? "rgba(10,10,10,0.12)" : "rgba(10,10,10,0.06)"}`,

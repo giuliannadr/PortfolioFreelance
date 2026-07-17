@@ -120,24 +120,19 @@ export const TrustSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-black uppercase leading-[0.85] text-white"
+            className="block font-black uppercase leading-[0.85]"
             style={{
               fontFamily: "Poppins, sans-serif",
-              fontSize: "clamp(1.85rem, 9vw, 8rem)",
+              fontSize: "clamp(1.85rem, 7vw, 5.5rem)",
               letterSpacing: "-0.03em",
             }}
           >
-            {lang === "en" ? "What they" : "Lo que dicen"}
-          </motion.h2>
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-black uppercase leading-[0.85] text-white/30"
-            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(1.85rem, 9vw, 8rem)", letterSpacing: "-0.03em" }}
-          >
-            {lang === "en" ? "SAY." : "MIS CLIENTES."}
+            <span className="mr-3" style={{ WebkitTextStroke: "1.2px rgba(255,255,255,0.9)", WebkitTextFillColor: "transparent", color: "transparent" }}>
+              {lang === "en" ? "WHAT THEY" : "LO QUE DICEN"}
+            </span>
+            <span className="text-white">
+              {lang === "en" ? "SAY." : "MIS CLIENTES."}
+            </span>
           </motion.h2>
         </div>
 
@@ -150,7 +145,7 @@ export const TrustSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.25 }}
           whileTap={{ scale: 0.97 }}
-          className="group relative inline-flex items-center gap-2.5 px-5 py-3 self-start sm:self-auto overflow-hidden shrink-0"
+          className="group relative inline-flex items-center gap-2.5 px-5 py-3 self-start sm:self-auto overflow-hidden shrink-0 rounded-full"
           style={{
             fontFamily: "Poppins, sans-serif",
             background: "rgba(255,255,255,0.06)",
@@ -187,20 +182,20 @@ export const TrustSection = () => {
               animate="center"
               exit="exit"
               transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-              className="relative overflow-hidden"
+              className="relative overflow-hidden rounded-3xl"
               style={{
-                background: "rgba(255,255,255,0.04)",
+                background: "rgba(255,255,255,0.045)",
                 backdropFilter: "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderTop: `2px solid ${item.color}`,
-                boxShadow: "0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: `0 24px 60px -12px ${item.color}30, 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)`,
               }}
             >
               {/* Top glow */}
-              <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none"
+              <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: item.color }} />
+              <div className="absolute top-1.5 left-0 right-0 h-24 pointer-events-none"
                 style={{ background: `linear-gradient(to bottom, ${item.color}14, transparent)` }} />
-              <div className="absolute top-0 left-6 right-6 h-px pointer-events-none"
+              <div className="absolute top-1.5 left-6 right-6 h-px pointer-events-none"
                 style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent)" }} />
 
               <div className="p-8 md:p-12">
@@ -240,7 +235,7 @@ export const TrustSection = () => {
                     </p>
                   </div>
                   <span
-                    className="text-[7px] font-black uppercase tracking-[0.18em] px-2 py-1 shrink-0"
+                    className="text-[7px] font-black uppercase tracking-[0.18em] px-2.5 py-1 shrink-0 rounded-full"
                     style={{
                       fontFamily: "Poppins, sans-serif",
                       color: item.color,
@@ -261,7 +256,7 @@ export const TrustSection = () => {
           <div className="flex items-center justify-center gap-6 mt-8">
             <button
               onClick={() => go(-1)}
-              className="w-9 h-9 flex items-center justify-center border border-white/10 text-white/30 hover:border-white/30 hover:text-white transition-all duration-200"
+              className="w-9 h-9 rounded-full flex items-center justify-center border border-white/10 text-white/30 hover:border-white/30 hover:text-white transition-all duration-200"
             >
               <ChevronLeft size={16} />
             </button>
@@ -271,7 +266,7 @@ export const TrustSection = () => {
                 <button
                   key={i}
                   onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
-                  className="transition-all duration-300"
+                  className="rounded-full transition-all duration-300"
                   style={{
                     width: i === current ? 20 : 6,
                     height: 6,
@@ -283,7 +278,7 @@ export const TrustSection = () => {
 
             <button
               onClick={() => go(1)}
-              className="w-9 h-9 flex items-center justify-center border border-white/10 text-white/30 hover:border-white/30 hover:text-white transition-all duration-200"
+              className="w-9 h-9 rounded-full flex items-center justify-center border border-white/10 text-white/30 hover:border-white/30 hover:text-white transition-all duration-200"
             >
               <ChevronRight size={16} />
             </button>

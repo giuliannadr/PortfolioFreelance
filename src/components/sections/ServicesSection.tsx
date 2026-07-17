@@ -250,24 +250,19 @@ export const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.85] text-white"
+          className="block font-black uppercase leading-[0.85]"
           style={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: "clamp(3rem, 9vw, 8rem)",
+            fontSize: "clamp(2.3rem, 7vw, 6rem)",
             letterSpacing: "-0.03em",
           }}
         >
-          {lang === "en" ? "Prices" : "Precios"}
-        </motion.h2>
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.85] text-white/30"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(3rem, 9vw, 8rem)", letterSpacing: "-0.03em" }}
-        >
-          {lang === "en" ? "CLEAR & DIRECT." : "CLAROS Y DIRECTOS."}
+          <span className="mr-3" style={{ WebkitTextStroke: "1.2px rgba(255,255,255,0.9)", WebkitTextFillColor: "transparent", color: "transparent" }}>
+            {lang === "en" ? "PRICING" : "PRECIOS"}
+          </span>
+          <span className="text-white">
+            {lang === "en" ? "MADE SIMPLE." : "SIN VUELTAS."}
+          </span>
         </motion.h2>
       </div>
 
@@ -396,7 +391,7 @@ export const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative flex flex-col overflow-hidden"
+              className="group relative flex flex-col overflow-hidden rounded-2xl"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 backdropFilter: "blur(24px)",

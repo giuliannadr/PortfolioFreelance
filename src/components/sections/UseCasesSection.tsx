@@ -484,7 +484,7 @@ export const UseCasesSection = () => {
             return (
               <div
                 key={i}
-                className="shrink-0 flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white"
+                className="shrink-0 flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white rounded-2xl"
                 style={{ width: cardW || "82vw" }}
               >
                 <CardInner c={c} content={content} lang={lang} />
@@ -529,7 +529,7 @@ export const UseCasesSection = () => {
                 boxShadow: `0 24px 60px ${c.accent}28, 0 8px 24px ${c.accent}15`,
                 transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
               }}
-              className="group flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white cursor-default relative"
+              className="group flex flex-col overflow-hidden border border-[#0A0A0A]/8 bg-white cursor-default relative rounded-2xl"
             >
               {/* Hover background glow */}
               <motion.div

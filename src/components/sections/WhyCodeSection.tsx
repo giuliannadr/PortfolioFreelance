@@ -85,7 +85,7 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-30px" }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col overflow-hidden border border-[#CC1500]/20 relative"
+          className="flex flex-col overflow-hidden border border-[#CC1500]/20 relative rounded-2xl"
           style={{ background: "#0A0A0A" }}
         >
           {/* Red accent bar */}
@@ -151,7 +151,7 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-30px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col bg-white border border-[#0A0A0A]/8 overflow-hidden"
+          className="flex flex-col bg-white border border-[#0A0A0A]/8 overflow-hidden rounded-2xl"
         >
           {/* Card header */}
           <div className="flex items-center gap-3 px-6 py-5 md:px-8 md:py-6 border-b border-[#0A0A0A]/6"
