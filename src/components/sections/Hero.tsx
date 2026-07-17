@@ -73,7 +73,7 @@ const SideScroller = ({ reverse = false, side }: { reverse?: boolean; side: "lef
 
 // ── Highlight mark ─────────────────────────────────────────────────────────
 const Highlight = ({ children }: { children: React.ReactNode }) => (
-  <mark style={{ background: "rgba(204,21,0,0.28)", color: "#fff", padding: "2px 8px 4px", fontStyle: "italic", fontFamily: "'Playfair Display', serif", borderRadius: 0 }}>
+  <mark style={{ background: "rgba(204,21,0,0.28)", color: "#fff", padding: "2px 8px 4px", fontFamily: "Poppins, sans-serif", fontWeight: 600, borderRadius: 0 }}>
     {children}
   </mark>
 );
@@ -256,8 +256,7 @@ export const Hero = () => {
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-10 py-6">
 
           <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38, duration: 0.5 }}
-            className="text-white/30 mb-2 mt-10 sm:mt-0"
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(0.95rem,1.6vw,1.3rem)" }}>
+            className="text-white/30 mb-2 mt-10 sm:mt-0 font-mono tracking-widest text-[10px] uppercase">
             {lang === "en" ? "Hello, I'm —" : "Hola, soy —"}
           </motion.p>
 
@@ -282,19 +281,17 @@ export const Hero = () => {
             <div className="overflow-hidden">
               <motion.h1 initial={{ y: "105%" }} animate={{ y: 0 }}
                 transition={{ duration: 0.9, delay: 0.54, ease: [0.16, 1, 0.3, 1] }}
-                className="block text-[clamp(2rem,13vw,3.4rem)] sm:text-[clamp(2.4rem,10vw,13rem)]"
+                className="block text-[clamp(2rem,13vw,3.4rem)] sm:text-[clamp(2.4rem,10vw,13rem)] font-light uppercase"
                 style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontStyle: "italic",
-                  fontWeight: 400,
-                  letterSpacing: "-0.015em",
+                  fontFamily: "Poppins, sans-serif",
+                  letterSpacing: "-0.04em",
                   lineHeight: 0.92,
                   backgroundImage: line2Gradient,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                 }}>
-                Di Rocco
+                DI ROCCO
               </motion.h1>
             </div>
           </div>
