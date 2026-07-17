@@ -47,10 +47,10 @@ export const ProfileCard = ({
     >
       <div className="relative flex flex-col w-[320px] sm:w-[360px] md:w-[380px] lg:w-[400px] bg-white text-gray-900 rounded-[28px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)] border border-black/10 p-5 sm:p-6 max-h-[90vh] overflow-hidden">
         
-        {/* Decoración Naranja - Fijo */}
+        {/* Decoración Roja - Fijo */}
         <div className="flex-none flex items-center gap-2 mb-3 sm:mb-4">
-          <span className="w-3 h-3 bg-[#FF6F00] rounded-full" />
-          <span className="w-8 h-[3px] bg-[#FF6F00] rounded-full" />
+          <span className="w-3 h-3 bg-[#CC1500] rounded-full" />
+          <span className="w-8 h-[3px] bg-[#CC1500] rounded-full" />
         </div>
 
         {/* Imagen Flexible: flex-1 permite que se achique, max-h mantiene tu alto original */}
@@ -80,22 +80,22 @@ export const ProfileCard = ({
 
           <div className="flex justify-center gap-5 mt-6 mb-1">
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
+              <FaWhatsapp className="text-[#CC1500] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <a href="https://linkedin.com/in/giulianadirocco" target="_blank" rel="noopener noreferrer">
-              <FaLinkedinIn className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
+              <FaLinkedinIn className="text-[#CC1500] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <a href="https://github.com/giuliannadr" target="_blank" rel="noopener noreferrer">
-              <FaGithub className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
+              <FaGithub className="text-[#CC1500] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <a href="https://instagram.com/giulianna.dev" target="_blank" rel="noopener noreferrer">
-              <FaInstagram className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
+              <FaInstagram className="text-[#CC1500] w-6 h-6 hover:scale-125 transition-transform" />
             </a>
             <button 
               onClick={handleEmailClick}
               className="cursor-pointer focus:outline-none"
             >
-              <HiOutlineMail className="text-[#FF6F00] w-6 h-6 hover:scale-125 transition-transform" />
+              <HiOutlineMail className="text-[#CC1500] w-6 h-6 hover:scale-125 transition-transform" />
             </button>
           </div>
         </div>
