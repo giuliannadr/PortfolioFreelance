@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-const BG = "#F8F7F5";
+const BG = "#F5F4F0";
 
 const STEPS = [
   { number: "01", key: "step1", accent: "#CC1500" },

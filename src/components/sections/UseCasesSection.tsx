@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { WhyCodePanel } from "./WhyCodeSection";
 
-const BG = "#F8F7F5";
+const BG = "#F5F4F0";
 
 // ── CSS-only mockups (zero images, instant load) ──────────────────────────────
 

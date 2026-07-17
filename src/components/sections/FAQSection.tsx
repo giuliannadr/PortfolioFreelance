@@ -113,16 +113,16 @@ export const FAQSection = () => {
     <section
       ref={ref}
       id="faq"
-      className="bg-[#F8F7F5] text-[#0A0A0A] py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative"
+      className="bg-[#F5F4F0] text-[#0A0A0A] py-20 md:py-32 px-5 sm:px-8 lg:px-10 relative"
     >
       {/* Edge fades */}
       <div
         className="absolute inset-x-0 top-0 h-28 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to bottom, #F8F7F5, transparent)" }}
+        style={{ background: "linear-gradient(to bottom, #F5F4F0, transparent)" }}
       />
       <div
         className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to top, #F8F7F5, transparent)" }}
+        style={{ background: "linear-gradient(to top, #F5F4F0, transparent)" }}
       />
 
       {/* Blobs */}

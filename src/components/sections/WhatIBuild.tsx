@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const BG = "#F8F7F5";
+const BG = "#F5F4F0";
 
 const CARDS = [
   { num: "01", accent: "#CC1500", es: { title: "Sitios Web & Landings", tag: "Tu primera impresión lo es todo", bullets: ["Diseño exclusivo adaptado a tu marca", "Optimizado para convertir visitas en clientes", "Visible en Google desde el día uno"] }, en: { title: "Websites & Landings", tag: "First impressions are everything", bullets: ["Custom design tailored to your brand", "Optimized to turn visits into clients", "Visible on Google from day one"] } },
