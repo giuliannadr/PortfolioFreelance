@@ -146,7 +146,8 @@ export const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden fixed inset-0 z-[100] bg-[#0A0A0A]/98 backdrop-blur-lg flex flex-col px-6 py-8"
+            className="lg:hidden fixed inset-0 z-[100] backdrop-blur-lg flex flex-col px-6 py-8"
+            style={{ background: "rgba(10,10,10,0.98)" }}
           >
             <div className="flex justify-between items-center mb-12">
               <span

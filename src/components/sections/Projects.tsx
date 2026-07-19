@@ -489,7 +489,8 @@ export const Projects = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedId(null)}
-              className="fixed inset-0 z-[1000] bg-[#0A0A0A]/96 backdrop-blur-xl"
+              className="fixed inset-0 z-[1000] backdrop-blur-xl"
+              style={{ background: "rgba(10,10,10,0.96)" }}
             />
 
             {/* Modal panel — centered flex container, no padding that clips backdrop */}

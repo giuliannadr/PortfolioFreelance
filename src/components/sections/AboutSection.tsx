@@ -114,7 +114,7 @@ export const AboutSection = () => {
             <div className="w-full h-64 lg:h-[280px] overflow-hidden border-b border-[#0A0A0A]/[0.08] relative bg-[#0A0A0A]/5 shrink-0">
               <img src="/giuli-profile.jpeg?v=3" alt="Giuliana Di Rocco"
                 className="w-full h-full object-cover"
-                style={{ filter: "contrast(1.02) brightness(1.01)", objectPosition: "center 20%" }} />
+                style={{ filter: "contrast(1.02) brightness(1.01)", objectPosition: "center 40%" }} />
             </div>
 
             <div className="px-5 pt-5 pb-4 flex flex-col gap-1 font-mono shrink-0">
