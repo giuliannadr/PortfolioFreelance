@@ -58,14 +58,14 @@ export const WhyCodePanel = ({ lang }: { lang: string }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-black uppercase leading-[0.88]"
+          className="flex flex-wrap items-baseline justify-center gap-x-2 font-black uppercase leading-[0.88]"
           style={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: "clamp(1.8rem, 4.5vw, 3.8rem)",
+            fontSize: "clamp(1.7rem, 4.5vw, 3.8rem)",
             letterSpacing: "-0.03em",
           }}
         >
-          <span className="mr-2" style={{ WebkitTextStroke: "1.1px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+          <span style={{ WebkitTextStroke: "1.1px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
             {lang === "en" ? "REAL" : "CÓDIGO"}
           </span>
           <span className="text-[#0A0A0A]">

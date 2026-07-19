@@ -97,10 +97,10 @@ export const ProcessSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-black uppercase leading-[0.85]"
-            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.5rem, 7vw, 6rem)", letterSpacing: "-0.03em" }}
+            className="flex flex-wrap items-baseline justify-center gap-x-3 font-black uppercase leading-[0.85]"
+            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2rem, 7vw, 6rem)", letterSpacing: "-0.03em" }}
           >
-            <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+            <span style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
               {t("process.title")}
             </span>
             <span className="text-[#0A0A0A]">

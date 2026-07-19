@@ -318,10 +318,10 @@ export const Projects = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-black uppercase leading-[0.88]"
-            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.3rem, 6vw, 5.5rem)", letterSpacing: "-0.02em" }}
+            className="flex flex-wrap items-baseline justify-center gap-x-3 font-black uppercase leading-[0.88]"
+            style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2rem, 6vw, 5.5rem)", letterSpacing: "-0.02em" }}
           >
-            <span className="mr-3" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+            <span style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
               {lang === "en" ? "MY" : "MI"}
             </span>
             <span className="text-[#0A0A0A]">

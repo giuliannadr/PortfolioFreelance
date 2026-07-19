@@ -72,10 +72,10 @@ export const AboutSection = () => {
           <motion.h2
             initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-black uppercase leading-[0.85] text-[#0A0A0A]"
+            className="flex flex-wrap items-baseline gap-x-3 font-black uppercase leading-[0.85] text-[#0A0A0A] select-none"
             style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.3rem, 5.5vw, 4.8rem)", letterSpacing: "-0.02em" }}
           >
-            <span className="mr-3 select-none" style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
+            <span style={{ WebkitTextStroke: "1.2px #0A0A0A", WebkitTextFillColor: "transparent", color: "transparent" }}>
               {lang === "en" ? "ABOUT" : "SOBRE"}
             </span>
             <span className="text-[#0A0A0A]">
